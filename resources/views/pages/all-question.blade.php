@@ -197,6 +197,7 @@
                          <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Name<th>
                                 <th>Questions</th>
                                 <th>Date</th>
                                 <th>Subject</th>
