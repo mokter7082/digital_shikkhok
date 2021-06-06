@@ -71,10 +71,10 @@
             @php
                date_default_timezone_set("Asia/Dhaka");
                $todaydate = date("Y-m-d");
-            $count_today_ques = DB::table('post_q')
+            $today_ques = DB::table('post_q')
                        ->where('date', 'like', '%'.$todaydate.'%')
                        ->get();
-          $today_count = count($count_today_ques);
+          $today_count = count($today_ques);
           @endphp
 <h3 class="panel-title"></h3>
 </div>
@@ -102,7 +102,7 @@
                   </tr>
             </thead>
                     <tbody>
-                      @foreach($today_qus as $val)
+                      @foreach($today_ques as $val)
                         <tr id = "tr-{{$val->id}}">
                           <input type="hidden" value="{{$val->id}}" id="userId">
                           <td>{{$val->id}}</td>

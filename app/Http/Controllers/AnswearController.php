@@ -522,10 +522,11 @@ class AnswearController extends Controller
        $start_date = $custome_year.'-'.$custome_month.'-'.'01';
        $end_date = $custome_year.'-'.$custome_month.'-'.date('t');
         
-     $monthly = DB::select("SELECT users.`name`, users.`mobile`, users.`mobile`, users.`institutionname`, users.`type`,
-     COUNT( CASE WHEN ( ans.date >= '$start_date' AND ans.date <= '$end_date' ) THEN 1 END ) AS total  FROM
-     `users` LEFT JOIN ans ON users.id = ans.user_id  WHERE users.type = 1 OR users.type = 3  GROUP BY users.id, users.`name`, users.`mobile`, users.`institutionname`, users.`type` ORDER BY
-     `total` DESC");
+     $monthly = DB::select("SELECT users.`name`, users.`mobile`, users.`institutionname`, users.`type`, COUNT( ans.id ) AS total 
+   FROM
+     `users` LEFT JOIN ans ON users.id = ans.user_id  WHERE (users.type = 1 OR users.type = 3) AND ans.date BETWEEN '$start_date' AND '$end_date'
+   GROUP BY users.id, users.`name`, users.`mobile`, users.`institutionname`, users.`type` 
+   ORDER BY `total` DESC");
      //dd($monthly);
        return view('pages.monthly-answer',compact('monthly'));
   }
@@ -533,10 +534,11 @@ class AnswearController extends Controller
   public function Save(Request $request){
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-    $monthly = DB::select("SELECT users.`name`, users.`mobile`, users.`institutionname`, users.`type`,
-    COUNT( CASE WHEN ( ans.date >= '$start_date' AND ans.date <= '$end_date' ) THEN 1 END ) AS total  FROM
-    `users` LEFT JOIN ans ON users.id = ans.user_id  WHERE users.type = 1 OR users.type = 3  GROUP BY users.id, users.`name`, users.`mobile`, users.`institutionname`, users.`type` ORDER BY
-    `total` DESC");
+    $monthly = DB::select("SELECT users.`name`, users.`mobile`, users.`institutionname`, users.`type`, COUNT( ans.id ) AS total 
+    FROM
+      `users` LEFT JOIN ans ON users.id = ans.user_id  WHERE (users.type = 1 OR users.type = 3) AND ans.date BETWEEN '$start_date' AND '$end_date'
+    GROUP BY users.id, users.`name`, users.`mobile`, users.`institutionname`, users.`type` 
+    ORDER BY `total` DESC");
        return view('pages.monthly-answer',compact('monthly'));
 
   }
@@ -546,6 +548,40 @@ class AnswearController extends Controller
                   ->get();
     //dd($all_ans_hero);
     return view('pages.all-answear_hero',compact('all_ans_hero'));
+  }
+  public function datewiseAnswer(){
+    $custom_date = date('Y-m-d');
+    $custom_date = explode('-',$custom_date);
+    $custom_year = $custom_date[0];
+    $custom_month = $custom_date[1];
+    $custom_date = $custom_date[2];
+
+    $start_date = $custom_year.'-'.$custom_month.'-'.'01';
+    $end_date = $custom_year.'-'.$custom_month.'-'.date('t');
+    $datewise_ans = DB::select("SELECT ans.*, users.type FROM `ans` INNER JOIN users ON users.id = ans.user_id  WHERE ans.date BETWEEN '$start_date' 
+    AND '$end_date'");
+    //dd($datewise_ans);
+    return view('pages.datewise-answer',compact('datewise_ans'));
+  }
+  public function answerSearch(Request $request){
+      $start_date = $request->start_date;
+      $end_date = $request->end_date;
+      $datewise_ans = DB::select("SELECT ans.*, users.type FROM `ans` INNER JOIN users ON users.id = ans.user_id  WHERE ans.date BETWEEN '$start_date' 
+    AND '$end_date'");
+    //dd($datewise_ans);
+    return view('pages.datewise-answer',compact('datewise_ans'));
+  }
+  public function answerUpdate(Request $request){
+   // dd($request->all());
+      $id = $request->id;
+      $ans =$request->ans;
+      //dd($id);
+      $up = DB::table('ans')
+      ->where('id', $id)->update(array('ans' => $ans)); 
+        return response()->json([
+          "mas"=>"success",
+          "status"=>200
+        ]);
   }
 
  

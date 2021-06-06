@@ -151,7 +151,7 @@
 <div class="text-center">
   <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#con-close-modal">Questioning Time</button>
 </div>
-  @include('fileInclude.timing-modal')
+  @include('modal.timing-modal')
 
     
    @php
