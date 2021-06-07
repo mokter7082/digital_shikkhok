@@ -47,6 +47,11 @@
                                                     @else
                                                      <button type="submit" style="margin-top:1px;" style="margin-top:1px;" class="btn btn-danger btn-sm" id="anshero{{$val->id}}" onclick="anshero({{$val->id}})">Ans Hero</button>
                                                     @endif
+                                                    @if ($val->status == '3')
+                                                    <button type="submit" style="margin-top:2px;" class="btn btn-warning btn-sm block" id="anshero_block{{$val->id}}" onclick="anshero_block({{$val->id}})">Unblock</button>
+                                                    @else
+                                                    <button type="submit" style="margin-top:2px;" class="btn btn-danger btn-sm block" id="anshero_block{{$val->id}}" onclick="anshero_block({{$val->id}})">Block</button>                     
+                                                    @endif
                                                   </td>
                                                         </tr>
                                                      @endforeach
@@ -142,6 +147,41 @@
             }
           });  
  }
+
+
+ function anshero_block(id){
+        var bclass = $("#anshero_block"+id).hasClass("btn-danger");
+        //alert(bclass);
+        if($("#anshero_block"+id).hasClass("btn-danger")){
+          $.ajax({
+            url: '<?php echo URL::to('anshero-block');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+            $("#anshero_block"+id).text('Unblock'); //versions newer than 1.6
+            $("#anshero_block"+id).removeClass("btn-danger");
+            $("#anshero_block"+id).addClass("btn-warning");
+            }
+          });
+        }else {
+          $.ajax({
+            url: '<?php echo URL::to('anshero-unblock');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+             $("#anshero_block"+id).text('Block'); //versions newer than 1.6
+             $("#anshero_block"+id).removeClass("btn-warning");
+             $("#anshero_block"+id).addClass("btn-danger");
+            }
+          });
+        }
+  }
 
 
 </script>

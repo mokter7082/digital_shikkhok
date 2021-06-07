@@ -134,8 +134,10 @@
                                         <table id="my_table" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                  <th>ID</th>
+                                                  <th>SL</th>
                                                   <th>Name</th>
+                                                  <th>Mobile</th>
+                                                  <th>Institutions Name</th>
                                                   <th>Questions</th>
                                                   <th>Date</th>
                                                   <th>Subject</th>
@@ -196,11 +198,13 @@
                       <table id="my_table" class="table table-striped table-bordered">
                          <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Name<th>
-                                <th>Questions</th>
-                                <th>Date</th>
-                                <th>Subject</th>
+                            <th>SL</th>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Institutions Name</th>
+                            <th>Questions</th>
+                            <th>Date</th>
+                            <th>Subject</th>
                             </tr>
                          </thead>
                         <tbody>

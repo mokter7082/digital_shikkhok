@@ -37,10 +37,10 @@
                              @if($teacher  == 1)
 
                              <?php
-                             $today_ans =  DB::table('ans')
-                                               ->where('date', 'like', '%' . $todaydate . '%')
-                                               ->get();
-                                                dd( $teacher_a);
+                            //  $today_ans =  DB::table('ans')
+                            //                    ->where('date', 'like', '%' . $todaydate . '%')
+                            //                    ->get();
+                                              //  dd( $teacher_a);
                                                 
                                         
                              ?>
@@ -144,7 +144,7 @@
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                  <th>ID</th>
+                                                  <th>Ques ID</th>
                                                   <th>User Name</th>
                                                   <th>Answear</th>
                                                   <th>Subject</th>
@@ -158,7 +158,7 @@
                                                   <tbody>
                                                     @foreach($today_answer as $val)
                                                     <tr id = "tr-{{$val->id}}">
-                                                            <td>{{$val->id}}</td>
+                                                            <td>{{$val->post_id}}</td>
                                                             <td>{{$val->user_name}}</td>
                                                             <td>{{$val->ans}}</td>
                                                             <td>{{$val->subject}}</td>
@@ -201,7 +201,7 @@
                                         <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                  <th>ID</th>
+                                                  <th>Ques ID</th>
                                                   <th>User Name</th>
                                                   <th>Answear</th>
                                                   <th>Subject</th>
@@ -213,7 +213,7 @@
                                                   <tbody>
                                                     @foreach($today_ans as $val)
                                                         <tr id = "tr-{{$val->id}}">
-                                                            <td>{{$val->id}}</td>
+                                                            <td>{{$val->post_id}}</td>
                                                             <td>{{$val->user_name}}</td>
                                                             <td>{{$val->ans}}</td>
                                                             <td>{{$val->subject}}</td>

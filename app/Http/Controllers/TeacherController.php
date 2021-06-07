@@ -127,4 +127,26 @@ class TeacherController extends Controller
               "messege"=>"Answer hero Mission success",
              ],200);
     }
+    public function teacherBlock(Request $req){
+      $id = $req->input('id');
+      //dd($id);
+     DB::table('users')
+      ->where('id',$id)
+      ->update(['status' => '3']);
+      return response()->json([
+        "message"=>"teacher status update 3 success"
+        ]);     
+}
+   public function teacherUnblock(Request $req){
+      $id = $req->input('id');
+      //dd($id);
+     DB::table('users')
+      ->where('id',$id)
+      ->update(['status' => '1']);
+
+      return response()->json([
+        "message"=>"teacher status update 1 success"
+        ]);    
+
+  }
 }

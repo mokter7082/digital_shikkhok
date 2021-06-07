@@ -97,7 +97,7 @@
                                         <table id="my_table" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>SL</th>
+                                                    <th>Ques ID</th>
                                                     <th>User Name</th>
                                                     <th>Answear</th>
                                                     <th>Subject</th>
@@ -175,7 +175,7 @@
                                         <table id="my_table" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>SL</th>
+                                                    <th>Ques ID</th>
                                                     <th>User Name</th>
                                                     <th>Answear</th>
                                                     <th>Subject</th>

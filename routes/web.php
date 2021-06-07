@@ -47,6 +47,8 @@ Route::post('/update-teacher/{id}',[TeacherController::class,'updateTeacher'])->
 Route::get('/today-reg_teacher',[TeacherController::class,'todayRegteacher'])->name('today-reg_teacher');
 Route::get('/teacher-delete',[TeacherController::class,'teacherDelete'])->name('teacher-delete');
 Route::get('/answer-hero',[TeacherController::class,'answerHero'])->name('answer-hero');
+Route::get('/teacher-block',[TeacherController::class,'teacherBlock'])->name('teacher-block');
+Route::get('/teacher-unblock',[TeacherController::class,'teacherUnblock'])->name('teacher-unblock');
 //student route
  Route::get('/all-student',[StudentController::class,'allStudent'])->name('all-student');
 Route::get('/today-reg_student',[StudentController::class,'todaySturegister'])->name('today-reg_student');
@@ -101,6 +103,8 @@ Route::get('/all-answer_hero',[AnswearController::class,'allAnswer_hero'])->name
 Route::get('/datewise-answer',[AnswearController::class,'datewiseAnswer'])->name('datewise-answer');
 Route::post('/answer-search',[AnswearController::class,'answerSearch'])->name('answer-search');
 Route::post('/answer-update',[AnswearController::class,'answerUpdate'])->name('answer-update');
+Route::get('/anshero-block',[AnswearController::class,'ansheroBlock'])->name('anshero-block');
+Route::get('/anshero-unblock',[AnswearController::class,'ansheroUnblock'])->name('anshero-unblock');
 
 //Leader Board routes
 Route::get('/le_all-teacher',[LeaderboardController::class,'Le_allteacher'])->name('le_all-teacher');

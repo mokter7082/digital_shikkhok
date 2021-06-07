@@ -149,6 +149,11 @@
                                                     @else
                                                      <button type="submit" style="margin-top:1px;" style="margin-top:1px;" class="btn btn-danger btn-sm" id="anshero{{$val->id}}" onclick="anshero({{$val->id}})">Ans Hero</button>
                                                     @endif
+                                                    @if ($val->status == '3')
+                                                    <button type="submit" style="margin-top:2px;" class="btn btn-warning btn-sm block" id="t_block{{$val->id}}" onclick="teacher_block({{$val->id}})">Unblock</button>
+                                                    @else
+                                                    <button type="submit" style="margin-top:2px;" class="btn btn-danger btn-sm block" id="t_block{{$val->id}}" onclick="teacher_block({{$val->id}})">Block</button>                     
+                                                    @endif
                                                   </td>
                                               </tr>
                                             @endforeach
@@ -306,6 +311,40 @@
             }
           });  
  }
+
+ function teacher_block(id){
+        var bclass = $("#t_block"+id).hasClass("btn-danger");
+        //alert(bclass);
+        if($("#t_block"+id).hasClass("btn-danger")){
+          $.ajax({
+            url: '<?php echo URL::to('teacher-block');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+            $("#t_block"+id).text('Unblock'); //versions newer than 1.6
+            $("#t_block"+id).removeClass("btn-danger");
+            $("#t_block"+id).addClass("btn-warning");
+            }
+          });
+        }else {
+          $.ajax({
+            url: '<?php echo URL::to('teacher-unblock');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+             $("#t_block"+id).text('Block'); //versions newer than 1.6
+             $("#t_block"+id).removeClass("btn-warning");
+             $("#t_block"+id).addClass("btn-danger");
+            }
+          });
+        }
+  }
 
 
 </script>

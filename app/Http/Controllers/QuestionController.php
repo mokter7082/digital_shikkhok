@@ -13,10 +13,6 @@ class QuestionController extends Controller
       ini_set('memory_limit', '-1');
       ini_set('max_execution_time', '0');
       
-      $all_q = DB::table('post_q')
-            ->join('subjects','subjects.id','=','post_q.subject_id')
-            ->select('post_q.*','subjects.name as sname')
-            ->get();
 
   
        return view('pages.all-question');
@@ -32,6 +28,8 @@ class QuestionController extends Controller
         "post_q.user_email",
         "post_q.date",
         "post_q.quens",
+        "users.mobile",
+        "users.institutionname",
         "post_q.subject"); //set column field database for datatable orderable
 
     $column_search = array(
@@ -39,6 +37,8 @@ class QuestionController extends Controller
         "post_q.user_email",
         "post_q.date",
         "post_q.quens",
+        "users.mobile",
+        "users.institutionname",
         "post_q.subject"); //set column field database for datatable searchable
 
     $order = array("post_q.id" => 'desc');
@@ -48,7 +48,8 @@ class QuestionController extends Controller
    
     $list = DB::table('post_q')
             ->join('subjects','subjects.id','=','post_q.subject_id')
-            ->select('post_q.*','subjects.name as sname');
+            ->join('users','users.id','=','post_q.user_id')
+            ->select('post_q.*','users.mobile','users.institutionname','subjects.name as sname');
 
     //echo $list->toSql(); exit;
 
@@ -82,13 +83,15 @@ class QuestionController extends Controller
 
     // generate server side datatables
     $data = array();
+    //dd($data);
     $sl = $start;
     if (!empty($list)) {
       foreach ($list as $value) {
         $row = array();
-        
-        $row[] = $value->id;
+        $row[] = ++$sl;
         $row[] = $value->user_name;
+        $row[] = $value->mobile;
+        $row[] = $value->institutionname;
         $row[] = $value->quens;
         $row[] = $value->date;
         $row[] = $value->subject;
@@ -118,9 +121,10 @@ class QuestionController extends Controller
       $todaydate = date("Y-m-d");
 
       $today_qus =  DB::table('post_q')
-                      ->where('date', 'like', '%'.$todaydate.'%')
-                      ->where('status',0)
-                      ->get();
+                  ->join('users','users.id','=','post_q.user_id')
+                  ->select('post_q.*','users.mobile','users.institutionname')
+                  ->where('post_q.date', 'like', '%'.$todaydate.'%')
+                  ->get();
        return view('pages.today-question',compact('today_qus'));
     }
      public function quesApprove(Request $req){
@@ -171,11 +175,6 @@ class QuestionController extends Controller
       
     }
      public function quesAns(){
-      // $all_qus_ans = DB::table('post_q')
-      //              ->join('ans','ans.post_id','=','post_q.id')
-      //              ->select('post_q.id','post_q.quens','ans.ans')
-      //              ->get();
-      //dd($all_qus_ans);
        return view('pages.all-ques_ans');
     }
     //ANS AND QUESTIONS DATA BY AJAX DATATABLE

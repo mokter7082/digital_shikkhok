@@ -25,6 +25,8 @@
                   <tr>
                      <th>ID</th>
                      <th>Name</th>
+                     <th>Mobile</th>
+                     <th>Institution Name</th>
                      <th>Question</th>
                      <th>Date</th>
                      <th>Subject</th>
@@ -33,9 +35,10 @@
                     <tbody>
                       @foreach($today_qus as $val)
                         <tr id = "tr-{{$val->id}}">
-                          <input type="hidden" value="{{$val->id}}" id="userId">
-                          <td>{{$val->id}}</td>
+                        <td>{{$val->id}}</td>
                           <td>{{$val->user_name}}</td>
+                          <td>{{$val->mobile}}</td>
+                          <td>{{$val->institutionname}}</td>
                           <td id="q">
                           {{$val->quens}}
                            @if($val->status == 0)
@@ -71,8 +74,10 @@
             @php
                date_default_timezone_set("Asia/Dhaka");
                $todaydate = date("Y-m-d");
-            $today_ques = DB::table('post_q')
-                       ->where('date', 'like', '%'.$todaydate.'%')
+             $today_ques = DB::table('post_q')
+                       ->join('users','users.id','=','post_q.user_id')
+                       ->select('post_q.*','users.mobile','users.institutionname')
+                       ->where('post_q.date', 'like', '%'.$todaydate.'%')
                        ->get();
           $today_count = count($today_ques);
           @endphp
@@ -95,6 +100,8 @@
                   <tr>
                      <th>ID</th>
                      <th>Name</th>
+                     <th>Mobile</th>
+                     <th>Institution Name</th>
                      <th>Question</th>
                      <th>Date</th>
                      <th>Subject</th>
@@ -107,6 +114,8 @@
                           <input type="hidden" value="{{$val->id}}" id="userId">
                           <td>{{$val->id}}</td>
                           <td>{{$val->user_name}}</td>
+                          <td>{{$val->mobile}}</td>
+                          <td>{{$val->institutionname}}</td>
                           <td id="q">
                           {{$val->quens}}
                            @if($val->status == 0)

@@ -38,6 +38,11 @@
                                                             <td>{{$val->date}}</td>
                                                             <td>
                                                                 <button type="submit" class="btn btn-danger btn-sm delete" id="s_delete{{$val->id}}" onclick="s_delete({{$val->id}})">Delete</button>
+                                                                @if ($val->status == '3')
+                                                                <button type="submit" style="margin-top:4px;" class="btn btn-warning btn-sm block" id="s_block{{$val->id}}" onclick="student_block({{$val->id}})">Unblock</button>
+                                                                @else
+                                                                <button type="submit" style="margin-top:4px;" class="btn btn-danger btn-sm block" id="s_block{{$val->id}}" onclick="student_block({{$val->id}})">Block</button>                                                             
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                       @endforeach
@@ -82,6 +87,42 @@
         });
     });
 
+  }
+
+
+  
+  function student_block(id){
+        var bclass = $("#s_block"+id).hasClass("btn-danger");
+        //alert(bclass);
+        if($("#s_block"+id).hasClass("btn-danger")){
+          $.ajax({
+            url: '<?php echo URL::to('student-block');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+            $("#s_block"+id).text('Unblock'); //versions newer than 1.6
+            $("#s_block"+id).removeClass("btn-danger");
+            $("#s_block"+id).addClass("btn-warning");
+            }
+          });
+        }else {
+          $.ajax({
+            url: '<?php echo URL::to('student-unblock');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+             $("#s_block"+id).text('Block'); //versions newer than 1.6
+             $("#s_block"+id).removeClass("btn-warning");
+             $("#s_block"+id).addClass("btn-danger");
+            }
+          });
+        }
   }
 
 </script>

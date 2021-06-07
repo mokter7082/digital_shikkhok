@@ -25,16 +25,18 @@
 	<div class="panel-body">
 	<div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-			 <table id="datatable" class="table table-striped table-bordered my_table">
+			 <table id="datatable" class="table table-striped table-bordered">
 			   <thead>
 				    <tr>
+              <th>Ques ID</th>
 				      <th>Name</th>
+              <th>Mobile Number</th>
 				      <th>Answer</th>
-                      <th>Subject</th>
-                      <th>Date</th>
-                      <th>Designation</th>
+              <th>Subject</th>
+              <th>Date</th>
+              <th>Designation</th>
 				      <th>Institute Name</th>
-                      <th>Action</th>
+              <th>Action</th>
 				    </tr>
 			   </thead>
 			   <tbody>
@@ -48,8 +50,11 @@
           ?>
           <tr>
              <input type="hidden" id="a_id" name=""  value="{{$value->id}}">
+             <td>{{$value->post_id}}</td>
               <td>{{$value->user_name}}</td>
+              <td>{{$value->mobile}}</td>
               <td id = "answer_td_{{$value->id}}">{{$value->ans}}</td>
+              
               <td>{{$value->subject}}</td>
               <td>{{$value->date}}</td>
               <td>
@@ -92,7 +97,7 @@ $(document).on('click', '.edit_ans', function () {
        
 
         var data = $(this).attr("data-text");
-        var data_text = $(this).closest('tr').find('td:nth-child(3)').html();
+        var data_text = $(this).closest('tr').find('td:nth-child(5)').html();
         //console.log($(this).closest('tr').find('td:nth-child(2)').html());
         var obj = JSON.parse(data);
         

@@ -422,7 +422,7 @@
           <div class="col-md-6 col-sm-6 col-lg-3">
           <div class="mini-stat clearfix bx-shadow">
             <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
-            <a href="{{URL::to('today-reg_teacher')}}">
+            <a href="{{URL::to('today-question')}}">
             <div class="mini-stat-info text-right text-muted">
             <span class="q_count counter">{{$today_questions}}</span>
                     Total Questions

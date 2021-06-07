@@ -35,14 +35,15 @@ class AnswearController extends Controller
         "ans.date",
         "ans.institutionname"); //set column field database for datatable searchable
 
-    $order = array("ans.id" => 'desc');
+    $order = array("ans.id" => 'asc');
 
     $recordsTotal = DB::table('ans')
             //->where('users.isTeacher',1)
             ->count();
    
     $list = DB::table('ans')
-            ->join('users','users.id','ans.user_id');
+            ->join('users','users.id','ans.user_id')
+            ->select('ans.*','users.name as user_name','users.type');
 
 
     //echo $list->toSql(); exit;
@@ -90,7 +91,8 @@ class AnswearController extends Controller
       foreach ($list as $value) {
         $row = array();
        
-        $row[] = ++$sl;
+       // $row[] = ++$sl;
+        $row[] = $value->post_id;
         $row[] = $value->user_name;
         $row[] = $value->ans;
         $row[] = $value->subject;
@@ -122,8 +124,10 @@ class AnswearController extends Controller
     date_default_timezone_set("Asia/Dhaka");
     $todaydate = date("Y-m-d");
     $today_ans =  DB::table('ans')
-                    ->where('date', 'like', '%'.$todaydate.'%')
-                    ->get();
+                  ->join('users','users.id','ans.user_id')
+                  ->select('ans.*','users.*')
+                  ->where('ans.date', 'like', '%' . $todaydate. '%')
+                  ->get();
 
      return view('pages.today-answear',compact('today_ans'));
  }
@@ -558,17 +562,18 @@ class AnswearController extends Controller
 
     $start_date = $custom_year.'-'.$custom_month.'-'.'01';
     $end_date = $custom_year.'-'.$custom_month.'-'.date('t');
-    $datewise_ans = DB::select("SELECT ans.*, users.type FROM `ans` INNER JOIN users ON users.id = ans.user_id  WHERE ans.date BETWEEN '$start_date' 
+    $datewise_ans = DB::select("SELECT ans.*, users.type,users.mobile FROM `ans` INNER JOIN users ON users.id = ans.user_id  WHERE ans.date BETWEEN '$start_date' 
     AND '$end_date'");
     //dd($datewise_ans);
     return view('pages.datewise-answer',compact('datewise_ans'));
   }
   public function answerSearch(Request $request){
-      $start_date = $request->start_date;
-      $end_date = $request->end_date;
-      $datewise_ans = DB::select("SELECT ans.*, users.type FROM `ans` INNER JOIN users ON users.id = ans.user_id  WHERE ans.date BETWEEN '$start_date' 
-    AND '$end_date'");
-    //dd($datewise_ans);
+      $s_date = $request->start_date;
+      $e_date = $request->end_date;
+     
+      $datewise_ans = DB::select("SELECT ans.*, users.type,users.mobile FROM `ans` INNER JOIN users ON users.id = ans.user_id  WHERE ans.date BETWEEN '$s_date' 
+    AND '$e_date'");
+  // dd($datewise_ans);
     return view('pages.datewise-answer',compact('datewise_ans'));
   }
   public function answerUpdate(Request $request){
@@ -583,6 +588,28 @@ class AnswearController extends Controller
           "status"=>200
         ]);
   }
+  public function ansheroBlock(Request $req){
+    $id = $req->input('id');
+    //dd($id);
+   DB::table('users')
+    ->where('id',$id)
+    ->update(['status' => '3']);
+    return response()->json([
+      "message"=>"teacher status update 3 success"
+      ]);     
+}
+ public function ansheroUnblock(Request $req){
+    $id = $req->input('id');
+    //dd($id);
+   DB::table('users')
+    ->where('id',$id)
+    ->update(['status' => '1']);
+
+    return response()->json([
+      "message"=>"teacher status update 1 success"
+      ]);    
+
+}
 
  
 
