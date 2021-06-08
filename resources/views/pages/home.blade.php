@@ -272,7 +272,7 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
               <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
-              <a href="{{URL::to('all-answer_hero')}}">
+              <a href="{{URL::to('today-answer_hero')}}">
                       <div class="mini-stat-info text-right text-muted">
                       <span class="anshero_count counter">{{$anshero}}</span>
                        Answer Hero
@@ -447,7 +447,7 @@
           <div class="col-md-6 col-sm-6 col-lg-3">
           <div class="mini-stat clearfix bx-shadow">
             <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
-            <a href="{{URL::to('today-reg_teacher')}}">
+            <a href="{{URL::to('today-answear')}}">
             <div class="mini-stat-info text-right text-muted">
             <span class="a_count counter">{{$today_answer}}</span>
                     Total Answer
@@ -461,6 +461,56 @@
     </div>
     </div>
       
+
+    @php
+        ini_set('memory_limit', '-1');
+        date_default_timezone_set("Asia/Dhaka");
+        $todaydate = date("Y-m-d");
+        $today_teacher_count = DB::select("SELECT * FROM users WHERE users.type=1 AND users.date  LIKE '%$todaydate%'");
+        $teacher_count = count($today_teacher_count);
+   @endphp
+     
+    <div class="row">
+          <div class="col-md-6 col-sm-6 col-lg-3">
+          <div class="mini-stat clearfix bx-shadow">
+            <span class="mini-stat-icon bg-info"><i class="fa fa-users"></i></span>
+            <a href="{{URL::to('today-reg_teacher')}}">
+            <div class="mini-stat-info text-right text-muted">
+            <span class="t_count counter">{{$teacher_count}}</span>
+                    Teachers
+                    </div>
+                    </a>
+                    <div class="tiles-progress">
+            <div class="m-t-20">
+            <h5 class="text-uppercase">Teachers<span class="pull-right t_count">{{$teacher_count}}</span></h5>
+            </div>
+            </div>
+    </div>
+    </div>
+
+ 
+      @php
+       $anshero = DB::select("SELECT * FROM users WHERE users.type=3 AND users.date  LIKE '%$todaydate%'");
+       $anshero = count($anshero);
+       @endphp
+       <div class="row">
+      <div class="col-md-6 col-sm-6 col-lg-3">
+      <div class="mini-stat clearfix bx-shadow">
+              <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
+              <a href="{{URL::to('today-answer_hero')}}">
+                      <div class="mini-stat-info text-right text-muted">
+                      <span class="anshero_count counter">{{$anshero}}</span>
+                       Answer Hero
+                      </div>
+                      </a>
+                      <div class="tiles-progress">
+              <div class="m-t-20">
+              <h5 class="text-uppercase">Answer Hero <span class="anshero_count pull-right">{{$anshero}}</span></h5>
+              </div>
+              </div>
+      </div>
+      </div>
+      </div>
       @else
       @endif
       </div> <!-- container -->

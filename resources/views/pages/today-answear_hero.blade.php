@@ -26,11 +26,12 @@
                                                   <th>Mobile</th>
                                                   <th>Institute Name</th>
                                                   <th>Subject</th>
+                                                 
                                               </tr>
                                           </thead>
                                                   <tbody>
-                                                    @foreach($today_register as $val)
-                                                           <tr id = "tr-{{$val->id}}">
+                                                    @foreach($today_regi_anshero as $val)
+                                                         <tr id = "tr-{{$val->id}}">
                                                             <td>{{$val->id}}</td>
                                                             <td>{{$val->name}}</td>
                                                             <td>{{$val->email}}</td>
@@ -45,9 +46,8 @@
                                           </div>
                                       </div>
                                   </div>
-
-                                  @elseif($teacher == '4')
-                                  <div class="panel-body">
+                         @elseif($teacher == '4')
+                         <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
                                         <table id="datatable" class="table table-striped table-bordered">
@@ -63,7 +63,7 @@
                                               </tr>
                                           </thead>
                                                   <tbody>
-                                                    @foreach($today_register as $val)
+                                                    @foreach($today_regi_anshero as $val)
                                                            <tr id = "tr-{{$val->id}}">
                                                             <td>{{$val->id}}</td>
                                                             <td>{{$val->name}}</td>
@@ -100,8 +100,8 @@
                                           </div>
                                       </div>
                                   </div>
-                                  @else
-                                  @endif
+                         @else
+                         @endif
                               </div>
                           </div>
 

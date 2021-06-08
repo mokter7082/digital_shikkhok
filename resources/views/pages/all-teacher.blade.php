@@ -225,6 +225,58 @@
                                   </div>
                               </div>
                           </div>
+                    @elseif($teacher == '6')
+                    <div class="col-md-12">
+                              <div class="panel panel-default">
+                                  <div class="panel-heading">
+                                      <h3 class="panel-title">All Teachers</h3>
+                                  </div>
+                                @php
+                                   $all_teacher = DB::table('users')
+                                              ->where('type',1)  
+                                              ->get();
+                                              
+                                            
+                                @endphp
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
+                                        <table id="datatable" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                  <th>ID</th>
+                                                  <th>Name</th>
+                                                  <th>Email</th>
+                                                  <th>Date</th>
+                                                  <th>Mobile</th>
+                                                  <th>Institution Name</th>
+                                                  <th>Ans Count</th>
+                                              </tr>
+                                          </thead>
+                                        <tbody>
+                                          @foreach($all_teacher as $val)
+                                              <tr id = "tr-{{$val->id}}">
+                                                 <td>{{$val->id}}</td>
+                                                  <td>{{$val->name}}</td>
+                                                  <td>{{$val->email}}</td>
+                                                  @php
+                                                        $d = $val->date;
+                                                        $date =  date("Y-m-d",strtotime($d));
+                                                  @endphp
+                                                  <td>{{$date}}</td>
+                                                  <td>{{$val->mobile}}</td>
+                                                  <td>{{$val->institutionname}}</td>
+                                                  <td>{{isset($a_q[$val->id])?$a_q[$val->id]:0}}</td>  
+                                              </tr>
+                                            @endforeach
+                                        </tbody>
+                                       </table>
+
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
                     @else
                     @endif
 

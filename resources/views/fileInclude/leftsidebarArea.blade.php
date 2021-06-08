@@ -139,12 +139,15 @@
                     <li><a href="{{route('monthly-answer')}}">Monthly Answer (C)</a></li>
                 </ul>
             </li>
-              <li class="has_sub">
+
+            <li class="has_sub">
                 <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Answer Hero</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
+                    <li><a href="{{route('today-answer_hero')}}">Today Answer Hero</a></li>
                     <li><a href="{{route('all-answer_hero')}}">All Answer Hero</a></li>
                 </ul>
             </li>
+
               <li class="has_sub">
                 <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Ques & Ans</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
@@ -197,6 +200,20 @@
                     <li><a href="{{route('last_week-answer')}}">Last Week Answer</a></li>
                     <li><a href="{{route('daily-answer')}}">Daily Answer</a></li>
                     <li><a href="{{route('monthly-answer')}}">Monthly Answer</a></li>
+                </ul>
+            </li>
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="fa fa-user"></i><span>Teacher</span><span class="pull-right"><i class="md md-add"></i></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{route('all-teacher')}}">All Teaches</a></li>
+                    <li><a href="{{route('today-reg_teacher')}}">Today Register Teacher</a></li>
+                </ul>
+            </li>
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Answer Hero</span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{route('today-answer_hero')}}">Today Answer Hero</a></li>
+                    <li><a href="{{route('all-answer_hero')}}">All Answer Hero</a></li>
                 </ul>
             </li>
             @else

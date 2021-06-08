@@ -553,7 +553,19 @@ class AnswearController extends Controller
     //dd($all_ans_hero);
     return view('pages.all-answear_hero',compact('all_ans_hero'));
   }
+  public function todayAnswer_hero(){
+    date_default_timezone_set("Asia/Dhaka");
+    $todaydate = date("Y-m-d");
+    $today_regi_anshero =  DB::table('users')
+          ->where('date', 'like', '%' . $todaydate . '%')
+          ->where('type',3)
+          ->get();
+          //dd($today_regi_anshero);
+    return view('pages.today-answear_hero',compact('today_regi_anshero'));
+  }
   public function datewiseAnswer(){
+    ini_set('memory_limit', '-1');
+    ini_set('max_execution_time', '0');
     $custom_date = date('Y-m-d');
     $custom_date = explode('-',$custom_date);
     $custom_year = $custom_date[0];

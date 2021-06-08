@@ -100,6 +100,7 @@ Route::post('monthly-decrement',[AnswearController::class,'monthlyDecrement'])->
 Route::post('monthly_answer_data',[AnswearController::class,'monthlyAnswerData'])->name('monthly_answer_data');
 Route::post('save',[AnswearController::class,'Save'])->name('save');
 Route::get('/all-answer_hero',[AnswearController::class,'allAnswer_hero'])->name('all-answer_hero');
+Route::get('/today-answer_hero',[AnswearController::class,'todayAnswer_hero'])->name('today-answer_hero');
 Route::get('/datewise-answer',[AnswearController::class,'datewiseAnswer'])->name('datewise-answer');
 Route::post('/answer-search',[AnswearController::class,'answerSearch'])->name('answer-search');
 Route::post('/answer-update',[AnswearController::class,'answerUpdate'])->name('answer-update');

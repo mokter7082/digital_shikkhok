@@ -9,7 +9,11 @@
                               	  <div class="panel-heading">
                                       <h3 class="panel-title">All Answer Hero</h3>
                                   </div>
-    
+                   
+                          @php
+                          $teacher = Session::get('type')  
+                          @endphp
+                          @if($teacher == '4') 
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
@@ -61,6 +65,39 @@
                                           </div>
                                       </div>
                                   </div>
+
+                          @elseif($teacher == '6') 
+                          <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
+                                        <table id="datatable" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                 <th>ID</th>
+                                                  <th>Name</th>
+                                                  <th>Email</th>
+                                                  <th>Mobile</th>
+                                                  <th>Institution Name</th>
+                                              </tr>
+                                          </thead>
+                                                  <tbody>
+                                                   @foreach($all_ans_hero as $val)
+                                                 <tr id = "tr-{{$val->id}}">
+                                                      <td>{{$val->id}}</td>
+                                                      <td>{{$val->name}}</td>
+                                                      <td>{{$val->email}}</td>
+                                                      <td>{{$val->mobile}}</td>
+                                                      <td>{{$val->institutionname}}</td>
+                                                 </tr>
+                                                     @endforeach
+                                                  </tbody>
+                                              </table>
+
+                                          </div>
+                                      </div>
+                                  </div>
+                          @else
+                          @endif
                               </div>
                           </div>
 
