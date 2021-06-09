@@ -580,6 +580,8 @@ class AnswearController extends Controller
     return view('pages.datewise-answer',compact('datewise_ans'));
   }
   public function answerSearch(Request $request){
+    ini_set('memory_limit', '-1');
+    ini_set('max_execution_time', '0');
       $s_date = $request->start_date;
       $e_date = $request->end_date;
      
