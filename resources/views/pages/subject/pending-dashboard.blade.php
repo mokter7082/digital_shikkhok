@@ -339,7 +339,7 @@
               <a href="{{URL::to('pending-ques')}}">
                       <div class="mini-stat-info text-right text-muted">
                       <span class="counter">{{$pending_count}}</span>
-                      Total Pending Question
+                      Total Pending 
                       </div>
                       </a>
                       <div class="tiles-progress">

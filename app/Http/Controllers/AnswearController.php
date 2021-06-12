@@ -149,6 +149,7 @@ class AnswearController extends Controller
  }
     public function Ainsert(Request $request){
           $post_id = $request->id;
+          $user_id = $request->l_user_id;
          // $post_user_id = $request->post_user_id;
          // $ans = $request->ans;
          // $user_id = $request->l_user_id;
@@ -168,11 +169,29 @@ class AnswearController extends Controller
        $data['institutionname'] = $request->institutionname ? : 0;
       // dd($data);
        $inset =DB::table('ans')->insert($data);
-
-        // $insert = DB::insert("INSERT INTO ans (post_id, post_user_id, ans, user_id, user_name, subject,date,image,institutionname) VALUES ('$post_id', '$post_user_id', '$ans','$user_id', '$user_name', '$subject','$date', '0',$institutionname)");
+             //update status
               DB::table('post_q')
              ->where('id',$post_id)
              ->update(['status' => '1']);
+             //fetch answer and count for give point 
+             $anscount = DB::select("SELECT ans.post_id,post_q.id, post_q.quens, count( ans.ans ) AS ct 
+             FROM `ans` LEFT JOIN post_q ON post_q.id = ans.post_id  WHERE ans.post_id = $request->id GROUP BY  ans.post_id,post_q.id, post_q.quens");
+      
+            //echo '<pre>';
+            //print_r($anscount);
+            //print_r($user_id);
+            //exit;
+
+           //point add teacher and answer hero
+             if((int)$anscount[0]->ct == 1){
+                DB::table('users')
+                ->where('id',$user_id)
+                ->update(['points' => DB::raw('points+3')]);
+             }else{
+                DB::table('users')
+                ->where('id',$user_id)
+                ->update(['points' => DB::raw('points+1')]);
+             }
          return response()->json('success');    
    }
 
