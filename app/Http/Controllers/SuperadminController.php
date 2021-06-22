@@ -34,7 +34,7 @@ class SuperadminController extends Controller
                Session::put('email',$result->email);
                Session::put('type',$result->type);
                Session::put('name',$result->name);
-              // Session::put('institutionname',$result->institutionname);
+               Session::put('institutionname',$result->institutionname);
                return redirect()->route('dashboard');
            }else {
                  return Redirect::back()->withErrors(['Please enter your valid number and password !']);

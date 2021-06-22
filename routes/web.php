@@ -106,7 +106,8 @@ Route::post('/answer-search',[AnswearController::class,'answerSearch'])->name('a
 Route::post('/answer-update',[AnswearController::class,'answerUpdate'])->name('answer-update');
 Route::get('/anshero-block',[AnswearController::class,'ansheroBlock'])->name('anshero-block');
 Route::get('/anshero-unblock',[AnswearController::class,'ansheroUnblock'])->name('anshero-unblock');
-
+//Flags
+Route::get('/flags-answer',[AnswearController::class,'flagsAnswer'])->name('flags-answer');
 //Leader Board routes
 Route::get('/le_all-teacher',[LeaderboardController::class,'Le_allteacher'])->name('le_all-teacher');
 Route::get('/le_all-student',[LeaderboardController::class,'Le_allstudent'])->name('le_all-student');

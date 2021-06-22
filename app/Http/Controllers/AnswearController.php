@@ -150,13 +150,7 @@ class AnswearController extends Controller
     public function Ainsert(Request $request){
           $post_id = $request->id;
           $user_id = $request->l_user_id;
-         // $post_user_id = $request->post_user_id;
-         // $ans = $request->ans;
-         // $user_id = $request->l_user_id;
-         // $user_name = $request->username;
-         // $subject = $request->subject;
-         // $date = $request->date;
-         // $institutionname = $request->institutionname;
+
        $data = array();
        $data['post_id'] = $request->id;
        $data['post_user_id'] = $request->post_user_id;
@@ -166,9 +160,10 @@ class AnswearController extends Controller
        $data['subject'] = $request->subject;
        $data['date'] = $request->date;
        $data['image'] = '0';
-       $data['institutionname'] = $request->institutionname ? : 0;
+       $data['institutionname'] = $request->institutionname;
       // dd($data);
        $inset =DB::table('ans')->insert($data);
+       //$inset =DB::table('answers')->insert($data);
              //update status
               DB::table('post_q')
              ->where('id',$post_id)
@@ -192,6 +187,26 @@ class AnswearController extends Controller
                 ->where('id',$user_id)
                 ->update(['points' => DB::raw('points+1')]);
              }
+       //ANSWER TABLE DATA INSERT HERE  
+      
+          
+       $answercount = DB::select("SELECT answers.question_id,post_q.id, post_q.quens, count( answers.answer ) AS ct 
+        FROM `answers` LEFT JOIN post_q ON post_q.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,post_q.id, post_q.quens");
+
+       if($answercount == NULL){
+        $point='3';
+        }else{
+        $point='1';     
+      }
+     $answer_data = array();
+     $answer_data['question_id'] = $request->id;
+     $answer_data['answered_by'] = $request->l_user_id;
+     $answer_data['answer'] = $request->ans;
+     $answer_data['file_url'] = '0';
+     $answer_data['points'] = $point;
+     $answer_data['flags'] = '0';
+     $answer_data['quality'] = '0';
+     DB::table('answers')->insert($answer_data);
          return response()->json('success');    
    }
 
@@ -641,7 +656,10 @@ class AnswearController extends Controller
     return response()->json([
       "message"=>"teacher status update 1 success"
       ]);    
-
+}
+public function flagsAnswer(){
+  $flags_answer = DB::select("SELECT id, answer FROM answers WHERE flags>0");
+  return view('pages.flags_answer',compact('flags_answer'));
 }
 
  

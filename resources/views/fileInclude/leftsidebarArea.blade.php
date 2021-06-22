@@ -171,13 +171,18 @@
                     <li><a href="{{route('agriculture')}}">Agriculture</a></li> 
                     <li><a href="{{route('islam')}}">Islam</a></li>         
                 </ul>
-            </li>
-            <li class="has_sub">
+            </li><li class="has_sub">
                 <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Leader board</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{route('le_all-teacher')}}">Teacher</a></li>
                     <li><a href="{{route('le_all-student')}}">Student</a></li>
                     <li><a href="{{route('le_all-anshero')}}">Answer Hero</a></li>
+                </ul>
+            </li>
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Flags</span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{route('flags-answer')}}">Flags Answer</a></li>
                 </ul>
             </li>
             @elseif($teacher == '5')

@@ -20,22 +20,13 @@
 <h3 class="panel-title">Total Pending Question ={{$pending_count}} </h3>
 </div>
       
-          <?php  
-          $l_user_id = Session::get('user_id');
-          $ins = DB::table('users')
-                  ->join('institutes','institutes.user_id','=','users.id')
-                  ->join('teachers','teachers.institute_id','=','institutes.id')
-                  ->select('institutes.institute_name')
-                  ->where('users.id',$l_user_id)            
-                  ->first();  
-                 // dd($ins);                    
+                 <?php                           
                      $l_user_id = Session::get('user_id');
-                    // $ins_name Session::get('institutionname');
+                     $institutionname = Session::get('institutionname');
                      $username = Session::get('name');
-                     $institutionname = @$ins->institute_name;
                      date_default_timezone_set("Asia/Dhaka");
                       $todaydate = date("Y-m-d");
-              ?>
+                 ?>
  <div class="panel-body">
       <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
