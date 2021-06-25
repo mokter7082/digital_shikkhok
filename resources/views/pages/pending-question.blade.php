@@ -16,13 +16,13 @@
                            ->get();
            $pending_count = count($count_pen_ques);
            $l_user_id = Session::get('user_id');
-@endphp
+         @endphp
 <h3 class="panel-title">Total Pending Question ={{$pending_count}} </h3>
 </div>
       
                  <?php                           
                      $l_user_id = Session::get('user_id');
-                     $institutionname = Session::get('institutionname');
+                    $institutionname = Session::get('institutionname');
                      $username = Session::get('name');
                      date_default_timezone_set("Asia/Dhaka");
                       $todaydate = date("Y-m-d");
@@ -42,7 +42,7 @@
             </thead>
                     <tbody>
                       @foreach($pending_ques as $val)
-                        <tr id = "tr-{{$val->id}}">
+                        <tr id="rowid_{{$val->id}}" data-id="{{$val->id}}">
                           <input type="hidden" value="{{$val->id}}" id="userId">
                           <td>{{$val->id}}</td>
                           <td id="q">
@@ -64,17 +64,19 @@
                           <td>{{$val->date}}</td>
                           <td>{{$val->subject}}</td>
                           <td>
-                           
-                            <input type="hidden" name="id" id="id_{{$val->id}}" value="{{$val->id}}">
+                          <form method="post" class="sub" enctype="multipart/form-data">
+                           @csrf
+                            <input type="hidden" class="id_i" name="id" value="{{$val->id}}">
                             <input type="hidden" name="post_user_id" id="post_user_id_{{$val->id}}" value="{{$val->user_id}}">
-                            <textarea name="ans" id="ans_{{$val->id}}" rows="3" cols="30" placeholder="Write Answer Here" required></textarea>
+                            <textarea class="form-control" name="ans" id="ans_{{$val->id}}" rows="3" cols="30" placeholder="Write Answer Here" required></textarea>
+                            <input name="image" type="file" id="image_{{$val->id}}" />
                             <input type="hidden" name="user_id" id="l_user_id_{{$val->id}}" value="{{$l_user_id}}">
                             <input type="hidden" name="username" id="username_{{$val->id}}" value="{{$username }}">
                             <input type="hidden" name="subject" id="subject_{{$val->id}}" value="{{$val->subject}}">
                             <input type="hidden" name="date" id="date_{{$val->id}}" value="{{$todaydate}}">
                             <input type="hidden" name="institutionname" id="institutionname_{{$val->id}}" value="{{$institutionname}}">
-                            <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val->id}})" type="button">submit</button>
-                           
+                            <button style="margin-top:2px; border-radius:10px;" type="submit" class="btn btn-sm btn-success">Submit</button>
+                            </form>
                           </td>
                         </tr>
                         @endforeach
@@ -91,7 +93,7 @@
 
 </div> <!-- container -->
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 <script type="text/javascript">
   
 
@@ -119,64 +121,70 @@
     });
     })
 
-   function myFunction(id){
-    //var id = $("#post_user_id_"+id).val();
-     var post_user_id = $("#post_user_id_"+id).val();
-     var ans = $("#ans_"+id).val();
-      var l_user_id = $("#l_user_id_"+id).val();
-      var username = $("#username_"+id).val();
-      var subject = $("#subject_"+id).val();
-      var date = $("#date_"+id).val();
-      var institutionname = $("#institutionname_"+id).val();
-
-        $.ajax({
-        url: "{{url('a_insert')}}",
-        type: "POST",
-        dataType: "json",
-        data:{
-             "id":id,
-             "post_user_id":post_user_id,
-             "ans":ans,
-             "l_user_id":l_user_id,
-             "username":username,
-             "subject":subject,
-             "date":date,
-             "institutionname":institutionname,
-             "_token": "{{ csrf_token() }}"
+$('.sub').submit(function(e) {
+       e.preventDefault();
+       var id = $(this).parents('tr').find('#userId').val();
+         //alert(id); return;
+       let formData = new FormData(this);
+       $.ajax({
+          type:'POST',
+          url: '{{url('a_insert')}}',
+           data: formData,
+           contentType: false,
+           processData: false,
+           success:function(data){
+             console.log(data);
+             if(data.data===true) {
+              $("#rowid_"+id).hide();
+            }else if(data.data===null){
+              $("#rowid_"+id).hide();
+            }
              
         },
-        success:function(response){
-            console.log(response);
-             $("#tr-"+id).hide();
-             
-        }
-      })
-    }
+       });
+  });
 
-  $(document).ready(function(){  
-           $('#search').keyup(function(){  
-                search_table($(this).val());  
-           });  
-           function search_table(value){  
-                $('#value_serch tr').each(function(){  
-                     var found = 'false';  
-                     $(this).each(function(){  
-                          if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)  
-                          {  
-                               found = 'true';  
-                          }  
-                     });  
-                     if(found == 'true')  
-                     {  
-                          $(this).show();  
-                     }  
-                     else  
-                     {  
-                          $(this).hide();  
-                     }  
-                });  
-           }  
-      });  
+// function AjaxPost(formData) {
+
+//       var id = $(".id_").val();
+//          alert(id);return;
+//         var ajaxConfig = {
+//             type: "POST",
+//             url: "a_insert",
+//             data: new FormData(formData),
+//             success: function (result) {
+//                 $("#tr_"+id).hide();
+                
+//             }
+//         }
+//         if ($(formData).attr('enctype') == "multipart/form-data") {
+//             ajaxConfig["contentType"] = false;
+//             ajaxConfig["processData"] = false;
+//         }
+//         $.ajax(ajaxConfig);
+//         return false;
+//     }
+
+  function answerSubmit(id){
+      //alert(id);
+    var formData = new FormData(this);
+       alert(formData);
+       $.ajax({
+          type:'POST',
+          url: '{{url('a_insert')}}',
+           data: formData,
+           contentType: false,
+           processData: false,
+           success:function(response){
+            var q_id = $(response.post_id).val();
+              //  $(response.post_id).remove();
+              alert(q_id);
+                
+             
+        },
+       });
+  }
+
 
 
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class AnswearController extends Controller
 {
@@ -148,56 +149,99 @@ class AnswearController extends Controller
             return response()->json('someone answering success');
  }
     public function Ainsert(Request $request){
-          $post_id = $request->id;
-          $user_id = $request->l_user_id;
+      $post_id = $request->id;
+      $user_id = $request->user_id;
+ 
+       $image  = $request->file('image');
+      //dd($data);
+      if($image){
+        $data = array();
+        $data['post_id'] = $request->id;
+        $data['post_user_id'] = $request->post_user_id;
+        $data['ans'] = $request->ans;
+        $data['user_id'] = $user_id;
+        $data['user_name'] = $request->username;
+        $data['subject'] = $request->subject;
+        $data['date'] = $request->date;
+        $data['institutionname'] = $request->institutionname;
+        
+        $image_name = Str::random(20);
+        $ext = strtolower($image->getClientOriginalExtension());
+        $image_fullname = $image_name.'.'.$ext;
+        $upload_path ='sub_images';
+        $image_url = $upload_path.$image_fullname;
+        $success = $image->move($upload_path,$image_fullname);
+        if($success){
+            $data['image']=$image_fullname;
+         $insert = DB::table('ans')->insert($data);
+         
+        $anscount = DB::select("SELECT ans.post_id,post_q.id, post_q.quens, count( ans.ans ) AS ct 
+      FROM `ans` LEFT JOIN post_q ON post_q.id = ans.post_id  WHERE ans.post_id = $request->id GROUP BY  ans.post_id,post_q.id, post_q.quens");
+         if((int)$anscount[0]->ct == 1){
+          DB::table('users')
+          ->where('id',$user_id)
+          ->update(['points' => DB::raw('points+3')]);
+       }else{
+          DB::table('users')
+          ->where('id',$user_id)
+          ->update(['points' => DB::raw('points+1')]);
+       }
+  
 
-       $data = array();
-       $data['post_id'] = $request->id;
-       $data['post_user_id'] = $request->post_user_id;
-       $data['ans'] = $request->ans;
-       $data['user_id'] = $request->l_user_id;
-       $data['user_name'] = $request->username;
-       $data['subject'] = $request->subject;
-       $data['date'] = $request->date;
-       $data['image'] = '0';
-       $data['institutionname'] = $request->institutionname;
-      // dd($data);
-       $inset =DB::table('ans')->insert($data);
-       //$inset =DB::table('answers')->insert($data);
-             //update status
-              DB::table('post_q')
-             ->where('id',$post_id)
-             ->update(['status' => '1']);
-             //fetch answer and count for give point 
-             $anscount = DB::select("SELECT ans.post_id,post_q.id, post_q.quens, count( ans.ans ) AS ct 
-             FROM `ans` LEFT JOIN post_q ON post_q.id = ans.post_id  WHERE ans.post_id = $request->id GROUP BY  ans.post_id,post_q.id, post_q.quens");
-      
-            //echo '<pre>';
-            //print_r($anscount);
-            //print_r($user_id);
-            //exit;
-
-           //point add teacher and answer hero
-             if((int)$anscount[0]->ct == 1){
-                DB::table('users')
-                ->where('id',$user_id)
-                ->update(['points' => DB::raw('points+3')]);
-             }else{
-                DB::table('users')
-                ->where('id',$user_id)
-                ->update(['points' => DB::raw('points+1')]);
-             }
-       //ANSWER TABLE DATA INSERT HERE  
-      
-          
-       $answercount = DB::select("SELECT answers.question_id,post_q.id, post_q.quens, count( answers.answer ) AS ct 
+        $answercount = DB::select("SELECT answers.question_id,post_q.id, post_q.quens, count( answers.answer ) AS ct 
         FROM `answers` LEFT JOIN post_q ON post_q.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,post_q.id, post_q.quens");
 
-       if($answercount == NULL){
-        $point='3';
-        }else{
-        $point='1';     
+          if($answercount == NULL){
+            $point='3';
+            }else{
+            $point='1';     
+          }
+         $answer_data = array();
+         $answer_data['question_id'] = $request->id;
+         $answer_data['answered_by'] = $request->post_user_id;
+         $answer_data['answer'] = $request->ans;
+         $answer_data['file_url'] = $image_fullname;
+         $answer_data['points'] = $point;
+         $answer_data['flags'] = '0';
+         $answer_data['quality'] = '0';
+         $insert = DB::table('answers')->insert($answer_data);
+      }else{
+          //ELSE IS BLANK
       }
+
+      
+
+     //echo '<pre>';
+     //print_r($anscount);
+     //print_r($user_id);
+     //exit;
+
+    //point add teacher and answer hero
+
+     // return response()->json('testing');
+
+   }else{
+    $data = array();
+    $data['post_id'] = $request->id;
+    $data['post_user_id'] = $request->post_user_id;
+    $data['ans'] = $request->ans;
+    $data['user_id'] = $user_id;
+    $data['user_name'] = $request->username;
+    $data['subject'] = $request->subject;
+    $data['date'] = $request->date;
+    $data['image'] = '0';
+    $data['institutionname'] = $request->institutionname;
+
+    $insert = DB::table('ans')->insert($data);
+     
+    $answercount = DB::select("SELECT answers.question_id,post_q.id, post_q.quens, count( answers.answer ) AS ct 
+        FROM `answers` LEFT JOIN post_q ON post_q.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,post_q.id, post_q.quens");
+
+        if($answercount == NULL){
+          $point='3';
+          }else{
+          $point='1';     
+        }
      $answer_data = array();
      $answer_data['question_id'] = $request->id;
      $answer_data['answered_by'] = $request->l_user_id;
@@ -207,7 +251,45 @@ class AnswearController extends Controller
      $answer_data['flags'] = '0';
      $answer_data['quality'] = '0';
      DB::table('answers')->insert($answer_data);
-         return response()->json('success');    
+
+   }
+
+   DB::table('post_q')
+   ->where('id',$post_id)
+   ->update(['status' => '1']);
+   //fetch answer and count for give point 
+   
+       
+       
+     
+      
+       
+       
+            
+    //    //ANSWER TABLE DATA INSERT HERE  
+      
+          
+    //    $answercount = DB::select("SELECT answers.question_id,post_q.id, post_q.quens, count( answers.answer ) AS ct 
+    //     FROM `answers` LEFT JOIN post_q ON post_q.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,post_q.id, post_q.quens");
+
+    //    if($answercount == NULL){
+    //     $point='3';
+    //     }else{
+    //     $point='1';     
+    //   }
+    //  $answer_data = array();
+    //  $answer_data['question_id'] = $request->id;
+    //  $answer_data['answered_by'] = $request->l_user_id;
+    //  $answer_data['answer'] = $request->ans;
+    //  $answer_data['file_url'] = '0';
+    //  $answer_data['points'] = $point;
+    //  $answer_data['flags'] = '0';
+    //  $answer_data['quality'] = '0';
+    //  DB::table('answers')->insert($answer_data);
+    return response()->json([
+      'data' => @$insert,
+      
+    ]);    
    }
 
  public function lastweekAnswer(){
