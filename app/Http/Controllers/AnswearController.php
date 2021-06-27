@@ -209,16 +209,6 @@ class AnswearController extends Controller
           //ELSE IS BLANK
       }
 
-      
-
-     //echo '<pre>';
-     //print_r($anscount);
-     //print_r($user_id);
-     //exit;
-
-    //point add teacher and answer hero
-
-     // return response()->json('testing');
 
    }else{
     $data = array();
@@ -257,35 +247,9 @@ class AnswearController extends Controller
    DB::table('post_q')
    ->where('id',$post_id)
    ->update(['status' => '1']);
-   //fetch answer and count for give point 
-   
-       
-       
-     
-      
-       
-       
-            
-    //    //ANSWER TABLE DATA INSERT HERE  
-      
-          
-    //    $answercount = DB::select("SELECT answers.question_id,post_q.id, post_q.quens, count( answers.answer ) AS ct 
-    //     FROM `answers` LEFT JOIN post_q ON post_q.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,post_q.id, post_q.quens");
 
-    //    if($answercount == NULL){
-    //     $point='3';
-    //     }else{
-    //     $point='1';     
-    //   }
-    //  $answer_data = array();
-    //  $answer_data['question_id'] = $request->id;
-    //  $answer_data['answered_by'] = $request->l_user_id;
-    //  $answer_data['answer'] = $request->ans;
-    //  $answer_data['file_url'] = '0';
-    //  $answer_data['points'] = $point;
-    //  $answer_data['flags'] = '0';
-    //  $answer_data['quality'] = '0';
-    //  DB::table('answers')->insert($answer_data);
+   
+          
     return response()->json([
       'data' => @$insert,
       

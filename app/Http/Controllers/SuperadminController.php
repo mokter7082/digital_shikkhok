@@ -27,15 +27,18 @@ class SuperadminController extends Controller
                  ->where('mobile',$mobile)
                  ->where('pass',$password)
                  ->first();
-
-                 //dd($result);
-          if($result){
-               Session::put('user_id',$result->id);
-               Session::put('email',$result->email);
-               Session::put('type',$result->type);
-               Session::put('name',$result->name);
-               Session::put('institutionname',$result->institutionname);
-               return redirect()->route('dashboard');
+          if($result){ 
+              if($result->status == 3){
+                return Redirect::back()->withErrors(['ডিজিটাল শিক্ষক ব্যাবহারের শর্তাবলী ভঙ্গ করার কারণে আপনাকে ব্লক করা হয়েছে !']);
+              }else{
+                Session::put('user_id',$result->id);
+                Session::put('email',$result->email);
+                Session::put('type',$result->type);
+                Session::put('name',$result->name);
+                Session::put('institutionname',$result->institutionname);
+                Session::put('status',$result->status);
+                return redirect()->route('dashboard');
+              } 
            }else {
                  return Redirect::back()->withErrors(['Please enter your valid number and password !']);
             }
