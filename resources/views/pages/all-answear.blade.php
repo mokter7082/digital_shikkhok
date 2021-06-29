@@ -99,6 +99,7 @@
                                                 <tr>
                                                     <th>Ques ID</th>
                                                     <th>User Name</th>
+                                                    <th>Mobile</th>
                                                     <th>Answear</th>
                                                     <th>Subject</th>
                                                     <th>Date</th>

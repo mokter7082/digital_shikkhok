@@ -24,6 +24,7 @@ class AnswearController extends Controller
     $column_order = array(
         "ans.id",
         "ans.user_name",
+        "users.mobile",
         "ans.ans",
         "ans.subject",
         "ans.date",
@@ -31,6 +32,7 @@ class AnswearController extends Controller
 
     $column_search = array(
         "ans.user_name",
+        "users.mobile",
         "ans.ans",
         "ans.subject",
         "ans.date",
@@ -44,7 +46,7 @@ class AnswearController extends Controller
    
     $list = DB::table('ans')
             ->join('users','users.id','ans.user_id')
-            ->select('ans.*','users.name as user_name','users.type');
+            ->select('ans.*','users.name as user_name','users.mobile','users.type');
 
 
     //echo $list->toSql(); exit;
@@ -95,6 +97,7 @@ class AnswearController extends Controller
        // $row[] = ++$sl;
         $row[] = $value->post_id;
         $row[] = $value->user_name;
+        $row[] = $value->mobile;
         $row[] = $value->ans;
         $row[] = $value->subject;
         $row[] = $value->date;

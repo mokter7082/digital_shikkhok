@@ -18,6 +18,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Mobile Number</th>
                                 <th>Point</th>
                                 <th>Action</th>
                     
@@ -28,6 +29,7 @@
                                 @foreach($all_anshero as $val)
                                     <td>{{$val->id}}</td>
                                     <td>{{$val->name}}</td>
+                                    <td>{{$val->mobile}}</td>
                                     <td>
                                       <div class="form-group col-xs-6">
                                       <div class="row">

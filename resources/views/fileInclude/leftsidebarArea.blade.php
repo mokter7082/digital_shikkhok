@@ -149,13 +149,13 @@
             </li>
 
               <li class="has_sub">
-                <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Ques & Ans</span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                <a href="#" class="waves-effect"><i class="fa fa-question"></i> <span>Ques & Ans</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{route('ques-ans')}}">List</a></li>          
                 </ul>
             </li>
             <li class="has_sub">
-                <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Subject wise Ques</span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                <a href="#" class="waves-effect"><i class="fa fa-question"></i> <span>Subject wise Ques</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{route('pending-dashboard')}}">Dashboard</a></li>
                     <li><a href="{{route('bangla')}}">Bangla</a></li>  
@@ -172,7 +172,7 @@
                     <li><a href="{{route('islam')}}">Islam</a></li>         
                 </ul>
             </li><li class="has_sub">
-                <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Leader board</span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                <a href="#" class="waves-effect"><i class="fa fa-user"></i> <span>Leader board</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{route('le_all-teacher')}}">Teacher</a></li>
                     <li><a href="{{route('le_all-student')}}">Student</a></li>
