@@ -143,6 +143,14 @@ class AnswearController extends Controller
          return response()->json('delete success');
       
     }
+    public function answerDelete(Request $req){
+      $id = $req->input('id');
+    DB::table('answers')
+            ->where('id', $id)
+            ->delete();
+    return response()->json('delete success');
+ 
+}
 
     public function Answering($id){
          $id;

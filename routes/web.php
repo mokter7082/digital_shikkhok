@@ -83,6 +83,7 @@ Route::get('/all-answer',[AnswearController::class,'allAnswer'])->name('all-answ
 Route::post('/all_answer_data',[AnswearController::class,'allanswerDataFetch'])->name('all_answer_data');
 Route::get('/today-answear',[AnswearController::class,'todayAnswear'])->name('today-answear');
 Route::get('/ans-delete',[AnswearController::class,'ansDelete'])->name('ans-delete');
+Route::get('/answer-delete',[AnswearController::class,'answerDelete'])->name('answer-delete');
 Route::post('/a_insert',[AnswearController::class,'Ainsert'])->name('a_insert');
 Route::get('/answering/{id}',[AnswearController::class,'Answering'])->name('answering');
 Route::post('weekly-decrement',[AnswearController::class,'weeklyDecrement'])->name('weekly-decrement');
