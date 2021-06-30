@@ -63,6 +63,8 @@ Route::get('/student-unblock',[StudentController::class,'studentUnblock'])->name
 Route::get('/all-question',[QuestionController::class,'allQuestion'])->name('all-question');
 Route::post('/all_ques_data',[QuestionController::class,'allQuesData'])->name('all_ques_data');
 Route::get('/today-question',[QuestionController::class,'todayQuestion'])->name('today-question');
+Route::get('/custom-question',[QuestionController::class,'customQuestion'])->name('custom-question');
+Route::post('/date-custom_ques',[QuestionController::class,'dateCustom'])->name('date-custom_ques');
 Route::get('/ques-approve',[QuestionController::class,'quesApprove'])->name('ques-approve');
 Route::get('/ques-disapprove',[QuestionController::class,'quesDisapprove'])->name('ques-disapprove');
 Route::get('/ques-delete',[QuestionController::class,'quesDelete'])->name('ques-delete');
@@ -82,6 +84,8 @@ Route::get('/multi-answered_ques',[QuestionController::class,'multiAnswered_ques
 Route::get('/all-answer',[AnswearController::class,'allAnswer'])->name('all-answer');
 Route::post('/all_answer_data',[AnswearController::class,'allanswerDataFetch'])->name('all_answer_data');
 Route::get('/today-answear',[AnswearController::class,'todayAnswear'])->name('today-answear');
+Route::get('/custom-answear',[AnswearController::class,'customAnswear'])->name('custom-answear');
+Route::post('/date-custom_answer',[AnswearController::class,'dateCustom_answer'])->name('date-custom_answer');
 Route::get('/ans-delete',[AnswearController::class,'ansDelete'])->name('ans-delete');
 Route::get('/answer-delete',[AnswearController::class,'answerDelete'])->name('answer-delete');
 Route::post('/a_insert',[AnswearController::class,'Ainsert'])->name('a_insert');

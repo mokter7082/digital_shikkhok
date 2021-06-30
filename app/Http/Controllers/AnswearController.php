@@ -132,9 +132,43 @@ class AnswearController extends Controller
                   ->select('ans.*','users.*')
                   ->where('ans.date', 'like', '%' . $todaydate. '%')
                   ->get();
-
      return view('pages.today-answear',compact('today_ans'));
  }
+public function customAnswear(){
+  $custom_date = date('Y-m-d');
+  $custom_date = explode('-',$custom_date);
+  $custome_year = $custom_date[0];
+  $custome_month = $custom_date[1];
+  $custome_day = $custom_date[2];
+   //  AFTER CUSTOMIZE GET DATA
+  $start_date = $custome_year.'-'.$custome_month.'-'.'01';
+  $end_date = $custome_year.'-'.$custome_month.'-'.date('t');
+
+$monthly_answer = DB::select("SELECT post_q.id, post_q.user_name, users.mobile, ans.date, post_q.quens, ans.ans
+  FROM
+	`ans`
+	INNER JOIN post_q ON ans.post_id = post_q.id 
+	INNER JOIN users ON ans.post_user_id = users.id 
+WHERE
+	ans.date BETWEEN '$start_date' 
+	AND '$end_date'");
+return view('pages.custom-answer',compact('monthly_answer'));
+}
+public function dateCustom_answer(Request $request){
+    $start_date = $request->start_date;
+    $end_date = $request->end_date;
+    $monthly_answer = DB::select("SELECT post_q.id, post_q.user_name, users.mobile, ans.date, post_q.quens, ans.ans
+  FROM
+	`ans`
+	INNER JOIN post_q ON ans.post_id = post_q.id 
+	INNER JOIN users ON ans.post_user_id = users.id 
+WHERE
+	ans.date BETWEEN '$start_date' 
+	AND '$end_date'");
+  //dd($monthly_answer);
+ return view('pages.custom-answer',compact('monthly_answer'));
+ 
+}
   public function ansDelete(Request $req){
            $id = $req->input('id');
          DB::table('ans')

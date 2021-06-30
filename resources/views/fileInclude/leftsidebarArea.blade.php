@@ -125,6 +125,7 @@
                 <ul class="list-unstyled">
                     <li><a href="{{route('all-question')}}">All Question</a></li>
                     <li><a href="{{route('today-question')}}">Today Question</a></li>
+                    <li><a href="{{route('custom-question')}}">Custom Question</a></li>
                     <li><a href="{{route('multi-answered_ques')}}">Multi Answred Ques</a></li>
                 </ul>
             </li>
@@ -134,6 +135,7 @@
                     <li><a href="{{route('all-answer')}}">All Answer</a></li>
                     <li><a href="{{route('datewise-answer')}}">Date Wise Answer</a></li>
                     <li><a href="{{route('today-answear')}}">Today Answer (C)</a></li>
+                    <li><a href="{{route('custom-answear')}}">Custom Answer</a></li>
                     <li><a href="{{route('last_week-answer')}}">Last Week Answer (C)</a></li>
                     <li><a href="{{route('daily-answer')}}">Daily Answer (C)</a></li>
                     <li><a href="{{route('monthly-answer')}}">Monthly Answer (C)</a></li>

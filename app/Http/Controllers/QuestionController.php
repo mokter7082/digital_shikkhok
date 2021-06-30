@@ -127,6 +127,31 @@ class QuestionController extends Controller
                   ->get();
        return view('pages.today-question',compact('today_qus'));
     }
+    public function customQuestion(){
+      
+      $custom_date = date('Y-m-d');
+      $custom_date = explode('-',$custom_date);
+      $custome_year = $custom_date[0];
+      $custome_month = $custom_date[1];
+      $custome_day = $custom_date[2];
+       //  AFTER CUSTOMIZE GET DATA
+      $start_date = $custome_year.'-'.$custome_month.'-'.'01';
+      $end_date = $custome_year.'-'.$custome_month.'-'.date('t');
+      $monthly_ques = DB::select("SELECT post_q.id, post_q.user_name, users.mobile, post_q.date,post_q.quens
+    FROM
+      `post_q`
+    INNER JOIN users ON post_q.user_id = users.id	WHERE post_q.date BETWEEN '$start_date' AND '$end_date'");
+      return view('pages.custom-questions',compact('monthly_ques'));
+    }
+    public function dateCustom(Request $request){
+           $start_date  = $request->start_date;
+           $end_date = $request->end_date;
+           $monthly_ques = DB::select("SELECT post_q.id, post_q.user_name, users.mobile, post_q.date,post_q.quens
+           FROM
+             `post_q`
+           INNER JOIN users ON post_q.user_id = users.id	WHERE post_q.date BETWEEN '$start_date' AND '$end_date'");
+             return view('pages.custom-questions',compact('monthly_ques'));
+    }
      public function quesApprove(Request $req){
           $id = $req->input('id');
            DB::table('post_q')
