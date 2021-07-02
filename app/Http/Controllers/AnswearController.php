@@ -135,38 +135,124 @@ class AnswearController extends Controller
      return view('pages.today-answear',compact('today_ans'));
  }
 public function customAnswear(){
-  $custom_date = date('Y-m-d');
-  $custom_date = explode('-',$custom_date);
-  $custome_year = $custom_date[0];
-  $custome_month = $custom_date[1];
-  $custome_day = $custom_date[2];
-   //  AFTER CUSTOMIZE GET DATA
-  $start_date = $custome_year.'-'.$custome_month.'-'.'01';
-  $end_date = $custome_year.'-'.$custome_month.'-'.date('t');
 
-$monthly_answer = DB::select("SELECT post_q.id, post_q.user_name, users.mobile, ans.date, post_q.quens, ans.ans
-  FROM
-	`ans`
-	INNER JOIN post_q ON ans.post_id = post_q.id 
-	INNER JOIN users ON ans.post_user_id = users.id 
-WHERE
-	ans.date BETWEEN '$start_date' 
-	AND '$end_date'");
-return view('pages.custom-answer',compact('monthly_answer'));
+return view('pages.custom-answer');
 }
 public function dateCustom_answer(Request $request){
-    $start_date = $request->start_date;
-    $end_date = $request->end_date;
-    $monthly_answer = DB::select("SELECT post_q.id, post_q.user_name, users.mobile, ans.date, post_q.quens, ans.ans
-  FROM
-	`ans`
-	INNER JOIN post_q ON ans.post_id = post_q.id 
-	INNER JOIN users ON ans.post_user_id = users.id 
-WHERE
-	ans.date BETWEEN '$start_date' 
-	AND '$end_date'");
-  //dd($monthly_answer);
- return view('pages.custom-answer',compact('monthly_answer'));
+     $post= $request->all();
+   
+      
+      $limit = $request->input('length');
+      $start = $request->input('start');
+      $search = $request->input('search.value');
+
+      $start_date = $request->input('start_date');
+      $end_date = $request->input('end_date');
+
+      
+
+        $custom_date = date('Y-m-d');
+        $custom_date = explode('-',$custom_date);
+        $custome_year = $custom_date[0];
+        $custome_month = $custom_date[1];
+        $custome_day = $custom_date[2];
+       //  AFTER CUSTOMIZE GET DATA
+        //dd($post);
+        if($post['start_date'] && $post['end_date']){
+          //dd($post);
+          $start_date = date('Y-m-d',strtotime($post['start_date']));
+          $end_date = date('Y-m-d',strtotime($post['end_date']));
+        }else{
+          $start_date = $custome_year.'-'.$custome_month.'-'.'01';
+          $end_date = $custome_year.'-'.$custome_month.'-'.date('t');
+          //dd($start_date);
+        }
+      
+      $column_order = array(
+          "ans.id",
+          "users.name",
+          "users.mobile",
+          "ans.date",
+          "ans.subject",
+          "ans.ans",
+          "post_q.quens"); //set column field database for datatable orderable
+  
+      $column_search = array(
+          "users.name",
+          "users.mobile",
+          "ans.date",
+          "ans.subject",
+          "ans.ans",
+          "post_q.quens"); //set column field database for datatable searchable
+  
+      $order = array("post_q.id" => 'desc');
+  
+      $recordsTotal =  DB::table('post_q')
+                      ->count();  //DEAFAULT COUNT FOR DATATABLE
+     
+      $list =  DB::table('ans')
+                 ->join('users','users.id','=','ans.user_id')
+                 ->join('post_q','ans.post_id','=','post_q.id')
+                 ->select('ans.*','users.mobile','users.name','post_q.quens')
+                 ->where('ans.date','>=',$start_date)
+                 ->where('ans.date','<=',$end_date);        
+  
+      //echo $list->toSql(); exit;
+
+      if (!empty($search)) {
+        $list->where(function($query) use ($search, $column_search) {
+          $query->where("post_q.id", 'LIKE', "%{$search}%");
+          foreach ($column_search as $item) {
+            $query->orWhere($item, 'LIKE', "%{$search}%");
+          }
+        });
+      }
+  
+      $recordsFiltered = $list->count();
+  
+      $list->limit($limit);
+
+      $list->offset($start);
+      
+  
+      if (!empty($request->input('order.0.column'))) { // here order processing
+        $list->orderBy($column_order[$request->input('order.0.column')], $request->input('order.0.dir'));
+      } else {
+        $list->orderBy(key($order), $order[key($order)]);
+      }
+  
+      //echo $list->toSql(); exit;
+  
+      $list = $list->get();
+      //dd($list);
+      // generate server side datatables
+      $data = array();
+      //dd($data);
+      $sl = $start;
+      if (!empty($list)) {
+        foreach ($list as $value) {
+          $row = array();
+          $row[] = ++$sl;
+          $row[] = $value->name;
+          $row[] = $value->mobile;
+          $row[] = $value->date;
+          $row[] = $value->quens;
+          $row[] = $value->ans;
+          $data[] = $row;
+        }
+      }
+  
+      //print_r($data); exit;
+  
+      $output = array(
+          "draw" => intval($request->input('draw')),
+          "recordsTotal" => intval($recordsTotal),
+          "recordsFiltered" => intval($recordsFiltered),
+          "data" => $data
+      );
+  
+      // output to json format
+      return response()->json($output);
  
 }
   public function ansDelete(Request $req){

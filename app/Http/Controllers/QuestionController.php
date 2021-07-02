@@ -128,29 +128,119 @@ class QuestionController extends Controller
        return view('pages.today-question',compact('today_qus'));
     }
     public function customQuestion(){
-      
-      $custom_date = date('Y-m-d');
-      $custom_date = explode('-',$custom_date);
-      $custome_year = $custom_date[0];
-      $custome_month = $custom_date[1];
-      $custome_day = $custom_date[2];
-       //  AFTER CUSTOMIZE GET DATA
-      $start_date = $custome_year.'-'.$custome_month.'-'.'01';
-      $end_date = $custome_year.'-'.$custome_month.'-'.date('t');
-      $monthly_ques = DB::select("SELECT post_q.id, post_q.user_name, users.mobile, post_q.date,post_q.quens
-    FROM
-      `post_q`
-    INNER JOIN users ON post_q.user_id = users.id	WHERE post_q.date BETWEEN '$start_date' AND '$end_date'");
-      return view('pages.custom-questions',compact('monthly_ques'));
+
+      return view('pages.custom-questions');
     }
     public function dateCustom(Request $request){
-           $start_date  = $request->start_date;
-           $end_date = $request->end_date;
-           $monthly_ques = DB::select("SELECT post_q.id, post_q.user_name, users.mobile, post_q.date,post_q.quens
-           FROM
-             `post_q`
-           INNER JOIN users ON post_q.user_id = users.id	WHERE post_q.date BETWEEN '$start_date' AND '$end_date'");
-             return view('pages.custom-questions',compact('monthly_ques'));
+        $post= $request->all();
+   
+      
+      $limit = $request->input('length');
+      $start = $request->input('start');
+      $search = $request->input('search.value');
+
+      $start_date = $request->input('start_date');
+      $end_date = $request->input('end_date');
+
+      
+
+        $custom_date = date('Y-m-d');
+        $custom_date = explode('-',$custom_date);
+        $custome_year = $custom_date[0];
+        $custome_month = $custom_date[1];
+        $custome_day = $custom_date[2];
+       //  AFTER CUSTOMIZE GET DATA
+        //dd($post);
+        if($post['start_date'] && $post['end_date']){
+          //dd($post);
+          $start_date = date('Y-m-d',strtotime($post['start_date']));
+          $end_date = date('Y-m-d',strtotime($post['end_date']));
+        }else{
+          $start_date = $custome_year.'-'.$custome_month.'-'.'01';
+          $end_date = $custome_year.'-'.$custome_month.'-'.date('t');
+        }
+      
+      $column_order = array(
+          "post_q.id",
+          "post_q.user_name",
+          "users.mobile",
+          "post_q.date",
+          "post_q.subject",
+          "post_q.quens"); //set column field database for datatable orderable
+  
+      $column_search = array(
+          "post_q.user_name",
+          "users.mobile",
+          "post_q.date",
+          "post_q.subject",
+          "post_q.quens"); //set column field database for datatable searchable
+  
+      $order = array("post_q.id" => 'desc');
+  
+      $recordsTotal =  DB::table('post_q')
+                      ->count();  //DEAFAULT COUNT FOR DATATABLE
+     
+      $list =  DB::table('post_q')
+                 ->join('users','users.id','=','post_q.user_id')
+                 ->select('post_q.*','users.mobile','users.institutionname')
+                 ->where('post_q.date','>=',$start_date)
+                 ->where('post_q.date','<=',$end_date);        
+  
+     // echo $list->toSql(); exit;
+
+      if (!empty($search)) {
+        $list->where(function($query) use ($search, $column_search) {
+          $query->where("post_q.id", 'LIKE', "%{$search}%");
+          foreach ($column_search as $item) {
+            $query->orWhere($item, 'LIKE', "%{$search}%");
+          }
+        });
+      }
+  
+      $recordsFiltered = $list->count();
+  
+      $list->limit($limit);
+
+      $list->offset($start);
+      
+  
+      if (!empty($request->input('order.0.column'))) { // here order processing
+        $list->orderBy($column_order[$request->input('order.0.column')], $request->input('order.0.dir'));
+      } else {
+        $list->orderBy(key($order), $order[key($order)]);
+      }
+  
+      //echo $list->toSql(); exit;
+  
+      $list = $list->get();
+      // generate server side datatables
+      $data = array();
+      //dd($data);
+      $sl = $start;
+      if (!empty($list)) {
+        foreach ($list as $value) {
+          $row = array();
+          //$row[] = ++$sl;
+          $row[] = $value->id;
+          $row[] = $value->user_name;
+          $row[] = $value->mobile;
+          $row[] = $value->date;
+          $row[] = $value->quens;
+          $data[] = $row;
+        }
+      }
+  
+      //print_r($data); exit;
+  
+      $output = array(
+          "draw" => intval($request->input('draw')),
+          "recordsTotal" => intval($recordsTotal),
+          "recordsFiltered" => intval($recordsFiltered),
+          "data" => $data
+      );
+  
+      // output to json format
+      return response()->json($output);
     }
      public function quesApprove(Request $req){
           $id = $req->input('id');
