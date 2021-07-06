@@ -11,13 +11,9 @@
                                   </div>
 
                                   <?php 
-                                        // $custom_date = date('Y-m-d');
-                                        // $custom_date = explode('-',$custom_date);
-                                        // $custome_year = $custom_date[0];
-                                        // $custome_month = $custom_date[1];
-                                        // $custome_day = $custom_date[2];
-                                        // $final_date = $custome_year.'-'.$custome_month.'-'.'20';
-    
+                                  
+                                  ini_set('memory_limit', '-1');
+                                  ini_set('max_execution_time', '0');
 
                                           
                                     $all_s = DB::select("SELECT DISTINCT

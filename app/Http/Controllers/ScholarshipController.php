@@ -21,6 +21,8 @@ class ScholarshipController extends Controller
     	return view('pages.all-scholarship',compact('q_q'));
 	}
   public function ansheroScholarship(){
+    ini_set('memory_limit', '-1');
+  
     return view('pages.anshero-scholarship');
   }
 	 public function scholarshipVerified(Request $req){
