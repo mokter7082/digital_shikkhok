@@ -21,33 +21,35 @@ class ScholarshipController extends Controller
     	return view('pages.all-scholarship',compact('q_q'));
 	}
   public function ansheroScholarship(){
-    $ans_hero = DB::table('scolarship')
-              ->join('ans','ans.user_id','=','scolarship.user_id')
-              ->join('users','users.id','scolarship.user_id')
-              ->select('scolarship.*','users.email','ans.user_id')
-              ->groupBy('ans.user_id')
-              ->get();
-              //dd($ans_hero);
-    return view('pages.anshero-scholarship',compact('ans_hero'));
+    // $ans_hero = DB::table('scolarship')
+    //           ->join('ans','ans.user_id','=','scolarship.user_id')
+    //           ->join('users','users.id','scolarship.user_id')
+    //           ->select('scolarship.*','users.email','ans.user_id')
+    //           ->groupBy('ans.user_id')
+    //           ->get();
+    //           //dd($ans_hero);
+    return view('pages.anshero-scholarship');
   }
   public function anshero_scho_data(Request $request){
  
+      
     $limit = $request->input('length');
     $start = $request->input('start');
     $search = $request->input('search.value');
+
+
+
     
     $column_order = array(
         "scolarship.id",
         "scolarship.name",
         "scolarship.mobile",
-        "scolarship.date",
         "scolarship.ans"); //set column field database for datatable orderable
 
     $column_search = array(
       "scolarship.id",
       "scolarship.name",
       "scolarship.mobile",
-      "scolarship.date",
       "scolarship.ans"); //set column field database for datatable searchable
 
     $order = array("scolarship.id" => 'desc');
@@ -60,6 +62,10 @@ class ScholarshipController extends Controller
     ->join('users','users.id','scolarship.user_id')
     ->select('scolarship.*','users.email','ans.user_id')
     ->groupBy('ans.user_id');
+  
+  
+       
+             
 
     //echo $list->toSql(); exit;
 
@@ -97,12 +103,17 @@ class ScholarshipController extends Controller
       foreach ($list as $value) {
         $row = array();
         //$row[] = ++$sl;
-        $row[] = $value->user_id;
+        $row[] = $value->id;
         $row[] = $value->name;
         $row[] = $value->email;
         $row[] = $value->mobile;
-        $row[] = $value->date;
         $row[] = $value->ans;
+         $row[] = $value->date;
+        if($value->status == 'আপনার আবেদনটি নিশ্চিত করা হয়েছে'){
+          $row[] = '<button type="submit" class="btn btn-primary btn-sm" id="verified_'.$value->id.'"onclick="verification(' .$value->id. ')">আপনার আবেদনটি নিশ্চিত করা হয়েছে</button>';
+        }else{
+          $row[] = '<button type="submit" class="btn btn-danger btn-sm" id="verified_'.$value->id.'"onclick="verification(' .$value->id. ')">আপনার আবেদন পর্যালোচনা অধীন</button>';
+        }
         $data[] = $row;
       }
     }
