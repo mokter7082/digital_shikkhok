@@ -9,45 +9,6 @@
                                   <div class="panel-heading">
                                       <h3 class="panel-title">Answer Hero Scholarship</h3>
                                   </div>
-
-                                  <?php 
-                                  
-                                  ini_set('memory_limit', '-1');
-                                  ini_set('max_execution_time', '0');
-
-                                          
-                                    $all_s = DB::select("SELECT DISTINCT
-                                            COUNT( ans.user_id ) AS answered,
-                                            scolarship.`id`,
-                                            scolarship.`user_id`,
-                                            scolarship.`name`,
-                                            users.`email`,
-                                            scolarship.mobile,
-                                            scolarship.`ans`,
-                                            scolarship.`status`,
-                                            max( ans.date ) `date` 
-                                            FROM
-                                            scolarship
-                                            JOIN ans ON ans.user_id = scolarship.user_id 
-                                            JOIN users ON users.id = scolarship.user_id
-                                            WHERE
-                                            date( ans.date ) >= '2021-04-20' 
-                                            GROUP BY
-                                            scolarship.`id`,
-                                            scolarship.`user_id`,
-                                            scolarship.`name`,
-                                            users.`email`,
-                                            scolarship.mobile,
-                                            scolarship.`ans`,
-                                            scolarship.`status` 
-                                            ORDER BY
-                                            answered DESC");
-                                  // dd($all_s)
-                     
-                                                            
-                                 
-
-                                  ?>
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
@@ -60,12 +21,12 @@
                                                   <th>Mobile</th>
                                                   <th>Answer</th>
                                                   <th>date</th>
-                                                  <th>Ques Count</th>
+                                            
                                                   <th>Action</th>
                                               </tr>
                                           </thead>
                                                   <tbody>
-                                                    @foreach($all_s  as $val)
+                                                    @foreach($ans_hero  as $val)
                                                         <tr>
                                                             <td>{{$val->user_id}}</td>
                                                             <td>{{$val->name}}</td>
@@ -73,7 +34,7 @@
                                                             <td>{{$val->mobile}}</td>
                                                             <td>{{$val->ans}}</td>
                                                             <td>{{$val->date}}</td>
-                                                            <td>{{$val->answered}}</td>
+                                                            
                                                             
                                                             <!-- <td>{{isset($q_q[$val->user_id])?$q_q[$val->user_id]:0}}</td> -->
                                                             <td>

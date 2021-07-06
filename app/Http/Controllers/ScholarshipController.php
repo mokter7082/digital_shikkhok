@@ -21,9 +21,103 @@ class ScholarshipController extends Controller
     	return view('pages.all-scholarship',compact('q_q'));
 	}
   public function ansheroScholarship(){
-    ini_set('memory_limit', '-1');
-  
-    return view('pages.anshero-scholarship');
+    $ans_hero = DB::table('scolarship')
+              ->join('ans','ans.user_id','=','scolarship.user_id')
+              ->join('users','users.id','scolarship.user_id')
+              ->select('scolarship.*','users.email','ans.user_id')
+              ->groupBy('ans.user_id')
+              ->get();
+              //dd($ans_hero);
+    return view('pages.anshero-scholarship',compact('ans_hero'));
+  }
+  public function anshero_scho_data(Request $request){
+ 
+    $limit = $request->input('length');
+    $start = $request->input('start');
+    $search = $request->input('search.value');
+    
+    $column_order = array(
+        "scolarship.id",
+        "scolarship.name",
+        "scolarship.mobile",
+        "scolarship.date",
+        "scolarship.ans"); //set column field database for datatable orderable
+
+    $column_search = array(
+      "scolarship.id",
+      "scolarship.name",
+      "scolarship.mobile",
+      "scolarship.date",
+      "scolarship.ans"); //set column field database for datatable searchable
+
+    $order = array("scolarship.id" => 'desc');
+
+    $recordsTotal =  DB::table('scolarship')
+                    ->count();  //DEAFAULT COUNT FOR DATATABLE
+   
+    $list =   DB::table('scolarship')
+    ->join('ans','ans.user_id','=','scolarship.user_id')
+    ->join('users','users.id','scolarship.user_id')
+    ->select('scolarship.*','users.email','ans.user_id')
+    ->groupBy('ans.user_id');
+
+    //echo $list->toSql(); exit;
+
+    if (!empty($search)) {
+      $list->where(function($query) use ($search, $column_search) {
+        $query->where("scolarship.id", 'LIKE', "%{$search}%");
+        foreach ($column_search as $item) {
+          $query->orWhere($item, 'LIKE', "%{$search}%");
+        }
+      });
+    }
+
+    $recordsFiltered = $list->count();
+
+    $list->limit($limit);
+
+    $list->offset($start);
+    
+
+    if (!empty($request->input('order.0.column'))) { // here order processing
+      $list->orderBy($column_order[$request->input('order.0.column')], $request->input('order.0.dir'));
+    } else {
+      $list->orderBy(key($order), $order[key($order)]);
+    }
+
+    //echo $list->toSql(); exit;
+
+    $list = $list->get();
+    //dd($list);
+    // generate server side datatables
+    $data = array();
+    //dd($data);
+    $sl = $start;
+    if (!empty($list)) {
+      foreach ($list as $value) {
+        $row = array();
+        //$row[] = ++$sl;
+        $row[] = $value->user_id;
+        $row[] = $value->name;
+        $row[] = $value->email;
+        $row[] = $value->mobile;
+        $row[] = $value->date;
+        $row[] = $value->ans;
+        $data[] = $row;
+      }
+    }
+
+    //print_r($data); exit;
+
+    $output = array(
+        "draw" => intval($request->input('draw')),
+        "recordsTotal" => intval($recordsTotal),
+        "recordsFiltered" => intval($recordsFiltered),
+        "data" => $data
+    );
+
+    // output to json format
+    return response()->json($output);
   }
 	 public function scholarshipVerified(Request $req){
         $id = $req->input('id');
