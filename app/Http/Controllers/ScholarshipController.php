@@ -17,12 +17,12 @@ class ScholarshipController extends Controller
            
                 foreach ($all_scholarship as $key => $value) {
                     $q_q[$value->user_id] = $value->quens_ct;
-                }
-              //  dd($q_q);
-
-              
+                }    
     	return view('pages.all-scholarship',compact('q_q'));
 	}
+  public function ansheroScholarship(){
+    return view('pages.anshero-scholarship');
+  }
 	 public function scholarshipVerified(Request $req){
         $id = $req->input('id');
         DB::table('scolarship')

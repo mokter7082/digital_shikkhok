@@ -134,6 +134,7 @@ Route::post('/weekly-data',[HomeController::class,'weeklyData'])->name('weekly-d
 
 //Scholarship route
 Route::get('/all-scholarship',[ScholarshipController::class,'allScholarship'])->name('all-scholarship');
+Route::get('/anshero-scholarship',[ScholarshipController::class,'ansheroScholarship'])->name('anshero-scholarship');
 Route::get('/scholarship-verified',[ScholarshipController::class,'scholarshipVerified'])->name('scholarship-verified');
 Route::get('/scholarship-not_verified',[ScholarshipController::class,'scholarshipNotverified'])->name('scholarship-not_verified');
 //subject controller controll 

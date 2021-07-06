@@ -117,7 +117,8 @@
               <li class="has_sub">
                 <a href="#" class="waves-effect"><i class="fa fa-graduation-cap" aria-hidden="true"></i><span>Scholarship</span><span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
-                    <li><a href="{{route('all-scholarship')}}">All Scholarship</a></li>
+                    <li><a href="{{route('all-scholarship')}}">Student Scholarship</a></li>
+                    <li><a href="{{route('anshero-scholarship')}}">Anshero Scholarship</a></li>
                 </ul>
             </li>
             <li class="has_sub">
