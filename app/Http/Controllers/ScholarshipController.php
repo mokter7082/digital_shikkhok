@@ -21,18 +21,12 @@ class ScholarshipController extends Controller
     	return view('pages.all-scholarship',compact('q_q'));
 	}
   public function ansheroScholarship(){
-    // $ans_hero = DB::table('scolarship')
-    //           ->join('ans','ans.user_id','=','scolarship.user_id')
-    //           ->join('users','users.id','scolarship.user_id')
-    //           ->select('scolarship.*','users.email','ans.user_id')
-    //           ->groupBy('ans.user_id')
-    //           ->get();
-    //           //dd($ans_hero);
+        //$aa = DB::select("");
     return view('pages.anshero-scholarship');
   }
   public function anshero_scho_data(Request $request){
- 
-      
+    ini_set('memory_limit', '-1');
+    ini_set('max_execution_time', '0');
     $limit = $request->input('length');
     $start = $request->input('start');
     $search = $request->input('search.value');
@@ -94,7 +88,7 @@ class ScholarshipController extends Controller
     //echo $list->toSql(); exit;
 
     $list = $list->get();
-    //dd($list);
+   // dd($list);
     // generate server side datatables
     $data = array();
     //dd($data);

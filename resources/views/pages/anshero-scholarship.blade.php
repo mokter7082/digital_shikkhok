@@ -47,7 +47,7 @@
     table = $('#my_table').DataTable({
       "processing": true, //Feature control the processing indicator.
       "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "pageLength":50,
+      "pageLength":10,
       "order": [], //Initial no order.
       // Load data for the table's content from an Ajax source
       "ajax": {
