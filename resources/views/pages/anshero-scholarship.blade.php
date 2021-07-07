@@ -7,26 +7,66 @@
                       <div class="col-md-12">
                               <div class="panel panel-default">
                                   <div class="panel-heading">
-                                      <h3 class="panel-title">Answer Hero Scholarship</h3>
+                                      <h3 class="panel-title">Anshero Scholarship</h3>
                                   </div>
+                                  <?php 
+    
+
+                                          
+                                    $all_anshero = DB::select("SELECT DISTINCT
+                                    scolarship.`id`,
+                                    scolarship.`user_id`,
+                                    scolarship.`name`,
+                                    scolarship.mobile,
+                                    scolarship.`ans`,
+                                    scolarship.`status`,
+                                    max(ans.date) `date` 
+                                  FROM
+                                    scolarship
+                                     JOIN ans ON ans.user_id = scolarship.user_id 
+                                  WHERE
+                                    date(ans.date) >=  '2021-06-25' 
+                                  GROUP BY
+                                    scolarship.`user_id`");
+                                  // dd($all_anshero);
+                     
+                                                            
+                                 
+
+                                  ?>
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                        <table id="my_table" class="table table-striped table-bordered">
+                                        <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                   <th>ID</th>
                                                   <th>Name</th>
-                                                  <th>Email</th>
                                                   <th>Mobile</th>
                                                   <th>Answer</th>
                                                   <th>date</th>
-                                            
                                                   <th>Action</th>
                                               </tr>
                                           </thead>
                                                   <tbody>
-                                             
+                                                    @foreach($all_anshero  as $val)
+                                                        <tr>
+                                                            <td>{{$val->user_id}}</td>
+                                                            <td>{{$val->name}}</td>
+                                                            <td>{{$val->mobile}}</td>
+                                                            <td>{{$val->ans}}</td>
+                                                            <td>{{$val->date}}</td>
+                                                         
+                                            
+                                                            <td>
+                                                              @if($val->status == 'আপনার আবেদনটি নিশ্চিত করা হয়েছে')
+                                                               <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">আপনার আবেদনটি নিশ্চিত করা হয়েছে</button>
+                                                              @else
+                                                               <button type="submit" id="verified_{{$val->id}}" class="btn btn-danger btn-sm" onclick="verification({{$val->id}})">আপনার আবেদন পর্যালোচনা অধীন</button>
+                                                              @endif
+                                                            </td>
+                                                        </tr>
+                                                      @endforeach
                                                   </tbody>
                                               </table>
 
@@ -42,48 +82,6 @@
 </div>
 <!-- Teacher Verified Not_veryfied form database with jquery -->
 <script type="text/javascript">
-  var table;
-  jQuery(document).ready(function ($) {
-    table = $('#my_table').DataTable({
-      "processing": true, //Feature control the processing indicator.
-      "serverSide": true, //Feature control DataTables' server-side processing mode.
-      "pageLength":10,
-      "order": [], //Initial no order.
-      // Load data for the table's content from an Ajax source
-      "ajax": {
-        "url": "<?php echo route('anshero_acholarship_data'); ?>",
-        "type": "POST",
-        "data": function(data) {
-          data._token = "{{ csrf_token() }}";
-          data.start_date = $("#start_date").val();
-          data.end_date = $("#end_date").val();
-        }
-      },
-
-      //Set column definition initialisation properties.
-      "columnDefs": [
-        {
-          "targets": [0, -1], //first, second and last column
-          "orderable": false, //set not orderable
-        },
-      ],
-
-    });
-    
-    $('#search').on( 'click change', function (event) {
-      event.preventDefault();
-      table.draw();
-      serach = 'SEARCH';
-    });
-
-  });
-
-  function reload_table() {
-    table.ajax.reload(null, false); //reload datatable ajax 
-  }
-
-
-
 
   function verification(id){
         var bclass = $("#verified_"+id).hasClass("btn-primary");

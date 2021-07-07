@@ -21,7 +21,6 @@ class ScholarshipController extends Controller
     	return view('pages.all-scholarship',compact('q_q'));
 	}
   public function ansheroScholarship(){
-        //$aa = DB::select("");
     return view('pages.anshero-scholarship');
   }
   public function anshero_scho_data(Request $request){
