@@ -120,6 +120,7 @@ Route::get('/le_all-anshero',[LeaderboardController::class,'Le_anshero'])->name(
 Route::get('/t_point-update',[LeaderboardController::class,'te_pointUpdate'])->name('t_point-update');
 Route::get('/s_point-update',[LeaderboardController::class,'stu_pointUpdate'])->name('s_point-update');
 Route::get('/ans_point-update',[LeaderboardController::class,'ans_pointUpdate'])->name('ans_point-update');
+Route::get('/june-data',[LeaderboardController::class,'juneData'])->name('june-data');
 
 
 

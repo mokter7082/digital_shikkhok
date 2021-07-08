@@ -286,6 +286,7 @@
       </div>
       </div>
 
+
       @elseif($teacher == '5')
          @php
        $all_teacher = DB::table('users')->where('isTeacher',1)->get();
@@ -393,10 +394,11 @@
                   <div class="tiles-progress">
                   <div class="m-t-20">
                   <h5 class="text-uppercase">Total Question <span class="pull-right">{{$sum_all_ques}}</span></h5>
+            </div>
+            </div>                              
       </div>
-      </div>                              
       </div>
-      </div>
+
       @elseif($teacher == '6')
       <!--  START editor COMPONENT -->
      <form  method="POST">

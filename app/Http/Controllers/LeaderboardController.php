@@ -67,4 +67,7 @@ return view('pages/leaderboard.all-answer_hero',compact('all_anshero'));
                 'data' =>$point_update,
             ]);
         }
+        public function juneData(){
+            return view('pages/leaderboard.june-data');
+        }
 }
