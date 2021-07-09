@@ -249,7 +249,7 @@
       </div>
       </div>
                               @php
-                              $pending_count =DB::select("SELECT * FROM `post_q` WHERE status = 0");
+                              $pending_count =DB::select("SELECT * FROM `questions` WHERE status = 0");
                               $pending_count = count($pending_count);
                               @endphp
 
