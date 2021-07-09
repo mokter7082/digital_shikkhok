@@ -753,9 +753,17 @@ public function dateCustom_answer(Request $request){
 
     $start_date = $custom_year.'-'.$custom_month.'-'.'01';
     $end_date = $custom_year.'-'.$custom_month.'-'.date('t');
-    $datewise_ans = DB::select("SELECT ans.*, users.type,users.mobile FROM `ans` INNER JOIN users ON users.id = ans.user_id  WHERE ans.date BETWEEN '$start_date' 
-    AND '$end_date'");
-    //dd($datewise_ans);
+    // $datewise_ans = DB::select("SELECT answers.*, users.type,users.mobile FROM `answers` INNER JOIN users ON users.id = answers.answered_by  WHERE answers.created_at BETWEEN '$start_date' 
+    // AND '$end_date'");
+    $datewise_ans = DB::table('answers')
+                 ->join('users','users.id','=','answers.answered_by')
+                 ->select('answers.*','users.name','users.mobile','users.type','users.institutionname','users.subject_id')
+                 ->where('answers.created_at','>=',$start_date)
+                 ->where('answers.created_at','<=',$end_date) 
+                 ->get();
+    // echo "<pre>";
+    // print_r($datewise_ans);
+    // exit;
     return view('pages.datewise-answer',compact('datewise_ans'));
   }
   public function answerSearch(Request $request){
@@ -764,8 +772,12 @@ public function dateCustom_answer(Request $request){
       $s_date = $request->start_date;
       $e_date = $request->end_date;
      
-      $datewise_ans = DB::select("SELECT ans.*, users.type,users.mobile FROM `ans` INNER JOIN users ON users.id = ans.user_id  WHERE ans.date BETWEEN '$s_date' 
-    AND '$e_date'");
+      $datewise_ans = DB::table('answers')
+      ->join('users','users.id','=','answers.answered_by')
+      ->select('answers.*','users.name','users.mobile','users.type','users.institutionname','users.subject_id')
+      ->where('answers.created_at','>=',$s_date)
+      ->where('answers.created_at','<=',$e_date) 
+      ->get();
   // dd($datewise_ans);
     return view('pages.datewise-answer',compact('datewise_ans'));
   }

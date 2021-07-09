@@ -202,12 +202,8 @@
     </div>
 
                 @php
-                    $ans_count = DB::table('answers')
-                                ->join('users','users.id','answers.answered_by')
-                                ->join('subjects','subjects.id','users.subject_id')
-                                ->select('answers.*','users.name','users.type','users.institutionname','subjects.name as sname')
-                                ->where('answers.created_at', 'like', '%' . $todaydate. '%')
-                                ->count();
+                    $ans_count_to = DB::select("SELECT * FROM answers WHERE created_at LIKE '%$todaydate%'");
+                    $ans_count = count($ans_count_to);
                     
                 @endphp
 

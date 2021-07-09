@@ -46,17 +46,17 @@
           @foreach($datewise_ans as $value)
           <?php
              $editedData['id'] = $value->id;
-             $editedData['ans'] = $value->ans;
+             $editedData['ans'] = $value->answer;
           ?>
           <tr>
              <input type="hidden" id="a_id" name=""  value="{{$value->id}}">
-             <td>{{$value->post_id}}</td>
-              <td>{{$value->user_name}}</td>
+             <td>{{$value->question_id}}</td>
+              <td>{{$value->name}}</td>
               <td>{{$value->mobile}}</td>
-              <td id = "answer_td_{{$value->id}}">{{$value->ans}}</td>
+              <td id = "answer_td_{{$value->id}}">{{$value->answer}}</td>
               
-              <td>{{$value->subject}}</td>
-              <td>{{$value->date}}</td>
+              <td>{{$value->subject_id}}</td>
+              <td>{{$value->created_at}}</td>
               <td>
                  @if($value->type == '1')
                  <p>Teacher</p>
