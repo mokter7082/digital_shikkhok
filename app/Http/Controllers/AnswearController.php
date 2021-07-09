@@ -47,7 +47,8 @@ class AnswearController extends Controller
    
     $list = DB::table('answers')
             ->join('users','users.id','answers.answered_by')
-            ->join('subjects','subjects.id','=','users.subject_id')
+            ->join('questions','questions.id','=','answers.question_id')
+            ->join('subjects','subjects.id','=','questions.subject_id')
             ->select('answers.*','users.name','users.mobile','users.institutionname','subjects.name as sname','users.type',);
 
 
