@@ -23,33 +23,34 @@ class QuestionController extends Controller
     $search = $request->input('search.value');
 
     $column_order = array(
-        "post_q.id",
-        "post_q.user_name",
-        "post_q.user_email",
-        "post_q.date",
-        "post_q.quens",
+        "questions.id",
+        "users.name",
+        "users.email",
+        "questions.created_at",
+        "questions.question",
         "users.mobile",
         "users.institutionname",
-        "post_q.subject"); //set column field database for datatable orderable
+        "subjects.subject"); //set column field database for datatable orderable
 
     $column_search = array(
-        "post_q.user_name",
-        "post_q.user_email",
-        "post_q.date",
-        "post_q.quens",
-        "users.mobile",
-        "users.institutionname",
-        "post_q.subject"); //set column field database for datatable searchable
+      "questions.id",
+      "users.name",
+      "users.email",
+      "questions.created_at",
+      "questions.question",
+      "users.mobile",
+      "users.institutionname",
+      "subjects.subject"); //set column field database for datatable searchable
 
-    $order = array("post_q.id" => 'desc');
+    $order = array("questions.id" => 'desc');
 
-    $recordsTotal =  DB::table('post_q')
+    $recordsTotal =  DB::table('questions')
                     ->count();  //DEAFAULT DOUNT FOR DATATABLE
    
-    $list = DB::table('post_q')
-            ->join('subjects','subjects.id','=','post_q.subject_id')
-            ->join('users','users.id','=','post_q.user_id')
-            ->select('post_q.*','users.mobile','users.institutionname','subjects.name as sname');
+    $list = DB::table('questions')
+            ->join('subjects','subjects.id','=','questions.subject_id')
+            ->join('users','users.id','=','questions.asked_by')
+            ->select('questions.*','users.name','users.mobile','users.institutionname','subjects.name as sname');
 
     //echo $list->toSql(); exit;
 
@@ -59,7 +60,7 @@ class QuestionController extends Controller
 
     if (!empty($search)) {
       $list->where(function($query) use ($search, $column_search) {
-        $query->where("post_q.id", 'LIKE', "%{$search}%");
+        $query->where("questions.id", 'LIKE', "%{$search}%");
         foreach ($column_search as $item) {
           $query->orWhere($item, 'LIKE', "%{$search}%");
         }
@@ -80,7 +81,7 @@ class QuestionController extends Controller
     //echo $list->toSql(); exit;
 
     $list = $list->get();
-
+    //dd($list);
     // generate server side datatables
     $data = array();
     //dd($data);
@@ -89,12 +90,12 @@ class QuestionController extends Controller
       foreach ($list as $value) {
         $row = array();
         $row[] = ++$sl;
-        $row[] = $value->user_name;
+        $row[] = $value->name;
         $row[] = $value->mobile;
         $row[] = $value->institutionname;
-        $row[] = $value->quens;
-        $row[] = $value->date;
-        $row[] = $value->subject;
+        $row[] = $value->question;
+        $row[] = $value->created_at;
+        $row[] = $value->sname;
        // $row[] = $value->quens;
        // $row[] = $value->sname;
         $row[] = '<button type="submit" class="btn btn-danger btn-sm delete" id="q_delete' . $value->id . '" onclick="q_delete(' . $value->id . ')">Delete</button>';

@@ -22,31 +22,33 @@ class AnswearController extends Controller
     $search = $request->input('search.value');
 
     $column_order = array(
-        "ans.id",
-        "ans.user_name",
+        "answers.id",
+        "users.name",
         "users.mobile",
-        "ans.ans",
-        "ans.subject",
-        "ans.date",
-        "ans.institutionname"); //set column field database for datatable orderable
+        "answers.answer",
+        "subjects.name",
+        "answers.created_at",
+        "users.institutionname"); //set column field database for datatable orderable
 
     $column_search = array(
-        "ans.user_name",
-        "users.mobile",
-        "ans.ans",
-        "ans.subject",
-        "ans.date",
-        "ans.institutionname"); //set column field database for datatable searchable
+      "answers.id",
+      "users.name",
+      "users.mobile",
+      "answers.answer",
+      "subjects.name",
+      "answers.created_at",
+      "users.institutionname"); //set column field database for datatable searchable
 
-    $order = array("ans.id" => 'asc');
+    $order = array("answers.id" => 'asc');
 
-    $recordsTotal = DB::table('ans')
+    $recordsTotal = DB::table('answers')
             //->where('users.isTeacher',1)
             ->count();
    
-    $list = DB::table('ans')
-            ->join('users','users.id','ans.user_id')
-            ->select('ans.*','users.name as user_name','users.mobile','users.type');
+    $list = DB::table('answers')
+            ->join('users','users.id','answers.answered_by')
+            ->join('subjects','subjects.id','=','users.subject_id')
+            ->select('answers.*','users.name','users.mobile','users.institutionname','subjects.name as sname','users.type',);
 
 
     //echo $list->toSql(); exit;
@@ -57,7 +59,7 @@ class AnswearController extends Controller
 
     if (!empty($search)) {
       $list->where(function($query) use ($search, $column_search) {
-        $query->where("ans.id", 'LIKE', "%{$search}%");
+        $query->where("answers.id", 'LIKE', "%{$search}%");
         foreach ($column_search as $item) {
           $query->orWhere($item, 'LIKE', "%{$search}%");
         }
@@ -78,7 +80,7 @@ class AnswearController extends Controller
     //echo $list->toSql(); exit;
 
     $list = $list->get();
-
+  //  dd($list);
     // generate server side datatables
     $data = array();
     $arr =[
@@ -95,12 +97,12 @@ class AnswearController extends Controller
         $row = array();
        
        // $row[] = ++$sl;
-        $row[] = $value->post_id;
-        $row[] = $value->user_name;
+        $row[] = $value->question_id;
+        $row[] = $value->name;
         $row[] = $value->mobile;
-        $row[] = $value->ans;
-        $row[] = $value->subject;
-        $row[] = $value->date;
+        $row[] = $value->answer;
+        $row[] = $value->sname;
+        $row[] = $value->created_at;
         $row[] = $arr[$value->type];
         $row[] = $value->institutionname;
         $row[] = '<button type="submit" class="btn btn-danger btn-sm delete" id="a_delete' . $value->id . '" onclick="a_delete(' . $value->id . ')">Delete</button>';
