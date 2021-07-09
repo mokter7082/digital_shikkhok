@@ -32,17 +32,17 @@
                                                  <th>ID</th>
                                                  <th>Question</th>
                                                  <th>Date</th>
-                                                 <th>Subject</th>
+                                            
                                                  <th>Answer</th>
                                               </tr>
                                           </thead>
-                                                  <tbody>
+                                          <tbody>
                                                     @foreach($biology_sub as $val)
-                                                    <tr id="rowid_{{$val->id}}" data-id="{{$val->id}}">
+                                                     <tr id="rowid_{{$val->id}}" data-id="{{$val->id}}">
                                                         <input type="hidden" value="{{$val->id}}" id="userId">
                                                         <td>{{$val->id}}</td>
                                                         <td id="q">
-                                                        {{$val->quens}}
+                                                        {{$val->question}}
                                                          @if($val->status == 0)
                                                           <p id="a">No answers yet</p>
                                                           @elseif($val->status == 2)
@@ -57,18 +57,16 @@
                                                              @else
                                                              @endif
                                                         </td>
-                                                        <td>{{$val->date}}</td>
-                                                        <td>{{$val->subject}}</td>
+                                                        <td>{{$val->created_at}}</td>
                                                         <td>
                                                             <form method="post" class="sub" enctype="multipart/form-data">
                                                             @csrf
                                                               <input type="hidden" class="id_i" name="id" value="{{$val->id}}">
-                                                              <input type="hidden" name="post_user_id" id="post_user_id_{{$val->id}}" value="{{$val->user_id}}">
+                                                              <input type="hidden" name="post_user_id" id="post_user_id_{{$val->id}}" value="{{$val->asked_by}}">
                                                               <textarea class="form-control" name="ans" id="ans_{{$val->id}}" rows="3" cols="30" placeholder="Write Answer Here" required></textarea>
                                                               <input name="image" type="file" id="image_{{$val->id}}" />
                                                               <input type="hidden" name="user_id" id="l_user_id_{{$val->id}}" value="{{$l_user_id}}">
                                                               <input type="hidden" name="username" id="username_{{$val->id}}" value="{{$username }}">
-                                                              <input type="hidden" name="subject" id="subject_{{$val->id}}" value="{{$val->subject}}">
                                                               <input type="hidden" name="date" id="date_{{$val->id}}" value="{{$todaydate}}">
                                                               <input type="hidden" name="institutionname" id="institutionname_{{$val->id}}" value="{{$institutionname}}">
                                                               <button style="margin-top:2px; border-radius:10px;" type="submit" class="btn btn-sm btn-success">Submit</button>

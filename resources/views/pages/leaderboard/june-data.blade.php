@@ -5,9 +5,9 @@
    <div class="container">
 
              @php
-                $june_quens =DB::table('post_q')
-                            ->where('date','>=','2021-06-01')
-                            ->where('date','<=','2021-06-30')
+                $june_quens =DB::table('questions')
+                            ->where('created_at','>=','2021-06-01')
+                            ->where('created_at','<=','2021-06-30')
                             ->count();
                 @endphp
 
@@ -29,11 +29,11 @@
       </div>
 
               @php
-                $physics_question =DB::table('post_q')
-                    ->where('subject', 'physics')
+                $physics_question =DB::table('questions')
+                    ->where('subject_id', '7')
                     ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
+                      $query->where('created_at','>=','2021-06-01')
+                      ->orWhere('created_at','<=','2021-06-30');
                      })->count();
                 @endphp
 
@@ -54,11 +54,11 @@
       </div>
       </div>
                @php
-                $chemistry_question =DB::table('post_q')
-                    ->where('subject', 'chemistry')
+                $chemistry_question =DB::table('questions')
+                    ->where('subject_id', '8')
                     ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
+                      $query->where('created_at','>=','2021-06-01')
+                      ->orWhere('created_at','<=','2021-06-30');
                      })->count();
                 @endphp
 
@@ -79,11 +79,11 @@
       </div>
       </div>
       @php
-                $biology_question =DB::table('post_q')
-                    ->where('subject', 'biology')
+                $biology_question =DB::table('questions')
+                    ->where('subject_id', '9')
                     ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
+                      $query->where('created_at','>=','2021-06-01')
+                      ->orWhere('created_at','<=','2021-06-30');
                      })->count();
                 @endphp
 
@@ -106,11 +106,11 @@
 
 
         @php
-        $math_question =DB::table('post_q')
-                    ->where('subject', 'math')
+        $math_question =DB::table('questions')
+                    ->where('subject_id', '5')
                     ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
+                      $query->where('created_at','>=','2021-06-01')
+                      ->orWhere('created_at','<=','2021-06-30');
                      })->count();
                 @endphp
 
@@ -133,11 +133,11 @@
       
 
       @php
-        $higher_math_question =DB::table('post_q')
-                    ->where('subject', 'higher_math')
+        $higher_math_question =DB::table('questions')
+                    ->where('subject_id', '10')
                     ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
+                      $query->where('created_at','>=','2021-06-01')
+                      ->orWhere('created_at','<=','2021-06-30');
                      })->count();
                 @endphp
 
@@ -159,9 +159,9 @@
       </div>  
 
                  @php
-                $june_ans =DB::table('ans')
-                            ->where('date','>=','2021-06-01')
-                            ->where('date','<=','2021-06-30')
+                $june_ans =DB::table('answers')
+                            ->where('created_at','>=','2021-06-01')
+                            ->where('created_at','<=','2021-06-30')
                             ->count();
                 @endphp
 
@@ -183,14 +183,17 @@
       </div>
 
 
-      @php
-                $physics_ans =DB::table('ans')
-                    ->where('subject', 'physics')
-                    ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
-                     })->count();
-                @endphp
+             <?php
+                 $physics_ans =DB::table('answers')
+                            ->join('questions','questions.id','=','answers.question_id')
+                            ->join('subjects','subjects.id','questions.subject_id')
+                            ->select('answers.*','questions.subject_id')
+                            ->where('subject_id', '7')
+                            ->where('answers.created_at','>=','2021-06-01')
+                            ->where('answers.created_at','>=','2021-06-30')
+                            ->count();
+
+                     ?>
 
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
@@ -210,12 +213,14 @@
       </div>
 
               @php
-                $chemistry_ans =DB::table('ans')
-                    ->where('subject', 'chemistry')
-                    ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
-                     })->count();
+                $chemistry_ans =DB::table('answers')
+                            ->join('questions','questions.id','=','answers.question_id')
+                            ->join('subjects','subjects.id','questions.subject_id')
+                            ->select('answers.*','questions.subject_id')
+                            ->where('subject_id', '8')
+                            ->where('answers.created_at','>=','2021-06-01')
+                            ->where('answers.created_at','>=','2021-06-30')
+                            ->count();
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
@@ -236,12 +241,14 @@
       </div>
 
             @php
-                $biology_ans =DB::table('ans')
-                    ->where('subject', 'biology')
-                    ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
-                     })->count();
+                $biology_ans =DB::table('answers')
+                            ->join('questions','questions.id','=','answers.question_id')
+                            ->join('subjects','subjects.id','questions.subject_id')
+                            ->select('answers.*','questions.subject_id')
+                            ->where('subject_id', '9')
+                            ->where('answers.created_at','>=','2021-06-01')
+                            ->where('answers.created_at','>=','2021-06-30')
+                            ->count();
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
@@ -263,12 +270,14 @@
     
 
       @php
-                $math_ans =DB::table('ans')
-                    ->where('subject', 'math')
-                    ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
-                     })->count();
+                $math_ans =DB::table('answers')
+                            ->join('questions','questions.id','=','answers.question_id')
+                            ->join('subjects','subjects.id','questions.subject_id')
+                            ->select('answers.*','questions.subject_id')
+                            ->where('subject_id', '5')
+                            ->where('answers.created_at','>=','2021-06-01')
+                            ->where('answers.created_at','>=','2021-06-30')
+                            ->count();
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
@@ -290,12 +299,14 @@
       
 
       @php
-                $higher_math_ans =DB::table('ans')
-                    ->where('subject', 'higher_math')
-                    ->where(function($query) {
-                      $query->where('date','>=','2021-06-01')
-                      ->orWhere('date','<=','2021-06-30');
-                     })->count();
+                $higher_math_ans =DB::table('answers')
+                            ->join('questions','questions.id','=','answers.question_id')
+                            ->join('subjects','subjects.id','questions.subject_id')
+                            ->select('answers.*','questions.subject_id')
+                            ->where('subject_id', '10')
+                            ->where('answers.created_at','>=','2021-06-01')
+                            ->where('answers.created_at','>=','2021-06-30')
+                            ->count();
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">

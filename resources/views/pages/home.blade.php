@@ -202,8 +202,13 @@
     </div>
 
                 @php
-                    $today_ans_count = DB::select("SELECT * FROM ans WHERE ans.date LIKE '%$todaydate%'");
-                    $ans_count = count($today_ans_count);
+                    $ans_count = DB::table('answers')
+                                ->join('users','users.id','answers.answered_by')
+                                ->join('subjects','subjects.id','users.subject_id')
+                                ->select('answers.*','users.name','users.type','users.institutionname','subjects.name as sname')
+                                ->where('answers.created_at', 'like', '%' . $todaydate. '%')
+                                ->count();
+                    
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
@@ -223,7 +228,7 @@
       </div>
       </div>
                        @php
-                           $today_ques_count = DB::select("SELECT * FROM post_q WHERE post_q.date LIKE '%$todaydate%'");
+                           $today_ques_count = DB::select("SELECT * FROM questions WHERE questions.created_at LIKE '%$todaydate%'");
                            $ques_count = count($today_ques_count);
                        @endphp
 

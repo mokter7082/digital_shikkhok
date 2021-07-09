@@ -9,25 +9,13 @@
                                   <div class="panel-heading">
                                       <h3 class="panel-title">Today Answear</h3>
                                   </div>
-                                  <div class="panel-heading">
                                     <?php
                                     $teacher = Session::get('type');
                                     $user_id = Session::get('user_id');
                                     date_default_timezone_set("Asia/Dhaka");
                                     $todaydate = date("Y-m-d");
-                                    $today_to_ans = DB::select("SELECT * FROM ans WHERE ans.date LIKE '%$todaydate%'");
-                                    //dd($today_to_ans);
-                                    $today_ans_count = count($today_to_ans);
                                     ?>
-                                    @if($teacher  == 1)
-                                    <h3 class="panel-title">Today Total Answer = </h3>
-                                    @elseif($teacher  == 3)
-                                    
-                                    @else
-                                    <h3 class="panel-title">Today Total Answer = {{$today_ans_count}}</h3>
-                                    @endif
-                                      
-                                  </div>
+                               
 
                                  @php
                                  $teacher = Session::get('type');
@@ -36,14 +24,7 @@
 
                              @if($teacher  == 1)
 
-                             <?php
-                            //  $today_ans =  DB::table('ans')
-                            //                    ->where('date', 'like', '%' . $todaydate . '%')
-                            //                    ->get();
-                                              //  dd( $teacher_a);
-                                                
-                                        
-                             ?>
+                        
                               <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
@@ -130,11 +111,7 @@
                                 </div>
                              @elseif($teacher  == 4)
                              <?php
-                             $today_answer =  DB::table('ans')
-                                                ->join('users','users.id','ans.user_id')
-                                                ->select('ans.*','users.*')
-                                                ->where('ans.date', 'like', '%' . $todaydate. '%')
-                                                ->get();
+                     
                                                 
                                         
                              ?>
@@ -149,21 +126,21 @@
                                                   <th>Answear</th>
                                                   <th>Subject</th>
                                                   <th>Date</th>
-                                                  <th>Subject</th>
+                                               
                                                   <th>Designation</th>
                                                   <th>Institution Name</th>
                                                   <th>Action</th>
                                               </tr>
                                           </thead>
                                                   <tbody>
-                                                    @foreach($today_answer as $val)
+                                                    @foreach($today_ans as $val)
                                                     <tr id = "tr-{{$val->id}}">
-                                                            <td>{{$val->post_id}}</td>
-                                                            <td>{{$val->user_name}}</td>
-                                                            <td>{{$val->ans}}</td>
-                                                            <td>{{$val->subject}}</td>
-                                                            <td>{{$val->date}}</td>
-                                                            <td>{{$val->subject}}</td>
+                                                            <td>{{$val->id}}</td>
+                                                            <td>{{$val->name}}</td>
+                                                            <td>{{$val->answer}}</td>
+                                                            <td>{{$val->sname}}</td>
+                                                            <td>{{$val->created_at}}</td>
+                                                
                                                             <td>
                                                                  @if($val->type == 1)
                                                                  <p>Teacher</p>

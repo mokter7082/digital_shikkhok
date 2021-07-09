@@ -30,12 +30,12 @@ class HomeController extends Controller
                        ->where('date', 'like', '%' . $date . '%')
                        ->count();
        $output['t_count'] = $t_count;
-       $a_count = DB::table('ans')
-                       ->where('date', 'like', '%' . $date . '%')
+       $a_count = DB::table('answers')
+                       ->where('created_at', 'like', '%' . $date . '%')
                        ->count();
        $output['a_count'] = $a_count;
-       $q_count = DB::table('post_q')
-                       ->where('date', 'like', '%' . $date . '%')
+       $q_count = DB::table('questions')
+                       ->where('created_at', 'like', '%' . $date . '%')
                        ->count();
        $output['q_count'] = $q_count;
        $s_count = DB::table('users')

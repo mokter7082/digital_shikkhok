@@ -19,6 +19,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Email</th>
                                 <th>Mobile Number</th>
                                 <th>Point</th>
                                 <th>Action</th>
@@ -29,6 +30,7 @@
                                 @foreach($all_teacher as $val)
                                     <td>{{$val->id}}</td>
                                     <td>{{$val->name}}</td>
+                                    <td>{{$val->email}}</td>
                                     <td>{{$val->mobile}}</td>
                                     <td>
                                       <div class="form-group col-xs-6">

@@ -68,6 +68,8 @@ return view('pages/leaderboard.all-answer_hero',compact('all_anshero'));
             ]);
         }
         public function juneData(){
+         
+               
             return view('pages/leaderboard.june-data');
         }
 }

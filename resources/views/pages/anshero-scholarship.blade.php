@@ -11,24 +11,30 @@
                                   </div>
                                   <?php 
     
-
+                                  // $all_anshero = DB::table('scolarship')
+                                  //                         ->join('answers','answers.answered_by','=','scolarship.user_id')
+                                  //                         ->join('users','users.id','=','scolarship.user_id')
+                                  //                         ->select(array('scolarship.*','users.email', DB::raw('COUNT(answers.answered_by) as ans_count')))
+                                  //                         ->groupBy('answers.answered_by')
+                                  //                         ->get();
+                                  //                         dd($all_anshero);
                                           
-                                    $all_anshero = DB::select("SELECT DISTINCT
-                                    scolarship.`id`,
-                                    scolarship.`user_id`,
-                                    scolarship.`name`,
-                                    scolarship.mobile,
-                                    scolarship.`ans`,
-                                    scolarship.`status`,
-                                    max(ans.date) `date` 
-                                  FROM
-                                    scolarship
-                                     JOIN ans ON ans.user_id = scolarship.user_id 
-                                  WHERE
-                                    date(ans.date) >=  '2021-06-25' 
-                                  GROUP BY
-                                    scolarship.`user_id`");
-                                  // dd($all_anshero);
+                                                          $all_anshero = DB::select("SELECT DISTINCT
+                                                          scolarship.`id`,
+                                                          scolarship.`user_id`,
+                                                          scolarship.`name`,
+                                                          scolarship.mobile,
+                                                          scolarship.`ans`,
+                                                          scolarship.`status`,
+                                                          max(ans.date) `date` 
+                                                        FROM
+                                                          scolarship
+                                                           JOIN ans ON ans.user_id = scolarship.user_id 
+                                                        WHERE
+                                                          date(ans.date) >=  '2021-06-25' 
+                                                        GROUP BY
+                                                          scolarship.`user_id`");
+                                  //  dd($all_anshero);
                      
                                                             
                                  

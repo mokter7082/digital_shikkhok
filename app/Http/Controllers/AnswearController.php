@@ -127,11 +127,13 @@ class AnswearController extends Controller
   public function todayAnswear(){
     date_default_timezone_set("Asia/Dhaka");
     $todaydate = date("Y-m-d");
-    $today_ans =  DB::table('ans')
-                  ->join('users','users.id','ans.user_id')
-                  ->select('ans.*','users.*')
-                  ->where('ans.date', 'like', '%' . $todaydate. '%')
+    $today_ans =  DB::table('answers')
+                  ->join('users','users.id','answers.answered_by')
+                  ->join('subjects','subjects.id','users.subject_id')
+                  ->select('answers.*','users.name','users.type','users.institutionname','subjects.name as sname')
+                  ->where('answers.created_at', 'like', '%' . $todaydate. '%')
                   ->get();
+                 // dd($today_ans);
      return view('pages.today-answear',compact('today_ans'));
  }
 public function customAnswear(){
@@ -282,45 +284,13 @@ public function dateCustom_answer(Request $request){
     public function Ainsert(Request $request){
       $post_id = $request->id;
       $user_id = $request->user_id;
- 
+       //dd($post_id);
        $image  = $request->file('image');
       //dd($data);
       if($image){
-        $data = array();
-        $data['post_id'] = $request->id;
-        $data['post_user_id'] = $request->post_user_id;
-        $data['ans'] = $request->ans;
-        $data['user_id'] = $user_id;
-        $data['user_name'] = $request->username;
-        $data['subject'] = $request->subject;
-        $data['date'] = $request->date;
-        $data['institutionname'] = $request->institutionname;
-        
-        $image_name = Str::random(20);
-        $ext = strtolower($image->getClientOriginalExtension());
-        $image_fullname = $image_name.'.'.$ext;
-        $upload_path ='sub_images';
-        $image_url = $upload_path.$image_fullname;
-        $success = $image->move($upload_path,$image_fullname);
-        if($success){
-            $data['image']=$image_fullname;
-         $insert = DB::table('ans')->insert($data);
-         
-        $anscount = DB::select("SELECT ans.post_id,post_q.id, post_q.quens, count( ans.ans ) AS ct 
-      FROM `ans` LEFT JOIN post_q ON post_q.id = ans.post_id  WHERE ans.post_id = $request->id GROUP BY  ans.post_id,post_q.id, post_q.quens");
-         if((int)$anscount[0]->ct == 1){
-          DB::table('users')
-          ->where('id',$user_id)
-          ->update(['points' => DB::raw('points+3')]);
-       }else{
-          DB::table('users')
-          ->where('id',$user_id)
-          ->update(['points' => DB::raw('points+1')]);
-       }
-  
 
-        $answercount = DB::select("SELECT answers.question_id,post_q.id, post_q.quens, count( answers.answer ) AS ct 
-        FROM `answers` LEFT JOIN post_q ON post_q.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,post_q.id, post_q.quens");
+        $answercount = DB::select("SELECT answers.question_id,questions.id, questions.question, count( answers.answer ) AS ct 
+        FROM `answers` LEFT JOIN questions ON questions.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,questions.id, questions.question");
 
           if($answercount == NULL){
             $point='3';
@@ -329,34 +299,29 @@ public function dateCustom_answer(Request $request){
           }
          $answer_data = array();
          $answer_data['question_id'] = $request->id;
-         $answer_data['answered_by'] = $request->post_user_id;
+         $answer_data['answered_by'] = $user_id;
          $answer_data['answer'] = $request->ans;
-         $answer_data['file_url'] = $image_fullname;
          $answer_data['points'] = $point;
          $answer_data['flags'] = '0';
          $answer_data['quality'] = '0';
+        $image_name = Str::random(20);
+        $ext = strtolower($image->getClientOriginalExtension());
+        $image_fullname = $image_name.'.'.$ext;
+        $upload_path ='sub_images';
+        $image_url = $upload_path.$image_fullname;
+        $success = $image->move($upload_path,$image_fullname);
+        if($success){
+            $answer_data['file_url']=$image_fullname;
          $insert = DB::table('answers')->insert($answer_data);
+         
       }else{
           //ELSE IS BLANK
       }
 
 
    }else{
-    $data = array();
-    $data['post_id'] = $request->id;
-    $data['post_user_id'] = $request->post_user_id;
-    $data['ans'] = $request->ans;
-    $data['user_id'] = $user_id;
-    $data['user_name'] = $request->username;
-    $data['subject'] = $request->subject;
-    $data['date'] = $request->date;
-    $data['image'] = '0';
-    $data['institutionname'] = $request->institutionname;
-
-    $insert = DB::table('ans')->insert($data);
-     
-    $answercount = DB::select("SELECT answers.question_id,post_q.id, post_q.quens, count( answers.answer ) AS ct 
-        FROM `answers` LEFT JOIN post_q ON post_q.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,post_q.id, post_q.quens");
+    $answercount = DB::select("SELECT answers.question_id,questions.id, questions.question, count( answers.answer ) AS ct 
+        FROM `answers` LEFT JOIN questions ON questions.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,questions.id, questions.question");
 
         if($answercount == NULL){
           $point='3';
@@ -365,7 +330,7 @@ public function dateCustom_answer(Request $request){
         }
      $answer_data = array();
      $answer_data['question_id'] = $request->id;
-     $answer_data['answered_by'] = $request->l_user_id;
+     $answer_data['answered_by'] = $user_id;
      $answer_data['answer'] = $request->ans;
      $answer_data['file_url'] = '0';
      $answer_data['points'] = $point;
@@ -375,7 +340,7 @@ public function dateCustom_answer(Request $request){
 
    }
 
-   DB::table('post_q')
+   DB::table('questions')
    ->where('id',$post_id)
    ->update(['status' => '1']);
 

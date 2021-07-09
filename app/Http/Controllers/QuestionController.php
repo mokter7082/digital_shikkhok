@@ -120,11 +120,15 @@ class QuestionController extends Controller
       date_default_timezone_set("Asia/Dhaka");
       $todaydate = date("Y-m-d");
 
-      $today_qus =  DB::table('post_q')
-                  ->join('users','users.id','=','post_q.user_id')
-                  ->select('post_q.*','users.mobile','users.institutionname')
-                  ->where('post_q.date', 'like', '%'.$todaydate.'%')
+      $today_qus =  DB::table('questions')
+                  ->join('users','users.id','=','questions.asked_by')
+                  ->join('subjects','subjects.id','questions.subject_id')
+                  ->select('questions.*','users.name','users.mobile','subjects.name as sname','users.institutionname')
+                  ->where('questions.status',0)
+                  ->where('questions.created_at', 'like', '%'.$todaydate.'%')
+                  ->where('questions.status',0)
                   ->get();
+                 // dd($today_qus);
        return view('pages.today-question',compact('today_qus'));
     }
     public function customQuestion(){
@@ -380,10 +384,13 @@ class QuestionController extends Controller
     return response()->json($output);
     }
     public function pendingQues(){
-      $pending_ques = DB::table('post_q')
-                     ->where('status',0)
-                     ->orWhere('status',2)
+      $pending_ques = DB::table('questions')
+                     ->join('subjects','subjects.id','=','questions.subject_id')
+                     ->select('questions.*','subjects.name as sname')
+                     ->where('questions.status',0)
+                     ->orWhere('questions.status',2)
                      ->get();
+                    // dd($pending_ques);
       return view('pages.pending-question',compact('pending_ques'));
     }
 

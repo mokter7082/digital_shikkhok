@@ -69,20 +69,7 @@
     <div class="panel-heading">
                  <h3 class="panel-title"></h3>
                  </div>
-            <div class="panel-heading">
 
-            @php
-               date_default_timezone_set("Asia/Dhaka");
-               $todaydate = date("Y-m-d");
-             $today_ques = DB::table('post_q')
-                       ->join('users','users.id','=','post_q.user_id')
-                       ->select('post_q.*','users.mobile','users.institutionname')
-                       ->where('post_q.date', 'like', '%'.$todaydate.'%')
-                       ->get();
-          $today_count = count($today_ques);
-          @endphp
-<h3 class="panel-title"></h3>
-</div>
 
               <?php                          
                      $l_user_id = Session::get('user_id');
@@ -109,15 +96,15 @@
                   </tr>
             </thead>
                     <tbody>
-                      @foreach($today_ques as $val)
-                        <tr id = "tr-{{$val->id}}">
+                      @foreach($today_qus as $val)
+                      <tr id="rowid_{{$val->id}}" data-id="{{$val->id}}">
                           <input type="hidden" value="{{$val->id}}" id="userId">
                           <td>{{$val->id}}</td>
-                          <td>{{$val->user_name}}</td>
+                          <td>{{$val->name}}</td>
                           <td>{{$val->mobile}}</td>
                           <td>{{$val->institutionname}}</td>
                           <td id="q">
-                          {{$val->quens}}
+                          {{$val->question}}
                            @if($val->status == 0)
                             <p id="a">No answers yet</p>
                             @elseif($val->status == 2)
@@ -132,20 +119,22 @@
                                @else
                                @endif
                           </td>
-                          <td>{{$val->date}}</td>
-                          <td>{{$val->subject}}</td>
+                          <td>{{$val->created_at}}</td>
+                          <td>{{$val->sname}}</td>
                           <td>
-                           
-                            <input type="hidden" name="id" id="id_{{$val->id}}" value="{{$val->id}}">
-                            <input type="hidden" name="post_user_id" id="post_user_id_{{$val->id}}" value="{{$val->user_id}}">
-                            <textarea name="ans" id="ans_{{$val->id}}" rows="3" cols="30" placeholder="Write Answer Here" required></textarea>
+                          <form method="post" class="sub" enctype="multipart/form-data">
+                           @csrf
+                            <input type="hidden" class="id_i" name="id" value="{{$val->id}}">
+                            <input type="hidden" name="post_user_id" id="post_user_id_{{$val->id}}" value="{{$val->asked_by}}">
+                            <textarea class="form-control" name="ans" id="ans_{{$val->id}}" rows="3" cols="30" placeholder="Write Answer Here" required></textarea>
+                            <input name="image" type="file" id="image_{{$val->id}}" />
                             <input type="hidden" name="user_id" id="l_user_id_{{$val->id}}" value="{{$l_user_id}}">
                             <input type="hidden" name="username" id="username_{{$val->id}}" value="{{$username }}">
-                            <input type="hidden" name="subject" id="subject_{{$val->id}}" value="{{$val->subject}}">
+                            <input type="hidden" name="subject" id="subject_{{$val->id}}" value="{{$val->sname}}">
                             <input type="hidden" name="date" id="date_{{$val->id}}" value="{{$todaydate}}">
                             <input type="hidden" name="institutionname" id="institutionname_{{$val->id}}" value="{{$institutionname}}">
-                            <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val->id}})" type="button">submit</button>
-                           
+                            <button style="margin-top:2px; border-radius:10px;" type="submit" class="btn btn-sm btn-success">Submit</button>
+                            </form>
                           </td>
                         </tr>
                         @endforeach
@@ -191,39 +180,62 @@
     });
     })
 
-   function myFunction(id){
-    //var id = $("#post_user_id_"+id).val();
-     var post_user_id = $("#post_user_id_"+id).val();
-     var ans = $("#ans_"+id).val();
-      var l_user_id = $("#l_user_id_"+id).val();
-      var username = $("#username_"+id).val();
-      var subject = $("#subject_"+id).val();
-      var date = $("#date_"+id).val();
-      var institutionname = $("#institutionname_"+id).val();
+//    function myFunction(id){
+//     //var id = $("#post_user_id_"+id).val();
+//      var post_user_id = $("#post_user_id_"+id).val();
+//      var ans = $("#ans_"+id).val();
+//       var l_user_id = $("#l_user_id_"+id).val();
+//       var username = $("#username_"+id).val();
+//       var subject = $("#subject_"+id).val();
+//       var date = $("#date_"+id).val();
+//       var institutionname = $("#institutionname_"+id).val();
 
-        $.ajax({
-        url: "{{url('a_insert')}}",
-        type: "POST",
-        dataType: "json",
-        data:{
-             "id":id,
-             "post_user_id":post_user_id,
-             "ans":ans,
-             "l_user_id":l_user_id,
-             "username":username,
-             "subject":subject,
-             "date":date,
-             "institutionname":institutionname,
-             "_token": "{{ csrf_token() }}"
+//         $.ajax({
+//         url: "{{url('a_insert')}}",
+//         type: "POST",
+//         dataType: "json",
+//         data:{
+//              "id":id,
+//              "post_user_id":post_user_id,
+//              "ans":ans,
+//              "l_user_id":l_user_id,
+//              "username":username,
+//              "subject":subject,
+//              "date":date,
+//              "institutionname":institutionname,
+//              "_token": "{{ csrf_token() }}"
+             
+//         },
+//         success:function(response){
+//             console.log(response);
+//              $("#tr-"+id).hide();
+             
+//         }
+//       })
+//     }
+
+$('.sub').submit(function(e) {
+       e.preventDefault();
+       var id = $(this).parents('tr').find('#userId').val();
+         //alert(id); return;
+       let formData = new FormData(this);
+       $.ajax({
+          type:'POST',
+          url: '{{url('a_insert')}}',
+           data: formData,
+           contentType: false,
+           processData: false,
+           success:function(data){
+             console.log(data);
+             if(data.data===true) {
+              $("#rowid_"+id).hide();
+            }else if(data.data===null){
+              $("#rowid_"+id).hide();
+            }
              
         },
-        success:function(response){
-            console.log(response);
-             $("#tr-"+id).hide();
-             
-        }
-      })
-    }
+       });
+  });
 
   $(document).ready(function(){  
            $('#search').keyup(function(){  
