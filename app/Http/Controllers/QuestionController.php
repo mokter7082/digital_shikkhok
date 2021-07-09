@@ -166,36 +166,36 @@ class QuestionController extends Controller
         }
       
       $column_order = array(
-          "post_q.id",
-          "post_q.user_name",
+          "questions.id",
+          "users.name",
           "users.mobile",
-          "post_q.date",
-          "post_q.subject",
-          "post_q.quens"); //set column field database for datatable orderable
+          "questions.created_at",
+          "questions.question"); //set column field database for datatable orderable
   
       $column_search = array(
-          "post_q.user_name",
-          "users.mobile",
-          "post_q.date",
-          "post_q.subject",
-          "post_q.quens"); //set column field database for datatable searchable
+        "questions.id",
+        "users.name",
+        "users.mobile",
+        "questions.created_at",
+        "questions.question"); //set column field database for datatable searchable
   
-      $order = array("post_q.id" => 'desc');
+      $order = array("questions.id" => 'desc');
   
-      $recordsTotal =  DB::table('post_q')
+      $recordsTotal =  DB::table('questions')
                       ->count();  //DEAFAULT COUNT FOR DATATABLE
      
-      $list =  DB::table('post_q')
-                 ->join('users','users.id','=','post_q.user_id')
-                 ->select('post_q.*','users.mobile','users.institutionname')
-                 ->where('post_q.date','>=',$start_date)
-                 ->where('post_q.date','<=',$end_date);        
+      $list =  DB::table('questions')
+                 ->join('users','users.id','=','questions.asked_by')
+                //  ->join('subjects','subjects.id','=','users.subject_id')
+                 ->select('questions.*','users.name','users.mobile','users.institutionname')
+                 ->where('questions.created_at','>=',$start_date)
+                 ->where('questions.created_at','<=',$end_date);        
   
      // echo $list->toSql(); exit;
 
       if (!empty($search)) {
         $list->where(function($query) use ($search, $column_search) {
-          $query->where("post_q.id", 'LIKE', "%{$search}%");
+          $query->where("questions.id", 'LIKE', "%{$search}%");
           foreach ($column_search as $item) {
             $query->orWhere($item, 'LIKE', "%{$search}%");
           }
@@ -218,6 +218,7 @@ class QuestionController extends Controller
       //echo $list->toSql(); exit;
   
       $list = $list->get();
+      //dd($list);
       // generate server side datatables
       $data = array();
       //dd($data);
@@ -227,10 +228,10 @@ class QuestionController extends Controller
           $row = array();
           //$row[] = ++$sl;
           $row[] = $value->id;
-          $row[] = $value->user_name;
+          $row[] = $value->name;
           $row[] = $value->mobile;
-          $row[] = $value->date;
-          $row[] = $value->quens;
+          $row[] = $value->created_at;
+          $row[] = $value->question;
           $data[] = $row;
         }
       }

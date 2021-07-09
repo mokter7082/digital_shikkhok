@@ -173,39 +173,40 @@ public function dateCustom_answer(Request $request){
         }
       
       $column_order = array(
-          "ans.id",
+          "answers.id",
           "users.name",
           "users.mobile",
-          "ans.date",
-          "ans.subject",
-          "ans.ans",
-          "post_q.quens"); //set column field database for datatable orderable
+          "answers.created_at",
+          "users.subject_id",
+          "answers.answer",
+          "questions.question"); //set column field database for datatable orderable
   
       $column_search = array(
-          "users.name",
-          "users.mobile",
-          "ans.date",
-          "ans.subject",
-          "ans.ans",
-          "post_q.quens"); //set column field database for datatable searchable
+        "answers.id",
+        "users.name",
+        "users.mobile",
+        "answers.created_at",
+        "users.subject_id",
+        "answers.answer",
+        "questions.question"); //set column field database for datatable searchable
   
-      $order = array("post_q.id" => 'desc');
+      $order = array("answers.id" => 'desc');
   
-      $recordsTotal =  DB::table('post_q')
+      $recordsTotal =  DB::table('answers')
                       ->count();  //DEAFAULT COUNT FOR DATATABLE
      
-      $list =  DB::table('ans')
-                 ->join('users','users.id','=','ans.user_id')
-                 ->join('post_q','ans.post_id','=','post_q.id')
-                 ->select('ans.*','users.mobile','users.name','post_q.quens')
-                 ->where('ans.date','>=',$start_date)
-                 ->where('ans.date','<=',$end_date);        
+      $list =  DB::table('answers')
+                 ->join('users','users.id','=','answers.answered_by')
+                 ->join('questions','questions.id','=','answers.question_id')
+                 ->select('answers.*','users.name','users.mobile','questions.question')
+                 ->where('answers.created_at','>=',$start_date)
+                 ->where('answers.created_at','<=',$end_date);        
   
       //echo $list->toSql(); exit;
 
       if (!empty($search)) {
         $list->where(function($query) use ($search, $column_search) {
-          $query->where("post_q.id", 'LIKE', "%{$search}%");
+          $query->where("answers.id", 'LIKE', "%{$search}%");
           foreach ($column_search as $item) {
             $query->orWhere($item, 'LIKE', "%{$search}%");
           }
@@ -239,9 +240,9 @@ public function dateCustom_answer(Request $request){
           $row[] = ++$sl;
           $row[] = $value->name;
           $row[] = $value->mobile;
-          $row[] = $value->date;
-          $row[] = $value->quens;
-          $row[] = $value->ans;
+          $row[] = $value->created_at;
+          $row[] = $value->question;
+          $row[] = $value->answer;
           $data[] = $row;
         }
       }
