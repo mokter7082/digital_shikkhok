@@ -9,51 +9,40 @@
                                   <div class="panel-heading">
                                       <h3 class="panel-title">All Scholarship</h3>
                                   </div>
-                                  <div class="panel-heading">
-                                    <?php
-                                       $total_scholarship = DB::table('scolarship')
-                                                       ->get();
-                                       $count_scholarship = count($total_scholarship);
-                                    ?>
-                                      <h3 class="panel-title"></h3>
-                                  </div>
-                                  <?php 
-                                        // $custom_date = date('Y-m-d');
-                                        // $custom_date = explode('-',$custom_date);
-                                        // $custome_year = $custom_date[0];
-                                        // $custome_month = $custom_date[1];
-                                        // $custome_day = $custom_date[2];
-                                        // $final_date = $custome_year.'-'.$custome_month.'-'.'20';
-    
 
+                                  <?php 
+                   
+                                                  $all_s = DB::select("SELECT DISTINCT
+                                                  COUNT( questions.asked_by ) AS question_asked,
+                                                  scolarship.`id`,
+                                                  scolarship.`user_id`,
+                                                  scolarship.`name`,
+                                                  users.`email`,
+                                                  scolarship.mobile,
+                                                  scolarship.`ans`,
+                                                  scolarship.`status`,
+                                                  max(questions.created_at) `created_at` 
+                                                FROM
+                                                  scolarship
+                                                   JOIN questions ON questions.asked_by = scolarship.user_id 
+                                                   JOIN users ON users.id = questions.asked_by
+                                                WHERE
+                                                  date(questions.created_at) >=  '2021-04-20' 
+                                                GROUP BY
+                                                  scolarship.`id`,
+                                                  scolarship.`user_id`,
+                                                  scolarship.`name`,
+                                                  users.`email`,
+                                                  scolarship.mobile,
+                                                  scolarship.`ans`,
+                                                  scolarship.`status`
+                                                  
+                                                ORDER BY
+                                                  question_asked DESC");
+                                                // dd($all_s)
+                                   
                                           
-                                    $all_s = DB::select("SELECT DISTINCT
-                                    COUNT( post_q.user_id ) AS question_asked,
-                                    scolarship.`id`,
-                                    scolarship.`user_id`,
-                                    scolarship.`name`,
-                                    post_q.`user_email`,
-                                    scolarship.mobile,
-                                    scolarship.`ans`,
-                                    scolarship.`status`,
-                                    max(post_q.date) `date` 
-                                  FROM
-                                    scolarship
-                                     JOIN post_q ON post_q.user_id = scolarship.user_id 
-                                  WHERE
-                                    date(post_q.date) >=  '2021-04-20' 
-                                  GROUP BY
-                                    scolarship.`id`,
-                                    scolarship.`user_id`,
-                                    scolarship.`name`,
-                                    post_q.`user_email`,
-                                    scolarship.mobile,
-                                    scolarship.`ans`,
-                                    scolarship.`status`
-                                    
-                                  ORDER BY
-                                    question_asked DESC");
-                                  // dd($all_s)
+                        
                      
                                                             
                                  
@@ -80,12 +69,12 @@
                                                         <tr>
                                                             <td>{{$val->user_id}}</td>
                                                             <td>{{$val->name}}</td>
-                                                            <td>{{$val->user_email}}</td>
+                                                            <td>{{$val->email}}</td>
                                                             <td>{{$val->mobile}}</td>
                                                             <td>{{$val->ans}}</td>
-                                                            <td>{{$val->date}}</td>
+                                                            <td>{{$val->created_at}}</td>
                                                          
-                                                            <td>{{isset($q_q[$val->user_id])?$q_q[$val->user_id]:0}}</td>
+                                                            <td>{{$val->question_asked}}</td>
                                                             <td>
                                                               @if($val->status == 'আপনার আবেদনটি নিশ্চিত করা হয়েছে')
                                                                <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">আপনার আবেদনটি নিশ্চিত করা হয়েছে</button>

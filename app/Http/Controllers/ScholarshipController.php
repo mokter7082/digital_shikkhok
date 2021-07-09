@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Redirect;
 class ScholarshipController extends Controller
 {
     public function allScholarship(){
-           $all_scholarship = DB::select("SELECT scolarship.user_id,COUNT(post_q.quens) quens_ct FROM `scolarship` INNER JOIN post_q ON post_q.user_id = scolarship.user_id GROUP BY scolarship.user_id");
+        //    $all_scholarship = DB::select("SELECT scolarship.user_id,COUNT(post_q.quens) quens_ct FROM `scolarship` INNER JOIN post_q ON post_q.user_id = scolarship.user_id GROUP BY scolarship.user_id");
     	
-         //dd($all_scholarship);
-                // $q_q = [];
+        //  //dd($all_scholarship);
+        //         // $q_q = [];
            
-                foreach ($all_scholarship as $key => $value) {
-                    $q_q[$value->user_id] = $value->quens_ct;
-                }    
-    	return view('pages.all-scholarship',compact('q_q'));
+        //         foreach ($all_scholarship as $key => $value) {
+        //             $q_q[$value->user_id] = $value->quens_ct;
+        //         }    
+    	return view('pages.all-scholarship');
 	}
   public function ansheroScholarship(){
     return view('pages.anshero-scholarship');
@@ -51,10 +51,11 @@ class ScholarshipController extends Controller
                     ->count();  //DEAFAULT COUNT FOR DATATABLE
    
     $list =   DB::table('scolarship')
-    ->join('ans','ans.user_id','=','scolarship.user_id')
+    ->join('answers','answers.answered_by','=','scolarship.user_id')
     ->join('users','users.id','scolarship.user_id')
-    ->select('scolarship.*','users.email','ans.user_id')
-    ->groupBy('ans.user_id');
+    ->select(array('scolarship.*','users.email','scolarship.ans', DB::raw('COUNT(answers.answered_by) as ans_count')))
+    // ->select('scolarship.*','users.email','ans.user_id')
+    ->groupBy('answers.answered_by');
   
   
        
@@ -87,7 +88,7 @@ class ScholarshipController extends Controller
     //echo $list->toSql(); exit;
 
     $list = $list->get();
-   // dd($list);
+     //dd($list);
     // generate server side datatables
     $data = array();
     //dd($data);
@@ -101,6 +102,7 @@ class ScholarshipController extends Controller
         $row[] = $value->email;
         $row[] = $value->mobile;
         $row[] = $value->ans;
+        $row[] = $value->ans_count;
          $row[] = $value->date;
         if($value->status == 'আপনার আবেদনটি নিশ্চিত করা হয়েছে'){
           $row[] = '<button type="submit" class="btn btn-primary btn-sm" id="verified_'.$value->id.'"onclick="verification(' .$value->id. ')">আপনার আবেদনটি নিশ্চিত করা হয়েছে</button>';

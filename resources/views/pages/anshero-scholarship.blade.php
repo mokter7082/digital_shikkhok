@@ -11,30 +11,42 @@
                                   </div>
                                   <?php 
     
-                                  // $all_anshero = DB::table('scolarship')
-                                  //                         ->join('answers','answers.answered_by','=','scolarship.user_id')
-                                  //                         ->join('users','users.id','=','scolarship.user_id')
-                                  //                         ->select(array('scolarship.*','users.email', DB::raw('COUNT(answers.answered_by) as ans_count')))
-                                  //                         ->groupBy('answers.answered_by')
-                                  //                         ->get();
-                                  //                         dd($all_anshero);
+                                  //  $all_anshero = DB::table('scolarship')
+                                  //                 ->join('answers','answers.answered_by','=','scolarship.user_id')
+                                  //                 ->join('users','users.id','scolarship.user_id')
+                                  //                 ->select(array('scolarship.*','users.email','scolarship.ans', DB::raw('COUNT(answers.answered_by) as ans_count')))
+                                  //                 ->groupBy('answers.answered_by')
+                                  //                 ->get();
+                                                   // dd($all_anshero);
                                           
                                                           $all_anshero = DB::select("SELECT DISTINCT
+                                                          COUNT( answers.answered_by ) AS anscount,
                                                           scolarship.`id`,
                                                           scolarship.`user_id`,
                                                           scolarship.`name`,
+                                                          users.`email`,
                                                           scolarship.mobile,
                                                           scolarship.`ans`,
                                                           scolarship.`status`,
-                                                          max(ans.date) `date` 
+                                                          max(answers.created_at) `created_at` 
                                                         FROM
                                                           scolarship
-                                                           JOIN ans ON ans.user_id = scolarship.user_id 
+                                                           JOIN answers ON answers.answered_by = scolarship.user_id 
+                                                           JOIN users ON users.id = answers.answered_by
                                                         WHERE
-                                                          date(ans.date) >=  '2021-06-25' 
+                                                          date(answers.created_at) >=  '2021-04-20' 
                                                         GROUP BY
-                                                          scolarship.`user_id`");
-                                  //  dd($all_anshero);
+                                                          scolarship.`id`,
+                                                          scolarship.`user_id`,
+                                                          scolarship.`name`,
+                                                          users.`email`,
+                                                          scolarship.mobile,
+                                                          scolarship.`ans`,
+                                                          scolarship.`status`
+                                                          
+                                                        ORDER BY
+                                                        anscount DESC");
+                                                         //dd($all_anshero)
                      
                                                             
                                  
@@ -49,7 +61,9 @@
                                                   <th>ID</th>
                                                   <th>Name</th>
                                                   <th>Mobile</th>
+                                                  <th>Email</th>
                                                   <th>Answer</th>
+                                                  <th>Answer Count</th>
                                                   <th>date</th>
                                                   <th>Action</th>
                                               </tr>
@@ -60,10 +74,10 @@
                                                             <td>{{$val->user_id}}</td>
                                                             <td>{{$val->name}}</td>
                                                             <td>{{$val->mobile}}</td>
+                                                            <td>{{$val->email}}</td>
                                                             <td>{{$val->ans}}</td>
-                                                            <td>{{$val->date}}</td>
-                                                         
-                                            
+                                                            <td>{{$val->anscount}}</td>
+                                                            <td>{{$val->created_at}}</td>
                                                             <td>
                                                               @if($val->status == 'আপনার আবেদনটি নিশ্চিত করা হয়েছে')
                                                                <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">আপনার আবেদনটি নিশ্চিত করা হয়েছে</button>
