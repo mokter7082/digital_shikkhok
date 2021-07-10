@@ -28,38 +28,29 @@
       </div>
       </div>
 
-              @php
-                $physics_question =DB::table('questions')
-                    ->where('subject_id', '7')
-                    ->where(function($query) {
-                      $query->where('created_at','>=','2021-06-01')
-                      ->orWhere('created_at','<=','2021-06-30');
-                     })->count();
-                @endphp
-
+              <?php
+                $physcis = DB::select('SELECT * FROM questions WHERE created_at BETWEEN "2021-06-01" AND "2021-06-30" AND subject_id = 7');    
+                $physcis_question = count($physcis);
+                    ?>
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
                   <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
                   <a href="{{route('all-question')}}">
                   <div class="mini-stat-info text-right text-muted">
-                      <span class="counter">{{$physics_question}}</span>
+                      <span class="counter">{{$physcis_question}}</span>
                        Questions
                       </div>
                   </a>
                   <div class="tiles-progress">
                   <div class="m-t-20">
-                  <h5 class="text-uppercase">Physics Questions <span class="pull-right">{{$physics_question}}</span></h5>
+                  <h5 class="text-uppercase">Physics Questions <span class="pull-right">{{$physcis_question}}</span></h5>
             </div>
             </div>                              
       </div>
       </div>
                @php
-                $chemistry_question =DB::table('questions')
-                    ->where('subject_id', '8')
-                    ->where(function($query) {
-                      $query->where('created_at','>=','2021-06-01')
-                      ->orWhere('created_at','<=','2021-06-30');
-                     })->count();
+               $chemistry = DB::select('SELECT * FROM questions WHERE created_at BETWEEN "2021-06-01" AND "2021-06-30" AND subject_id = 8');
+                $chemistry_question = count($chemistry);
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
@@ -78,13 +69,9 @@
             </div>                              
       </div>
       </div>
-      @php
-                $biology_question =DB::table('questions')
-                    ->where('subject_id', '9')
-                    ->where(function($query) {
-                      $query->where('created_at','>=','2021-06-01')
-                      ->orWhere('created_at','<=','2021-06-30');
-                     })->count();
+      @php      
+              $biology = DB::select('SELECT * FROM questions WHERE created_at BETWEEN "2021-06-01" AND "2021-06-30" AND subject_id = 9');
+                $biology_question = count($biology);
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
@@ -106,12 +93,8 @@
 
 
         @php
-        $math_question =DB::table('questions')
-                    ->where('subject_id', '5')
-                    ->where(function($query) {
-                      $query->where('created_at','>=','2021-06-01')
-                      ->orWhere('created_at','<=','2021-06-30');
-                     })->count();
+        $math = DB::select('SELECT * FROM questions WHERE created_at BETWEEN "2021-06-01" AND "2021-06-30" AND subject_id = 5');
+        $math_question = count($math);
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
@@ -133,12 +116,8 @@
       
 
       @php
-        $higher_math_question =DB::table('questions')
-                    ->where('subject_id', '10')
-                    ->where(function($query) {
-                      $query->where('created_at','>=','2021-06-01')
-                      ->orWhere('created_at','<=','2021-06-30');
-                     })->count();
+      $higher_math = DB::select('SELECT * FROM questions WHERE created_at BETWEEN "2021-06-01" AND "2021-06-30" AND subject_id = 10');
+        $higher_math_question = count($higher_math);
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
@@ -183,7 +162,8 @@
       </div>
 
 
-             <?php
+             <?php  
+             
                  $physics_ans =DB::table('answers')
                             ->join('questions','questions.id','=','answers.question_id')
                             ->join('subjects','subjects.id','questions.subject_id')

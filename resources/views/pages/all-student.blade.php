@@ -125,8 +125,6 @@
                                           <th>Name</th>
                                           <th>Email</th>
                                           <th>Mobile</th>
-                                         
-                                          <th>Subject</th>
                                           <th>Date</th>
                                           <th>Action</th>
                                       </tr>
@@ -138,8 +136,6 @@
                                                 <td>{{$val->name}}</td>
                                                 <td>{{$val->email}}</td>
                                                 <td>{{$val->mobile}}</td>
-                                           
-                                                <td>{{$val->english}}</td>
                                                 <td>{{$val->date}}</td>
                                                 <td class="text-center">
                                                   <button type="submit" class="btn btn-danger btn-sm delete" id="s_delete{{$val->id}}" onclick="s_delete({{$val->id}})">Delete</button>
