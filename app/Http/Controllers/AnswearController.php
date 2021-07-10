@@ -340,7 +340,7 @@ public function dateCustom_answer(Request $request){
      $answer_data['points'] = $point;
      $answer_data['flags'] = '0';
      $answer_data['quality'] = '0';
-     DB::table('answers')->insert($answer_data);
+    $insert = DB::table('answers')->insert($answer_data);
 
    }
 
@@ -351,7 +351,7 @@ public function dateCustom_answer(Request $request){
    
           
     return response()->json([
-      'data' => @$insert,
+      'data' => $insert,
       
     ]);    
    }
