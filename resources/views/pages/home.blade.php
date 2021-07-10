@@ -245,8 +245,11 @@
       </div>
       </div>
                               @php
-                              $pending_count =DB::select("SELECT * FROM `questions` WHERE status = 0");
-                              $pending_count = count($pending_count);
+                              $pending_count =DB::table('questions')
+                                            ->where('status',0)
+                                            ->orWhere('status',2)
+                                            ->count();
+                              
                               @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
