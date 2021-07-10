@@ -68,9 +68,10 @@
                              $user_id = Session::get('user_id');
                              $teacher_ans_t_3 =  DB::table('answers')
                                                 ->join('users','users.id','answers.answered_by')
-                                                ->select('answers.*')
+                                                ->select('answers.*','users.name','users.institutionname')
                                                 ->where('answered_by',$user_id)
                                                 ->get();
+                                                //dd($teacher_ans_t_3);
                                                 
                                         
                              ?>
@@ -83,9 +84,9 @@
                                                   <th>ID</th>
                                                   <th>User Name</th>
                                                   <th>Answear</th>
-                                                  <th>Subject</th>
+                                             
                                                   <th>Date</th>
-                                                  <th>Subject</th>
+                                     
                                                   <th>Institution Name</th>
                                                   <th>Action</th>
                                               </tr>
@@ -94,11 +95,11 @@
                                                     @foreach($teacher_ans_t_3 as $val)
                                                         <tr id = "tr-{{$val->id}}">
                                                             <td>{{$val->id}}</td>
-                                                            <td>{{$val->user_name}}</td>
-                                                            <td>{{$val->ans}}</td>
-                                                            <td>{{$val->subject}}</td>
-                                                            <td>{{$val->date}}</td>
-                                                            <td>{{$val->subject}}</td>
+                                                            <td>{{$val->name}}</td>
+                                                            <td>{{$val->answer}}</td>
+                                                           
+                                                            <td>{{$val->created_at}}</td>
+                                                  
                                                             <td>{{$val->institutionname}}</td>
                                                              <td>
                                                               <button type="submit" class="btn btn-danger btn-sm delete" id="a_delete{{$val->id}}" onclick="a_delete({{$val->id}})">Delete</button>

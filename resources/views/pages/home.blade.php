@@ -98,7 +98,7 @@
              <div class="col-md-6 col-sm-6 col-lg-3">
                  <div class="mini-stat clearfix bx-shadow">
                      <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
-                     <a href="">
+                     <a href="{{URL::to('today-answear')}}">
                      <div class="mini-stat-info text-right text-muted">
                          <span class="a_count counter">{{$ans_count}}</span>
                           Answer
