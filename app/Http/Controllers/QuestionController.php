@@ -390,7 +390,6 @@ class QuestionController extends Controller
                      ->join('subjects','subjects.id','=','questions.subject_id')
                      ->select('questions.*','subjects.name as sname')
                      ->where('questions.status',0)
-                     ->orWhere('questions.status',2)
                      ->get();
                     // dd($pending_ques);
       return view('pages.pending-question',compact('pending_ques'));

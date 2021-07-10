@@ -14,7 +14,7 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
                   <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
-                  <a href="{{route('all-question')}}">
+                  <a href="#">
                   <div class="mini-stat-info text-right text-muted">
                       <span class="counter">{{$june_quens}}</span>
                        Question
@@ -35,7 +35,7 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
                   <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
-                  <a href="{{route('all-question')}}">
+                  <a href="#">
                   <div class="mini-stat-info text-right text-muted">
                       <span class="counter">{{$physcis_question}}</span>
                        Questions
@@ -56,7 +56,7 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
                   <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
-                  <a href="{{route('all-question')}}">
+                  <a href="">
                   <div class="mini-stat-info text-right text-muted">
                       <span class="counter">{{$chemistry_question}}</span>
                        Questions
@@ -77,7 +77,7 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
                   <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
-                  <a href="{{route('all-question')}}">
+                  <a href="">
                   <div class="mini-stat-info text-right text-muted">
                       <span class="counter">{{$biology_question}}</span>
                        Questions
@@ -100,7 +100,7 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
                   <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
-                  <a href="{{route('all-question')}}">
+                  <a href="">
                   <div class="mini-stat-info text-right text-muted">
                       <span class="counter">{{$math_question}}</span>
                        Questions
@@ -123,7 +123,7 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
                   <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
-                  <a href="{{route('all-question')}}">
+                  <a href="">
                   <div class="mini-stat-info text-right text-muted">
                       <span class="counter">{{$higher_math_question}}</span>
                        Questions
@@ -147,7 +147,7 @@
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
                   <span class="mini-stat-icon bg-info"><i class="fa fa-question"></i></span>
-                  <a href="{{route('all-question')}}">
+                  <a href="">
                   <div class="mini-stat-info text-right text-muted">
                       <span class="counter">{{$june_ans}}</span>
                        Answer
@@ -166,7 +166,7 @@
              
                  $physics_ans =DB::table('answers')
                             ->join('questions','questions.id','=','answers.question_id')
-                            ->join('subjects','subjects.id','questions.subject_id')
+                            //->join('subjects','subjects.id','questions.subject_id')
                             ->select('answers.*','questions.subject_id')
                             ->where('subject_id', '7')
                             ->where('answers.created_at','>=','2021-06-01')

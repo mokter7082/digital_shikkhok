@@ -8,7 +8,6 @@
                   @php
                   $pending_count = DB::table('questions')
                                 ->where('status',0)
-                                ->orWhere('status',2)
                                 ->count();
                   
                   @endphp
@@ -64,7 +63,7 @@
                                         ->where('subject_id', '3')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     
                     @endphp
@@ -91,7 +90,7 @@
                                         ->where('subject_id', '5')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                    
                     @endphp
@@ -118,7 +117,7 @@
                                         ->where('subject_id', '8')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 
@@ -144,7 +143,7 @@
                                         ->where('subject_id', '7')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 
@@ -172,7 +171,7 @@
                                         ->where('subject_id', '10')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 
@@ -199,7 +198,7 @@
                                         ->where('subject_id', '12')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 
@@ -226,7 +225,7 @@
                                         ->where('subject_id', '9')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 
@@ -252,7 +251,7 @@
                                         ->where('subject_id', '14')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 
@@ -278,7 +277,7 @@
                                         ->where('subject_id', '11')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 
@@ -304,7 +303,7 @@
                                         ->where('subject_id', '13')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 
@@ -331,7 +330,7 @@
                                         ->where('subject_id', '6')
                                         ->where(function($query) {
                                         $query->where('status', '0')
-                                        ->orWhere('status', '2');
+                                        ->orWhere('status', '0');
                                         })->count();
                     @endphp
 

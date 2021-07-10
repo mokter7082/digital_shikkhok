@@ -16,7 +16,7 @@ class SubjectController extends Controller
                     ->where('subject_id', '1')
                     ->where(function($query) {
                       $query->where('status', '0')
-                      ->orWhere('status', '2');
+                      ->orWhere('status', '0');
                      })->get();
                    //  dd($bangla_sub);
     	return view('pages/subject.bangla',compact('bangla_sub'));
@@ -26,7 +26,7 @@ class SubjectController extends Controller
                     ->where('subject_id', '3')
                     ->where(function($query) {
                       $query->where('status', '0')
-                      ->orWhere('status', '2');
+                      ->orWhere('status', '0');
                      })->get();
     	return view('pages/subject.english',compact('english_sub'));
     }
@@ -35,7 +35,7 @@ class SubjectController extends Controller
                     ->where('subject_id', '5')
                     ->where(function($query) {
                       $query->where('status', '0')
-                      ->orWhere('status', '2');
+                      ->orWhere('status', '0');
                      })->get();
     	return view('pages/subject.math',compact('math_sub'));
     }
@@ -44,7 +44,7 @@ class SubjectController extends Controller
                         ->where('subject_id', '8')
                         ->where(function($query) {
                          $query->where('status', '0')
-                        ->orWhere('status', '2');
+                        ->orWhere('status', '0');
                         })->get();
     	return view('pages/subject.chemistry',compact('chemistry_sub'));
     }
@@ -53,7 +53,7 @@ class SubjectController extends Controller
                         ->where('subject_id', '7')
                         ->where(function($query) {
                          $query->where('status', '0')
-                        ->orWhere('status', '2');
+                        ->orWhere('status', '0');
                         })->get();
     	return view('pages/subject.physics',compact('physics_sub'));
     }
@@ -62,7 +62,7 @@ class SubjectController extends Controller
                          ->where('subject_id', '10')
                          ->where(function($query) {
                          $query->where('status', '0')
-                         ->orWhere('status', '2');
+                         ->orWhere('status', '0');
                          })->get();
     	return view('pages/subject.higher_math',compact('higher_math_sub'));
     }
@@ -71,7 +71,7 @@ class SubjectController extends Controller
                          ->where('subject_id', '12')
                          ->where(function($query) {
                          $query->where('status', '0')
-                         ->orWhere('status', '2');
+                         ->orWhere('status', '0');
                          })->get();
     	return view('pages/subject.accounting',compact('accounting_sub'));
     }
@@ -80,7 +80,7 @@ class SubjectController extends Controller
                          ->where('subject_id', '9')
                          ->where(function($query) {
                          $query->where('status', '0')
-                         ->orWhere('status', '2');
+                         ->orWhere('status', '0');
                          })->paginate(500);
     	return view('pages/subject.biology',compact('biology_sub'));
     }
@@ -89,7 +89,7 @@ class SubjectController extends Controller
                          ->where('subject_id', '14')
                          ->where(function($query) {
                          $query->where('status', '0')
-                         ->orWhere('status', '2');
+                         ->orWhere('status', '0');
                          })->get();
     	return view('pages/subject.geography',compact('geography_sub'));
     }
@@ -98,7 +98,7 @@ class SubjectController extends Controller
                          ->where('subject_id', '11')
                          ->where(function($query) {
                          $query->where('status', '0')
-                         ->orWhere('status', '2');
+                         ->orWhere('status', '0');
                          })->get();
     	return view('pages/subject.ict',compact('ict_sub'));
     }
@@ -107,7 +107,7 @@ class SubjectController extends Controller
                          ->where('subject_id', '13')
                          ->where(function($query) {
                          $query->where('status', '0')
-                         ->orWhere('status', '2');
+                         ->orWhere('status', '0');
                          })->get();
                  return view('pages/subject.agriculture',compact('agriculture_sub'));
     }
@@ -116,7 +116,7 @@ class SubjectController extends Controller
                          ->where('subject_id', '6')
                          ->where(function($query) {
                          $query->where('status', '0')
-                         ->orWhere('status', '2');
+                         ->orWhere('status', '0');
                          })->get();
     	return view('pages/subject.islam',compact('islam_sub'));
     }

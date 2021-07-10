@@ -66,8 +66,10 @@
                               
                              <?php
                              $user_id = Session::get('user_id');
-                             $teacher_ans_t_3 =  DB::table('ans')
-                                                ->where('user_id',$user_id)
+                             $teacher_ans_t_3 =  DB::table('answers')
+                                                ->join('users','users.id','answers.answered_by')
+                                                ->select('answers.*')
+                                                ->where('answered_by',$user_id)
                                                 ->get();
                                                 
                                         

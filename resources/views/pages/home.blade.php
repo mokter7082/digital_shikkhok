@@ -90,15 +90,15 @@
             </form>
                 <?php
                     $user_id = Session::get('user_id');
-                    $today_ans_count = $teacher_ans =  DB::table('ans')
-                                                   ->where('user_id',$user_id)->get();
+                    $today_ans_count = $teacher_ans =  DB::table('answers')
+                                                   ->where('answered_by',$user_id)->get();
                     $ans_count = count($today_ans_count);
                 ?>
                 <!-- STAET TEACHERS COMPONENT -->
              <div class="col-md-6 col-sm-6 col-lg-3">
                  <div class="mini-stat clearfix bx-shadow">
                      <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
-                     <a href="{{URL::to('today-answear')}}">
+                     <a href="">
                      <div class="mini-stat-info text-right text-muted">
                          <span class="a_count counter">{{$ans_count}}</span>
                           Answer
@@ -112,8 +112,10 @@
                  </div>
              </div>
                       @php
-                      $pending_count =DB::select("SELECT * FROM `post_q` WHERE status = 0");
-                      $pending_count = count($pending_count);
+                      $pending_count = DB::table('questions')
+                                            ->where('status',0)
+                                            ->count();
+                 
                       @endphp
 
           <div class="col-md-6 col-sm-6 col-lg-3">
@@ -247,7 +249,6 @@
                               @php
                               $pending_count =DB::table('questions')
                                             ->where('status',0)
-                                            ->orWhere('status',2)
                                             ->count();
                               
                               @endphp
