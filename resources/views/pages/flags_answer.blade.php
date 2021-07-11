@@ -22,6 +22,7 @@
                                                 <tr>
                                                  <th>ID</th>
                                                   <th>Answer</th> 
+                                                  <th>Question</th> 
                                                   <th>Actions</th>  
                                               </tr>
                                           </thead>
@@ -29,6 +30,7 @@
                                                    @foreach($flags_answer as $val)
                                                    <tr id = "tr-{{$val->id}}">
                                                         <td>{{$val->id}}</td>
+                                                        <td>{{$val->question}}</td>
                                                         <td>{{$val->answer}}</td>
                                                         <td>
                                                            <button type="submit" style="margin-top:1px;" class="btn btn-danger btn-sm delete" id="ans_delete{{$val->id}}" onclick="ans_delete({{$val->id}})">Delete</button>

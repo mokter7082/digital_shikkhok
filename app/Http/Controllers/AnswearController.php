@@ -816,7 +816,11 @@ public function dateCustom_answer(Request $request){
       ]);    
 }
 public function flagsAnswer(){
-  $flags_answer = DB::select("SELECT id, answer FROM answers WHERE flags>0");
+  // $flags_answer = DB::select("SELECT id, answer FROM answers WHERE flags>0");
+  $flags_answer = DB::select('SELECT answers.id, answers.answer,answers.flags, questions.question
+FROM answers INNER JOIN questions ON questions.id = answers.question_id WHERE answers.flags >0');
+  //dd($flags_answer);
+
   return view('pages.flags_answer',compact('flags_answer'));
 }
 

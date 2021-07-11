@@ -30,8 +30,8 @@
             </form>
                 <?php
                     $user_id = Session::get('user_id');
-                    $today_ans_count = $teacher_ans =  DB::table('ans')
-                                                   ->where('user_id',$user_id)->get();
+                    $today_ans_count = $teacher_ans =  DB::table('answers')
+                                                   ->where('answered_by',$user_id)->get();
                     $ans_count = count($today_ans_count);
 
                 ?>
@@ -54,7 +54,7 @@
                  </div>
              </div>
                       @php
-                      $pending_count =DB::select("SELECT * FROM `post_q` WHERE status = 0");
+                      $pending_count =DB::select("SELECT * FROM `questions` WHERE status = 0");
                       $pending_count = count($pending_count);
                       @endphp
 
@@ -294,7 +294,7 @@
 
       @elseif($teacher == '5')
          @php
-       $all_teacher = DB::table('users')->where('isTeacher',1)->get();
+       $all_teacher = DB::table('users')->where('type',1)->get();
       $count_teacher = count($all_teacher);
 
        $sum_t = $count_teacher+105;
@@ -317,7 +317,7 @@
     </div>
     </div>
        @php
-       $all_student = DB::table('users')->where('type',1)->get();
+       $all_student = DB::table('users')->where('type',2)->get();
        $count_student = count($all_student);
        $sum_stu = $count_student+3883;
        @endphp
@@ -360,7 +360,7 @@
       </div>
       </div>
                     @php
-                    $all_ans =DB::table('ans')->get();
+                    $all_ans =DB::table('answers')->get();
                     $count_ans = count($all_ans);
                     $sum_ans = $count_ans+27759;
                     @endphp
@@ -382,7 +382,7 @@
       </div>
       </div>
                 @php
-                $all_quens =DB::table('post_q')->get();
+                $all_quens =DB::table('questions')->get();
                 $count_quens = count($all_quens);
                 $sum_all_ques = $count_quens+15581;
                 @endphp
@@ -421,7 +421,7 @@
             ini_set('memory_limit', '-1');
             date_default_timezone_set("Asia/Dhaka");
             $todaydate = date("Y-m-d");
-            $today_questions = DB::table('post_q')
+            $today_questions = DB::table('questions')
             ->where('date', 'like', '%' . $todaydate . '%')
             ->count();
          @endphp
@@ -446,7 +446,7 @@
             ini_set('memory_limit', '-1');
             date_default_timezone_set("Asia/Dhaka");
             $todaydate = date("Y-m-d");
-            $today_answer = DB::table('ans')
+            $today_answer = DB::table('answers')
             ->where('date', 'like', '%' . $todaydate . '%')
             ->count();
          @endphp
