@@ -12,6 +12,7 @@ use App\Http\Middleware\DashboardMiddleware;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\volunteerController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\AnnouncementController;
 
 
 /*
@@ -43,14 +44,16 @@ Route::get('/all-teacher',[TeacherController::class,'allTeacher'])->name('all-te
 Route::get('/teacher-inactive',[TeacherController::class,'teacherInactive'])->name('teacher-inactive');
 Route::get('/teacher-active',[TeacherController::class,'teacherActive'])->name('teacher-active');
 Route::get('/edit-teacher/{id}',[TeacherController::class,'editTeacher'])->name('edit-teacher');
-Route::post('/update-teacher/{id}',[TeacherController::class,'updateTeacher'])->name('update-teacher');
+// Route::post('/update-teacher/{id}',[TeacherController::class,'updateTeacher'])->name('update-teacher');
+Route::post('/insert-teacher',[TeacherController::class,'insertTeacher'])->name('insert-teacher');
 Route::get('/today-reg_teacher',[TeacherController::class,'todayRegteacher'])->name('today-reg_teacher');
 Route::get('/teacher-delete',[TeacherController::class,'teacherDelete'])->name('teacher-delete');
 Route::get('/answer-hero',[TeacherController::class,'answerHero'])->name('answer-hero');
 Route::get('/teacher-block',[TeacherController::class,'teacherBlock'])->name('teacher-block');
 Route::get('/teacher-unblock',[TeacherController::class,'teacherUnblock'])->name('teacher-unblock');
 //student route
- Route::get('/all-student',[StudentController::class,'allStudent'])->name('all-student');
+Route::get('/all-student',[StudentController::class,'allStudent'])->name('all-student');
+//Route::get('/all_stu_data',[StudentController::class,'allstuData'])->name('all_stu_data');
 Route::get('/today-reg_student',[StudentController::class,'todaySturegister'])->name('today-reg_student');
 Route::get('/student-inactive',[StudentController::class,'studentInactive'])->name('student-inactive');
 Route::get('/student-active',[StudentController::class,'studentActive'])->name('student-active');
@@ -155,6 +158,8 @@ Route::get('agriculture',[SubjectController::class,'Agriculture'])->name('agricu
 Route::get('islam',[SubjectController::class,'Islam'])->name('islam');
 //volunteers
 Route::get('all-volunteers',[volunteerController::class,'allVolunteers'])->name('all-volunteers');
+//Announcement 
+Route::get('/announcement',[AnnouncementController::class,'AnnounceMent'])->name('announcement');
 
 
 

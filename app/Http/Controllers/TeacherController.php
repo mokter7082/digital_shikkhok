@@ -105,6 +105,27 @@ class TeacherController extends Controller
           echo 'wrong';
         }
     }
+    public function insertTeacher(Request $request){
+
+      //$teacher_id = $request->teacher_id;
+      $subject_id = $request->subject_id;
+      
+      $dataInsertArray = [];
+      foreach($subject_id as $subject){
+        $dataInsertArray[] = array(
+          'teacher_id' => ($request->teacher_id),
+          'subject_id' => $subject
+        );
+      }
+      //dd($dataInsertArray);
+
+
+      $insert = DB::table('teacher_subject')->insert($dataInsertArray);
+      Session::flash('message','Subject Add success');
+      return Redirect::to('/edit-teacher/'.$request->teacher_id);    
+
+ }
+
     public function quesTiming(Request $request){
      // dd($request->all());
         $id = $request->id;

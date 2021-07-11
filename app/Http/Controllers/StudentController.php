@@ -11,10 +11,8 @@ use Carbon\Carbon;
 class StudentController extends Controller
 {
     public function allStudent(){
-      $all_student = DB::table('users')
-               ->where('type',2)            
-                  ->get();
-                 // dd($all_student);
+      $all_student = DB::select("SELECT * FROM users WHERE type = 2");
+                  //dd($all_student);
    
       return view('pages.all-student',compact('all_student'));
     }

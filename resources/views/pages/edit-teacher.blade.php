@@ -7,31 +7,39 @@
   <div class="col-md-12">
    <div class="panel panel-default">
               <div class="panel-heading">
-                  <h2 class=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Teacher Update</h2>
+                  <h2 class=""><i class="fa fa-user-plus" aria-hidden="true"></i> Teacher Subject Add</h2>
               </div>
 	<div class="panel-body">
 	<div class="row">
 	   <div class="col-md-6">
 	   <div class="panel panel-default">
-<!-- 	   <div class="panel-heading">
-	   	 <a href="{{route('all-teacher')}}" class="btn btn-primary">All teacher<a>
-	   </div> -->
+        <?php  
+		$subject = DB::table('subjects')->get();	
+		?>
+		@if(Session::has('message'))
+				<p class="alert alert-info">{{ Session::get('message') }}</p>
+			  @endif
 	    <div class="panel-body">
-	            <form role="form" method="post" action="{{url('update-teacher/'.$edit_teacher->id)}}">
+	            <!-- <form role="form" method="post" action="{{url('update-teacher/'.$edit_teacher->id)}}"> -->
+				<form role="form" method="post" action="{{route('insert-teacher')}}">
 	            	@csrf
 	                <div class="form-group">
 	                    <label for="name">Teacher Name</label>
-	                    <input type="text" name="name" class="form-control" value="{{$edit_teacher->name}}" id="name">
+	                    <input type="text" class="form-control" value="{{$edit_teacher->name}}" id="name">
+						<input type="hidden" name="teacher_id" class="form-control" value="{{$edit_teacher->id}}" id="name">
 	                </div>
+
 	                <div class="form-group">
-	                    <label for="email">Teacher Email</label>
-	                    <input type="email" name="email" class="form-control" value="{{$edit_teacher->email}}" id="email">
+					<label for="name">Subject</label></br>
+						@foreach($subject as $val)
+						<div class="checkbox checkbox-success checkbox-inline">
+							<input type="checkbox"  name="subject_id[]" id="" value="{{$val->id}}" >
+						 <label for="">{{$val->name}}</label>
+						</div>
+						@endforeach
 	                </div>
-	                <div class="form-group">
-	                    <label for="mobile">Teacher Mobile</label>
-	                    <input type="text" name="mobile" class="form-control" value="{{$edit_teacher->mobile}}" id="mobile">
-	                </div>
-	                <button type="submit" class="btn btn-purple waves-effect waves-light">Update</button>
+					
+	                <button type="submit" class="btn btn-purple waves-effect waves-light">Submit</button>
 	            </form>
 	     </div>
 	     </div>

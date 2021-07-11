@@ -188,6 +188,12 @@
                     <li><a href="{{route('flags-answer')}}">Flags Answer</a></li>
                 </ul>
             </li>
+            <!-- <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="fa fa-bullhorn"></i> <span>Announcement </span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{route('announcement')}}">Announcement</a></li>
+                </ul>
+            </li> -->
             <li class="has_sub">
                 <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>June Data</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">

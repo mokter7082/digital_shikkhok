@@ -32,6 +32,7 @@
         <!-- Custom Files -->
         <link href="{{url('css/helper.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{url('css/style.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{url('css/custom.css')}}" rel="stylesheet" type="text/css" />
 
         <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
     

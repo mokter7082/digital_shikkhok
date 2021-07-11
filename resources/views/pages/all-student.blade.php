@@ -7,114 +7,13 @@
      @php
              $teacher = Session::get('type')  
              @endphp
-             @if($teacher == '1')
-                      <div class="col-md-12">
-                              <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                      <h3 class="panel-title">All Student</h3>
-                                  </div>
-                                  <div class="panel-heading">
-                                    <?php
-                                       $total_stu = DB::table('users')->where('type',2)->get();
-                                       $t_student = count($total_stu);
-                                    ?>
-                                      <h3 class="panel-title">Total Student = {{$t_student}}</h3>
-                                  </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                        <table id="datatable" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                  <th>ID</th>
-                                                  <th>Name</th>
-                                                  <th>Email</th>
-                                                  <th>Mobile</th>
-  
-                                                  <th>Subject</th>
-                                                  <th>Date</th>
-                                                  <th>Action</th>
-                                              </tr>
-                                          </thead>
-                                                  <tbody>
-                                                    @foreach($all_student as $val)
-                                                           <tr id = "tr-{{$val->id}}">
-                                                            <td>{{$val->id}}</td>
-                                                            <td>{{$val->name}}</td>
-                                                            <td>{{$val->email}}</td>
-                                                            <td>{{$val->mobile}}</td>
-      
-                                                            <td>{{$val->english}}</td>
-                                                            <td>{{$val->date}}</td>
-                                                            <td class="text-center">
-                                                              <button type="submit" class="btn btn-danger btn-sm delete" id="s_delete{{$val->id}}" onclick="s_delete({{$val->id}})">Delete</button>
-                                                            </td>
-                                                        </tr>
-                                                      @endforeach
-                                                  </tbody>
-                                              </table>
-
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          @elseif($teacher == '3')
-                          <div class="col-md-12">
-                              <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                        <table id="" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                 
-                                                  <th>Name</th>
-                                                  <th>Email</th>
-                                                  <th>Mobile</th>
-                             
-                          
-                                                  <th>Date</th>
-                                                  <th>Action</th>
-                                              </tr>
-                                          </thead>
-                                                  <tbody>
-                                                    @foreach($all_student as $val)
-                                                           <tr id = "tr-{{$val->id}}">
-                                                        
-                                                            <td>{{$val->name}}</td>
-                                                            <td>{{$val->email}}</td>
-                                                            <td>{{$val->mobile}}</td>
-                                                      
-                                                      
-                                                            <td>{{$val->date}}</td>
-                                                            <td class="text-center">
-                                                              <button type="submit" class="btn btn-danger btn-sm delete" id="s_delete{{$val->id}}" onclick="s_delete({{$val->id}})">Delete</button>
-                                                            </td>
-                                                        </tr>
-                                                      @endforeach
-                                                  </tbody>
-                                              </table>
-
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          @elseif($teacher == '4')
-                          
+             @if($teacher == '4')
                           <div class="col-md-12">
                               <div class="panel panel-default">
                                   <div class="panel-heading">
                                       <h3 class="panel-title">All Student</h3>
                                   </div>
-                                  <div class="panel-heading">
-                                    <?php
-                                       $total_stu = DB::table('users')->where('type',2)->get();
-                                       $t_student = count($total_stu);
-                                    ?>
-                                      <h3 class="panel-title">Total Student = {{$t_student}}</h3>
-                                  </div>
+
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
@@ -160,12 +59,6 @@
                           @elseif($teacher == '5')
                               <div class="col-md-12">
                               <div class="panel panel-default">
-                                @php
-                                   $all_stu = DB::table('users')
-                                      ->where('type',2)
-                                      ->orderBy('date', 'DESC')
-                                      ->get();
-                                @endphp
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
@@ -184,7 +77,7 @@
                                               </tr>
                                           </thead>
                                         <tbody>
-                                          @foreach($all_stu as $val)
+                                          @foreach($all_student as $val)
                                               <tr id = "tr-{{$val->id}}">
                                                 
                                                   <td>{{$val->name}}</td>
