@@ -422,7 +422,7 @@
             date_default_timezone_set("Asia/Dhaka");
             $todaydate = date("Y-m-d");
             $today_questions = DB::table('questions')
-            ->where('date', 'like', '%' . $todaydate . '%')
+            ->where('created_at', 'like', '%' . $todaydate . '%')
             ->count();
          @endphp
     <div class="row">
@@ -447,7 +447,7 @@
             date_default_timezone_set("Asia/Dhaka");
             $todaydate = date("Y-m-d");
             $today_answer = DB::table('answers')
-            ->where('date', 'like', '%' . $todaydate . '%')
+            ->where('created_at', 'like', '%' . $todaydate . '%')
             ->count();
          @endphp
     <div class="row">
