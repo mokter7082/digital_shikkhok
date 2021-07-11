@@ -21,8 +21,8 @@
                                             <thead>
                                                 <tr>
                                                  <th>ID</th>
-                                                  <th>Answer</th> 
                                                   <th>Question</th> 
+                                                  <th>Answer</th> 
                                                   <th>Actions</th>  
                                               </tr>
                                           </thead>
