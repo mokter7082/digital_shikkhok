@@ -14,6 +14,9 @@
                           $teacher = Session::get('type')  
                           @endphp
                           @if($teacher == '4') 
+                          @if(Session::has('message'))
+                          <p class="alert alert-info">{{ Session::get('message') }}</p>
+                          @endif
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
@@ -45,7 +48,8 @@
                                                      <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">Verified</button><br>
                                                     @endif
                                                     <button type="submit" style="margin-top:1px;" class="btn btn-danger btn-sm delete" id="t_delete{{$val->id}}" onclick="t_delete({{$val->id}})">Delete</button><br>
-                                                    <a href="{{URL::to('edit-teacher/'.$val->id)}}" style="margin-top:2px;" class="btn btn-warning btn-sm">Edit</a><br>
+                                                    <a href="{{URL::to('add-subject/'.$val->id)}}" style="margin-top:2px;" class="btn btn-success btn-sm">Add Subject</a><br>
+                                                    <a href="{{URL::to('edit-teacher/'.$val->id)}}" style="margin-top:2px;" class="btn btn-warning btn-sm">Edite</a><br>
                                                     @if($val->type == '3')
                                                      <button type="submit" style="margin-top:1px;" class="btn btn-primary btn-sm delete" id="" onclick="">Teacher</button><br>
                                                     @else

@@ -81,15 +81,12 @@ class TeacherController extends Controller
                  ->delete();
          return response()->json('delete success');
     }
-    public function editTeacher($id){
-       $edit_teacher = DB::table('users')
-                       // ->join('institutes','institutes.user_id','=','users.id')
-                       // ->join('teachers','teachers.institute_id','=','institutes.id')
-                       // ->select('users.*','institutes.institute_name')
+    public function addSubject($id){
+       $add_subject = DB::table('users')
                        ->where('users.id',$id)
                        ->first();
              //dd($edit_teacher);
-       return view('pages.edit-teacher',compact('edit_teacher'));
+       return view('pages.add-subject',compact('add_subject'));
     }
     public function updateTeacher(Request $request,$id){
          //dd($id);
@@ -99,14 +96,11 @@ class TeacherController extends Controller
         $update_data['mobile'] = $request->mobile;
         //dd($update_data);
         $t_update = DB::table('users')->where('id',$id)->update($update_data);
-        if($t_update){
-          return Redirect::to('all-teacher');
-        }else{
-          echo 'wrong';
-        }
+        Session::flash('message', 'Update Success');
+        return Redirect::back();
+         
     }
     public function insertTeacher(Request $request){
-
       //$teacher_id = $request->teacher_id;
       $subject_id = $request->subject_id;
       
@@ -118,14 +112,19 @@ class TeacherController extends Controller
         );
       }
       //dd($dataInsertArray);
-
-
       $insert = DB::table('teacher_subject')->insert($dataInsertArray);
       Session::flash('message','Subject Add success');
-      return Redirect::to('/edit-teacher/'.$request->teacher_id);    
+      return Redirect::to('all-answer_hero');
+      //return Redirect::to('/edit-teacher/'.$request->teacher_id);    
 
  }
-
+ public function editTeacher($id){
+   //return "fghksjfdh";
+  $edit_teacher = DB::table('users')
+                  ->where('users.id',$id)
+                  ->first();
+  return view('pages.edit-teachers',compact('edit_teacher'));
+}
     public function quesTiming(Request $request){
      // dd($request->all());
         $id = $request->id;

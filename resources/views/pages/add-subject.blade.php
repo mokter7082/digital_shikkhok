@@ -20,13 +20,13 @@
 				<p class="alert alert-info">{{ Session::get('message') }}</p>
 			  @endif
 	    <div class="panel-body">
-	            <!-- <form role="form" method="post" action="{{url('update-teacher/'.$edit_teacher->id)}}"> -->
+	            <!-- <form role="form" method="post" action="{{url('update-teacher/'.$add_subject->id)}}"> -->
 				<form role="form" method="post" action="{{route('insert-teacher')}}">
 	            	@csrf
 	                <div class="form-group">
 	                    <label for="name">Teacher Name</label>
-	                    <input type="text" class="form-control" value="{{$edit_teacher->name}}" id="name">
-						<input type="hidden" name="teacher_id" class="form-control" value="{{$edit_teacher->id}}" id="name">
+	                    <input type="text" class="form-control" value="{{$add_subject->name}}" id="name">
+						<input type="hidden" name="teacher_id" class="form-control" value="{{$add_subject->id}}" id="name">
 	                </div>
 
 	                <div class="form-group">

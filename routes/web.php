@@ -43,8 +43,9 @@ Route::middleware([DashboardMiddleware::class])->group(function(){
 Route::get('/all-teacher',[TeacherController::class,'allTeacher'])->name('all-teacher');
 Route::get('/teacher-inactive',[TeacherController::class,'teacherInactive'])->name('teacher-inactive');
 Route::get('/teacher-active',[TeacherController::class,'teacherActive'])->name('teacher-active');
+Route::get('/add-subject/{id}',[TeacherController::class,'addSubject'])->name('add-subject');
 Route::get('/edit-teacher/{id}',[TeacherController::class,'editTeacher'])->name('edit-teacher');
-// Route::post('/update-teacher/{id}',[TeacherController::class,'updateTeacher'])->name('update-teacher');
+ Route::post('/update-teacher/{id}',[TeacherController::class,'updateTeacher'])->name('update-teacher');
 Route::post('/insert-teacher',[TeacherController::class,'insertTeacher'])->name('insert-teacher');
 Route::get('/today-reg_teacher',[TeacherController::class,'todayRegteacher'])->name('today-reg_teacher');
 Route::get('/teacher-delete',[TeacherController::class,'teacherDelete'])->name('teacher-delete');
