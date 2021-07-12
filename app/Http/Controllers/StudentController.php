@@ -16,6 +16,27 @@ class StudentController extends Controller
    
       return view('pages.all-student',compact('all_student'));
     }
+    public function editStudent($id){
+      //return "fghksjfdh";
+     $edit_student = DB::table('users')
+                     ->where('users.id',$id)
+                     ->first();
+                    // dd($edit_student);
+     return view('pages.edit-student',compact('edit_student'));
+   }
+   public function updateStudent(Request $request,$id){
+    //dd($id);
+   $update_data = array();
+   $update_data['name'] = $request->name;
+   $update_data['email'] = $request->email;
+   $update_data['mobile'] = $request->mobile;
+   $update_data['institutionname'] = $request->institutionname;
+   //dd($update_data);
+   $t_update = DB::table('users')->where('id',$id)->update($update_data);
+   Session::flash('message', 'Updated');
+   return Redirect::back();
+    
+}
     public function todaySturegister(){
       date_default_timezone_set("Asia/Dhaka");
       $todaydate = date("Y-m-d");

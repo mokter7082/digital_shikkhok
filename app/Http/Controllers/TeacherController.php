@@ -83,9 +83,13 @@ class TeacherController extends Controller
     }
     public function addSubject($id){
        $add_subject = DB::table('users')
+                       ->join('teacher_subject','teacher_subject.teacher_id','=','users.id')
+
+                       ->select('users.*',DB::raw('group_concat(teacher_subject.subject_id) as s_id'))
                        ->where('users.id',$id)
+                       ->groupBy('users.id')
                        ->first();
-             //dd($edit_teacher);
+            // dd($add_subject);
        return view('pages.add-subject',compact('add_subject'));
     }
     public function updateTeacher(Request $request,$id){
@@ -94,6 +98,7 @@ class TeacherController extends Controller
         $update_data['name'] = $request->name;
         $update_data['email'] = $request->email;
         $update_data['mobile'] = $request->mobile;
+        $update_data['institutionname'] = $request->institutionname;
         //dd($update_data);
         $t_update = DB::table('users')->where('id',$id)->update($update_data);
         Session::flash('message', 'Update Success');
@@ -114,7 +119,7 @@ class TeacherController extends Controller
       //dd($dataInsertArray);
       $insert = DB::table('teacher_subject')->insert($dataInsertArray);
       Session::flash('message','Subject Add success');
-      return Redirect::to('all-answer_hero');
+      return Redirect::back();
       //return Redirect::to('/edit-teacher/'.$request->teacher_id);    
 
  }

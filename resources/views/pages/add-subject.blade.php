@@ -7,18 +7,22 @@
   <div class="col-md-12">
    <div class="panel panel-default">
               <div class="panel-heading">
-                  <h2 class=""><i class="fa fa-user-plus" aria-hidden="true"></i> Teacher Subject Add</h2>
+                  <h2 class=""><i class="fa fa-user-plus" aria-hidden="true"></i>Add Subjects</h2>
               </div>
 	<div class="panel-body">
 	<div class="row">
 	   <div class="col-md-6">
 	   <div class="panel panel-default">
         <?php  
-		$subject = DB::table('subjects')->get();	
+		//dd($add_subject);
+		$subject = DB::table('subjects')->where('status',1) ->get();
+		$ext_sub = explode(",",$add_subject->s_id);
+		//explode(" ",$str)
+		
 		?>
-		@if(Session::has('message'))
-				<p class="alert alert-info">{{ Session::get('message') }}</p>
-			  @endif
+		       @if(Session::has('message'))
+					<p class="alert alert-info">{{ Session::get('message') }}</p>
+				@endif
 	    <div class="panel-body">
 	            <!-- <form role="form" method="post" action="{{url('update-teacher/'.$add_subject->id)}}"> -->
 				<form role="form" method="post" action="{{route('insert-teacher')}}">
@@ -33,8 +37,10 @@
 					<label for="name">Subject</label></br>
 						@foreach($subject as $val)
 						<div class="checkbox checkbox-success checkbox-inline">
-							<input type="checkbox"  name="subject_id[]" id="" value="{{$val->id}}" >
+						@if (!in_array($val->id, $ext_sub))
+						<input type="checkbox"  name="subject_id[]" id="" value="{{$val->id}}" >
 						 <label for="">{{$val->name}}</label>
+						@endif
 						</div>
 						@endforeach
 	                </div>

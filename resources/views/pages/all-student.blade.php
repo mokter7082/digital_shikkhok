@@ -37,14 +37,14 @@
                                                 <td>{{$val->mobile}}</td>
                                                 <td>{{$val->date}}</td>
                                                 <td class="text-center">
-                                                  <button type="submit" class="btn btn-danger btn-sm delete" id="s_delete{{$val->id}}" onclick="s_delete({{$val->id}})">Delete</button>
-      
+                                                  <button type="submit" class="btn btn-danger btn-sm delete" id="s_delete{{$val->id}}" onclick="s_delete({{$val->id}})">Delete</button></br>
+                                                  <a href="{{URL::to('edit-student/'.$val->id)}}" style="margin-top:2px;" class="btn btn-success btn-sm">Edit</a><br>
                                                   @if ($val->status == '3')
                                                    <button type="submit" style="margin-top:4px;" class="btn btn-warning btn-sm block" id="s_block{{$val->id}}" onclick="student_block({{$val->id}})">Unblock</button>
                                                   @else
                                                   <button type="submit" style="margin-top:4px;" class="btn btn-danger btn-sm block" id="s_block{{$val->id}}" onclick="student_block({{$val->id}})">Block</button>
-                                                    
                                                   @endif
+                                                  
                                                 </td>
                                             </tr>
                                               @endforeach
