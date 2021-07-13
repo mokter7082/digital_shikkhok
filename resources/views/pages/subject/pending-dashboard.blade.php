@@ -35,7 +35,7 @@
                                 ->where('subject_id', '1')
                                 ->where(function($query) {
                                 $query->where('status', '0')
-                                ->orWhere('status', '2');
+                                ->orWhere('status', '0');
                                 })->count();
                     
                     @endphp
