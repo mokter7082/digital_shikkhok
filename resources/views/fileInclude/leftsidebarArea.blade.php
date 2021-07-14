@@ -179,7 +179,7 @@
                 <ul class="list-unstyled">
                     <li><a href="{{route('le_all-teacher')}}">Teacher</a></li>
                     <li><a href="{{route('le_all-student')}}">Student</a></li>
-                    <li><a href="{{route('le_all-anshero')}}">Answer Hero</a></li>
+                    <!-- <li><a href="{{route('le_all-anshero')}}">Answer Hero</a></li> -->
                 </ul>
             </li>
             <li class="has_sub">

@@ -35,7 +35,7 @@
                                     <td>
                                       <div class="form-group col-xs-6">
                                           <div class="row">
-                                          <p id="point_td_{{$val->id}}" class="font-weight-bold">{{$val->points}}</p>
+                                          <p id="point_td_{{$val->id}}" class="font-weight-bold">{{$val->countpoint}}</p>
                                           <input class="form-control col-sm-1 inp" id="point_{{$val->id}}" type="text" name="point">
                                           </div>
                                     </div>

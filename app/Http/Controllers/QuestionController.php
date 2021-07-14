@@ -29,8 +29,7 @@ class QuestionController extends Controller
         "questions.created_at",
         "questions.question",
         "users.mobile",
-        "users.institutionname",
-        "subjects.subject"); //set column field database for datatable orderable
+        "users.institutionname"); //set column field database for datatable orderable
 
     $column_search = array(
       "questions.id",
@@ -39,8 +38,7 @@ class QuestionController extends Controller
       "questions.created_at",
       "questions.question",
       "users.mobile",
-      "users.institutionname",
-      "subjects.subject"); //set column field database for datatable searchable
+      "users.institutionname"); //set column field database for datatable searchable
 
     $order = array("questions.id" => 'desc');
 
@@ -81,7 +79,7 @@ class QuestionController extends Controller
     //echo $list->toSql(); exit;
 
     $list = $list->get();
-    //dd($list);
+   // dd($list);
     // generate server side datatables
     $data = array();
     //dd($data);
@@ -96,8 +94,6 @@ class QuestionController extends Controller
         $row[] = $value->question;
         $row[] = $value->created_at;
         $row[] = $value->sname;
-       // $row[] = $value->quens;
-       // $row[] = $value->sname;
         $row[] = '<button type="submit" class="btn btn-danger btn-sm delete" id="q_delete' . $value->id . '" onclick="q_delete(' . $value->id . ')">Delete</button>';
   
 
