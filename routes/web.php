@@ -82,6 +82,8 @@ Route::get('/pending-ques',[QuestionController::class,'pendingQues'])->name('pen
 Route::get('/today_pen-ques',[QuestionController::class,'todayPending_ques'])->name('today_pen-ques');
 Route::get('/single-answered_ques',[QuestionController::class,'singleAnswered_ques'])->name('single-answered_ques');
 Route::get('/multi-answered_ques',[QuestionController::class,'multiAnswered_ques'])->name('multi-answered_ques');
+Route::get('/single-date',[QuestionController::class,'singleDate'])->name('single-date');
+Route::post('/single_date_data',[QuestionController::class,'singleDatedata'])->name('single_date_data');
 
 
 

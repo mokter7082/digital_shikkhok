@@ -127,6 +127,7 @@
                     <li><a href="{{route('all-question')}}">All Question</a></li>
                     <li><a href="{{route('today-question')}}">Today Question</a></li>
                     <li><a href="{{route('custom-question')}}">Custom Question</a></li>
+                    <li><a href="{{route('single-date')}}">Sigle Date</a></li>
                     <li><a href="{{route('multi-answered_ques')}}">Multi Answred Ques</a></li>
                 </ul>
             </li>

@@ -420,5 +420,120 @@ class QuestionController extends Controller
 
       return view('pages.multi-answered_ques',compact('question_details'));
     }
+    public function singleDate(){
+      return view('pages.single-date');
+    }
+
+    public function singleDatedata (Request $request){
+      $post= $request->all();
+      //dd($post);
+   
+      
+      $limit = $request->input('length');
+      $start = $request->input('start');
+      $search = $request->input('search.value');
+
+      $start_date = $request->input('start_date');
+      $end_date = $request->input('end_date');
+
+      
+
+         $custom_date = date('Y-m-d');
+        // $custom_date = explode('-',$custom_date);
+        // $custome_year = $custom_date[0];
+        // $custome_month = $custom_date[1];
+        // $custome_day = $custom_date[2];
+       //  AFTER CUSTOMIZE GET DATA
+        //dd($post);
+        if($post['start_date']){
+        // dd($post);
+          $date = date('Y-m-d',strtotime($post['start_date']));
+        }else{
+         $date = date('Y-m-d');
+        // dd($date);
+        }
+
+      
+      $column_order = array(
+          "questions.id",
+          "users.name",
+          "users.mobile",
+          "questions.created_at",
+          "questions.question"); //set column field database for datatable orderable
+  
+      $column_search = array(
+        "questions.id",
+        "users.name",
+        "users.mobile",
+        "questions.created_at",
+        "questions.question"); //set column field database for datatable searchable
+  
+      $order = array("questions.id" => 'desc');
+  
+      $recordsTotal =  DB::table('questions')
+                      ->count();  //DEAFAULT COUNT FOR DATATABLE
+     
+      $list =  DB::table('questions')
+                 ->join('users','users.id','=','questions.asked_by')
+                 ->select('questions.*','users.name','users.mobile','users.institutionname')
+                 ->where('questions.created_at', 'like', '%' . $date . '%');   
+  
+     // echo $list->toSql(); exit;
+
+      if (!empty($search)) {
+        $list->where(function($query) use ($search, $column_search) {
+          $query->where("questions.id", 'LIKE', "%{$search}%");
+          foreach ($column_search as $item) {
+            $query->orWhere($item, 'LIKE', "%{$search}%");
+          }
+        });
+      }
+  
+      $recordsFiltered = $list->count();
+  
+      $list->limit($limit);
+
+      $list->offset($start);
+      
+  
+      if (!empty($request->input('order.0.column'))) { // here order processing
+        $list->orderBy($column_order[$request->input('order.0.column')], $request->input('order.0.dir'));
+      } else {
+        $list->orderBy(key($order), $order[key($order)]);
+      }
+  
+      //echo $list->toSql(); exit;
+  
+      $list = $list->get();
+      //dd($list);
+      // generate server side datatables
+      $data = array();
+      //dd($data);
+      $sl = $start;
+      if (!empty($list)) {
+        foreach ($list as $value) {
+          $row = array();
+          //$row[] = ++$sl;
+          $row[] = $value->id;
+          $row[] = $value->name;
+          $row[] = $value->mobile;
+          $row[] = $value->created_at;
+          $row[] = $value->question;
+          $data[] = $row;
+        }
+      }
+  
+      //print_r($data); exit;
+  
+      $output = array(
+          "draw" => intval($request->input('draw')),
+          "recordsTotal" => intval($recordsTotal),
+          "recordsFiltered" => intval($recordsFiltered),
+          "data" => $data
+      );
+  
+      // output to json format
+      return response()->json($output);
+    }
  
 }
