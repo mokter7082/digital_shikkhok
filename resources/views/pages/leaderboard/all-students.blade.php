@@ -21,6 +21,7 @@
                                 <th>Email</th>
                                 <th>Mobile Number</th>
                                 <th>Point</th>
+                                <th>Ans Count</th>
                                 <th>Action</th>
                     
                             </tr>
@@ -35,12 +36,12 @@
                                     <td>
                                       <div class="form-group col-xs-6">
                                       <div class="row">
-                                          <p id="point_td_{{$val->id}}" class="font-weight-bold">{{$val->countpoint}}</p>
+                                          <p id="point_td_{{$val->id}}" class="font-weight-bold">{{$val->total_point}}</p>
                                           <input class="form-control col-sm-1 inp" id="point_{{$val->id}}" type="text" name="point">
                                           </div>
-                                    </div>
-                                     
+                                    </div>  
                                  </td> 
+                                 <td>{{$val->quescount}}</td>
                                  <td> <button type="submit" class="btn btn-sm btn-purple waves-effect waves-light" id="p_update{{$val->id}}" onclick="p_update({{$val->id}})">Update</button></td>                              
                                  </tr>
                                 @endforeach
