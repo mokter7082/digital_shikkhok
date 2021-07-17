@@ -63,7 +63,7 @@
                             <input name="image" type="file" id="image_{{$val->id}}" />
                             <input type="hidden" name="user_id" id="l_user_id_{{$val->id}}" value="{{$l_user_id}}">
                             <input type="hidden" name="username" id="username_{{$val->id}}" value="{{$username }}">
-                            <input type="hidden" name="subject" id="subject_{{$val->id}}" value="{{$val->sname}}">
+                            <input type="hidden" name="subject" id="subject_{{$val->id}}" value="{{$val->sid}}">
                             <input type="hidden" name="date" id="date_{{$val->id}}" value="{{$todaydate}}">
                             <input type="hidden" name="institutionname" id="institutionname_{{$val->id}}" value="{{$institutionname}}">
                             <button style="margin-top:2px; border-radius:10px;" type="submit" class="btn btn-sm btn-success">Submit</button>

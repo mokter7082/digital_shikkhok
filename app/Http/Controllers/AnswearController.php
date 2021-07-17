@@ -286,26 +286,75 @@ public function dateCustom_answer(Request $request){
             return response()->json('someone answering success');
  }
     public function Ainsert(Request $request){
+
+     
+      $sub_id = $request->subject;
       $post_id = $request->id;
       $user_id = $request->user_id;
-       //dd($post_id);
+       //**************** */
+
+      
+    //**************end */
        $image  = $request->file('image');
       //dd($data);
       if($image){
-
-        $answercount = DB::select("SELECT answers.question_id,questions.id, questions.question, count( answers.answer ) AS ct 
-        FROM `answers` LEFT JOIN questions ON questions.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,questions.id, questions.question");
-
-          if($answercount == NULL){
-            $point='3';
-            }else{
-            $point='1';     
-          }
+        $point_count = DB::table('answers')
+        ->select(DB::raw('count(question_id) as count '))
+       ->where('question_id',$request->id)
+       ->first();
+      // dd($point_count);
+        $teacher = Session::get('type');
+       if($teacher == 0){
+         $answer_points = 5;
+       }elseif($teacher == 3){
+         if($point_count->count == 0){
+                   if($sub_id == 5){
+                     $answer_points = 5.0;
+                   }elseif($sub_id == 7){
+                     $answer_points = 8.0;
+                   }elseif($sub_id == 8){
+                     $answer_points = 8.0;
+                   }elseif($sub_id == 9){
+                     $answer_points = 5.0;
+                   }elseif($sub_id == 10){
+                     $answer_points = 6.0;
+                   }else{
+                     $answer_points = 3.0;
+                   }
+                   
+         }else{
+           if($sub_id == 5){
+             $answer_points = 2.5;
+           }elseif($sub_id == 7){
+             $answer_points = 4.0;
+           }elseif($sub_id == 8){
+             $answer_points = 4.0;
+           }elseif($sub_id == 9){
+             $answer_points = 2.5;
+           }elseif($sub_id == 10){
+             $answer_points = 3.0;
+           }else{
+             $answer_points = .5;
+           } 
+         }      
+         
+        }else{
+          $answercount = DB::select("SELECT answers.question_id,questions.id, questions.question, count( answers.answer ) AS ct 
+          FROM `answers` LEFT JOIN questions ON questions.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,questions.id, questions.question");
+  
+            if($answercount == NULL){
+              $answer_points='3';
+              }else{
+              $answer_points='1';     
+            }
+        }
+         ///End Ansheor and teacher ar special point///
+    
          $answer_data = array();
          $answer_data['question_id'] = $request->id;
          $answer_data['answered_by'] = $user_id;
          $answer_data['answer'] = $request->ans;
-         $answer_data['points'] = $point;
+         $answer_data['points'] = $answer_points;
          $answer_data['flags'] = '0';
          $answer_data['quality'] = '0';
         $image_name = Str::random(20);
@@ -324,31 +373,132 @@ public function dateCustom_answer(Request $request){
 
 
    }else{
-    $answercount = DB::select("SELECT answers.question_id,questions.id, questions.question, count( answers.answer ) AS ct 
-        FROM `answers` LEFT JOIN questions ON questions.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,questions.id, questions.question");
 
-        if($answercount == NULL){
-          $point='3';
-          }else{
-          $point='1';     
-        }
+    ///Ansheor and teacher ar special point///
+    $point_count = DB::table('answers')
+    ->select(DB::raw('count(question_id) as count '))
+   ->where('question_id',$request->id)
+   ->first();
+  // dd($point_count);
+    $teacher = Session::get('type');
+   if($teacher == 0){
+     $answer_points = 5;
+   }elseif($teacher == 3){
+     if($point_count->count == 0){
+               if($sub_id == 5){
+                 $answer_points = 5.0;
+               }elseif($sub_id == 7){
+                 $answer_points = 8.0;
+               }elseif($sub_id == 8){
+                 $answer_points = 8.0;
+               }elseif($sub_id == 9){
+                 $answer_points = 5.0;
+               }elseif($sub_id == 10){
+                 $answer_points = 6.0;
+               }else{
+                 $answer_points = 3.0;
+               }
+               
+     }else{
+       if($sub_id == 5){
+         $answer_points = 2.5;
+       }elseif($sub_id == 7){
+         $answer_points = 4.0;
+       }elseif($sub_id == 8){
+         $answer_points = 4.0;
+       }elseif($sub_id == 9){
+         $answer_points = 2.5;
+       }elseif($sub_id == 10){
+         $answer_points = 3.0;
+       }else{
+         $answer_points = .5;
+       } 
+     }
+                
      $answer_data = array();
      $answer_data['question_id'] = $request->id;
      $answer_data['answered_by'] = $user_id;
      $answer_data['answer'] = $request->ans;
      $answer_data['file_url'] = '0';
-     $answer_data['points'] = $point;
+     $answer_data['points'] = $answer_points;
      $answer_data['flags'] = '0';
      $answer_data['quality'] = '0';
-    $insert = DB::table('answers')->insert($answer_data);
+     $insert = DB::table('answers')->insert($answer_data);
+     ///End Ansheor and teacher ar special point///
+   }else{
+    $answercount = DB::select("SELECT answers.question_id,questions.id, questions.question, count( answers.answer ) AS ct 
+    FROM `answers` LEFT JOIN questions ON questions.id = answers.question_id  WHERE answers.question_id = $request->id GROUP BY  answers.question_id,questions.id, questions.question");
+     //dd($answercount);
+    if($answercount == NULL){
+      $point='3';
+      }else{
+      $point='1';     
+    }
+ $answer_data = array();
+ $answer_data['question_id'] = $request->id;
+ $answer_data['answered_by'] = $user_id;
+ $answer_data['answer'] = $request->ans;
+ $answer_data['file_url'] = '0';
+ $answer_data['points'] = $point;
+ $answer_data['flags'] = '0';
+ $answer_data['quality'] = '0';
+$insert = DB::table('answers')->insert($answer_data);
+ }
+//00000000000/
+   
+
+   
+
 
    }
-
    DB::table('questions')
    ->where('id',$post_id)
    ->update(['status' => '1']);
+     //*********New Points Add Area *********/
+    //  $point_count = DB::select("SELECT points.user_id
+    //  FROM `points`  WHERE points.user_id = $user_id");
+    //  //dd($point_count);
+    //  if($point_count == NULL){
 
-   
+    //   $teacher = Session::get('type');
+    //   if($teacher == 1) {
+    //     $answer_points = 5;
+    //   }elseif($teacher == 3){
+    //           if($sub_id == 5){
+    //             $answer_points = 2.5;
+    //           }elseif($sub_id == 7){
+    //             $answer_points = 4.0;
+    //           }elseif($sub_id == 8){
+    //             $answer_points = 4.0;
+    //           }elseif($sub_id == 9){
+    //             $answer_points = 2.5;
+    //           }elseif($sub_id == 10){
+    //             $answer_points = 3.0;
+    //           }else{
+    //             $answer_points = .5;
+    //           }       
+    //   }
+    //       $new_points = array();
+    //       $new_points['user_id'] = $user_id;
+    //       $new_points['point'] = $answer_points;
+    //       $new_points['type'] = 0;
+    //       $new_points['user_type'] = $teacher;
+    //       DB::table('points')->insert($new_points);
+    //  }else{
+    //    DB::table('points')
+    //    ->where('user_id',$user_id)
+    //    ->update(['point' =>'point+0.4']);
+    //  }
+    
+//*********New End Area *********/
+// $point_count = DB::select("SELECT answers.question_id, count( answers.question_id ) AS ct
+//    FROM `answers`  WHERE answers.question_id = $request->id");
+
+  //  $ccc = $point_count[0]['ct'];
+  //  dd($ccc);
+
+
+  
           
     return response()->json([
       'data' => $insert,

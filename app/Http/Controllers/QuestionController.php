@@ -384,7 +384,7 @@ class QuestionController extends Controller
     public function pendingQues(){
       $pending_ques = DB::table('questions')
                      ->join('subjects','subjects.id','=','questions.subject_id')
-                     ->select('questions.*','subjects.name as sname')
+                     ->select('questions.*','subjects.name as sname','subjects.id as sid')
                      ->where('questions.status',0)
                      ->get();
                     // dd($pending_ques);
