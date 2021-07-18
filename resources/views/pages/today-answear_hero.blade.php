@@ -58,7 +58,6 @@
                                                   <th>Email</th>
                                                   <th>Mobile</th>
                                                   <th>Institute Name</th>
-                                                  <th>Subject</th>
                                                   <th>Action</th>
                                               </tr>
                                           </thead>
@@ -70,7 +69,6 @@
                                                             <td>{{$val->email}}</td>
                                                             <td>{{$val->mobile}}</td>
                                                             <td>{{$val->institutionname}}</td>
-                                                            <td>{{$val->english}}</td>
                                                              <td class="row">
                                                           @if($val->status == '0')
                                                            <button type="submit" id="verified_{{$val->id}}" class="btn btn-warning btn-sm" onclick="verification({{$val->id}})">Verify</button><br>
