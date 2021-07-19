@@ -29,7 +29,7 @@
                                                   <tbody>
                                                   @foreach($flags_answer as $val)
                                                   <tr id="rowid_{{$val->id}}" data-id="{{$val->id}}">
-                                                 <input type="hidden" value="{{$val->id}}" id="userId">
+                                                 <input type="hidden" value="{{$val->id}}" class="userId">
                                                         <td>{{$val->id}}</td>
                                                         <td>{{$val->question}}</td>
                                                         <td>{{$val->answer}}</td>
@@ -116,7 +116,7 @@ function verification(id){
   function ans_delete(ans_id){
    
       $('.delete').click(function(){
-        var id = $(this).parents('tr').find('#userId').val();
+        var id = $(this).parents('tr').find('.userId').val();
     // alert(id); return;
         swal({   
             title: "Are you sure?",   
@@ -146,7 +146,7 @@ function verification(id){
 
     $('.sub').submit(function(e) {
        e.preventDefault();
-       var id = $(this).parents('tr').find('#userId').val();
+       var id = $(this).parents('tr').find('.userId').val();
          //alert(id); return;
        let formData = new FormData(this);
        $.ajax({
