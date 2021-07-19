@@ -49,7 +49,7 @@
                                                         </td>
                                                         <td>
                                                         <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#view-{{$val->id}}">View</button>
-                                                           <button type="submit" style="margin-top:1px;" class="btn btn-danger btn-sm delete" id="ans_delete{{$val->id}}" onclick="ans_delete({{$val->ans_id}})">Delete</button>
+                                                           <button type="submit" style="margin-top:1px; margin-bottom:1px;" class="btn btn-danger btn-sm delete" id="ans_delete{{$val->id}}" onclick="ans_delete({{$val->ans_id}})">Delete</button>
                                                            @if($val->status == '0')
                                                      <button type="submit" id="verified_{{$val->id}}" class="btn btn-warning btn-sm" onclick="verification({{$val->id}})">Verify</button><br>
                                                      @elseif($val->status == 'not_verified')
@@ -114,8 +114,10 @@ function verification(id){
 
 
   function ans_delete(ans_id){
-      // var t_td = (id);
+   
       $('.delete').click(function(){
+        var id = $(this).parents('tr').find('#userId').val();
+    // alert(id); return;
         swal({   
             title: "Are you sure?",   
             text: "Delete this Ans!",   
@@ -126,13 +128,13 @@ function verification(id){
             closeOnConfirm: false 
         }, function(){ 
           $.ajax({
-            url: '<?php echo URL::to('ans-delete');?>',
+            url: '<?php echo URL::to('flags-delete');?>',
             method: 'GET',
             data: {id:ans_id},
             cache: false,
             success: function(html){
             console.log(html);
-           // $("#tr-"+id).remove();
+            $("#rowid_"+id).hide();
             // reload_table();
             }
           });  

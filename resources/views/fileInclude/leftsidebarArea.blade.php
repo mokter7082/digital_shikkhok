@@ -237,6 +237,13 @@
                     <li><a href="{{route('all-answer_hero')}}">All Answer Hero</a></li>
                 </ul>
             </li>
+            @elseif($teacher == '7')
+            <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Flags</span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{route('flags-answer')}}">Flags Answer</a></li>
+                </ul>
+            </li>
             @else
             @endif
         </ul>

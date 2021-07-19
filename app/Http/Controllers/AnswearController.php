@@ -987,7 +987,16 @@ WHERE
 	answers.flags >0');
   //dd($flags_answer);
 
-  return view('pages.flags_answer',compact('flags_answer'));
+    return view('pages.flags_answer',compact('flags_answer'));
+  }
+  public function flagsDelete(Request $req){
+    $id = $req->input('id');
+   // dd($id);
+   DB::table('answers')
+          ->where('id', $id)
+          ->delete();
+  return response()->json('delete success');
+
 }
 
  

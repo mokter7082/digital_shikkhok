@@ -121,6 +121,7 @@ Route::get('/anshero-block',[AnswearController::class,'ansheroBlock'])->name('an
 Route::get('/anshero-unblock',[AnswearController::class,'ansheroUnblock'])->name('anshero-unblock');
 //Flags
 Route::get('/flags-answer',[AnswearController::class,'flagsAnswer'])->name('flags-answer');
+Route::get('/flags-delete',[AnswearController::class,'flagsDelete'])->name('flags-delete');
 //Leader Board routes
 Route::get('/le_all-teacher',[LeaderboardController::class,'Le_allteacher'])->name('le_all-teacher');
 Route::get('/le_all-student',[LeaderboardController::class,'Le_allstudent'])->name('le_all-student');
