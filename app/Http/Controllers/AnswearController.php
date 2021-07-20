@@ -998,6 +998,24 @@ WHERE
   return response()->json('delete success');
 
 }
+public function flagsBlock(Request $req){
+  $id = $req->input('id');
+  //dd($id);
+ DB::table('users')
+  ->where('id',$id)
+  ->update(['status' => '3']);
+  return response()->json(['success']);     
+}
+public function flagsUnblock(Request $req){
+  $id = $req->input('id');
+  //dd($id);
+ DB::table('users')
+  ->where('id',$id)
+  ->update(['status' => '1']);
+
+  return response()->json(['success']);     
+
+}
 
  
 

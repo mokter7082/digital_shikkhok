@@ -57,6 +57,11 @@
                                                     @else
                                                      <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">Verified</button><br>
                                                     @endif
+                                                    @if ($val->status == '3')
+                                                   <button type="submit" style="margin-top:4px;" class="btn btn-warning btn-sm block" id="flags_block{{$val->id}}" onclick="flags_block({{$val->id}})">Unblock</button>
+                                                  @else
+                                                  <button type="submit" style="margin-top:4px;" class="btn btn-danger btn-sm block" id="flags_block{{$val->id}}" onclick="flags_block({{$val->id}})">Block</button>
+                                                  @endif
                                                         </td>
                                                    </tr>
                                                      @endforeach
@@ -166,5 +171,38 @@ function verification(id){
         },
        });
   });
+  function flags_block(id){
+        var bclass = $("#flags_block"+id).hasClass("btn-danger");
+        //alert(bclass);
+        if($("#flags_block"+id).hasClass("btn-danger")){
+          $.ajax({
+            url: '<?php echo URL::to('flags-block');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+            $("#flags_block"+id).text('Unblock'); //versions newer than 1.6
+            $("#flags_block"+id).removeClass("btn-danger");
+            $("#flags_block"+id).addClass("btn-warning");
+            }
+          });
+        }else {
+          $.ajax({
+            url: '<?php echo URL::to('flags-unblock');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+             $("#flags_block"+id).text('Block'); //versions newer than 1.6
+             $("#flags_block"+id).removeClass("btn-warning");
+             $("#flags_block"+id).addClass("btn-danger");
+            }
+          });
+        }
+  }
 </script>
 @endsection
