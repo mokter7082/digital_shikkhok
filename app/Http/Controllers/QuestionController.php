@@ -302,25 +302,21 @@ class QuestionController extends Controller
     $search = $request->input('search.value');
 
     $column_order = array(
-        "post_q.id"); //set column field database for datatable orderable
+        "questions.id"); //set column field database for datatable orderable
 
     $column_search = array(
-        "post_q.quens"); //set column field database for datatable searchable
+        "questions.question"); //set column field database for datatable searchable
 
-    $order = array("post_q.id" => 'desc');
+    $order = array("questions.id" => 'desc');
 
-    $recordsTotal =  DB::table('post_q')
-                    // ->join('ans','ans.post_id','=','post_q.id')
-                    // ->select('post_q.id','post_q.quens','ans.ans')
+    $recordsTotal =  DB::table('questions')
+
                     ->count();  //DEAFAULT DOUNT FOR DATATABLE
    
-    $list = DB::table('post_q')
-                    ->join('ans','ans.post_id','=','post_q.id')
-                    ->select('post_q.id','post_q.quens','ans.ans');
-            // ->selectRaw("users.`name`,users.`mobile`,users.`institutionname`,(SELECT COUNT(ans.id) FROM ans WHERE ans.user_id = users.id AND ans.`date` BETWEEN '$from_date' AND '$to_date') AS total")
-            //->leftJoin('ans', 'ans.user_id', "users.id")
-           // ->where('users.isTeacher',1);
-            //->groupByRaw('users.id,users.`name`,users.`mobile`,users.`institutionname');
+    $list = DB::table('questions')
+                    ->join('answers','answers.question_id','=','questions.id')
+                    ->select('questions.id','questions.question','answers.answer');
+
 
     //echo $list->toSql(); exit;
 
@@ -330,7 +326,7 @@ class QuestionController extends Controller
 
     if (!empty($search)) {
       $list->where(function($query) use ($search, $column_search) {
-        $query->where("users.id", 'LIKE', "%{$search}%");
+        $query->where("questions.id", 'LIKE', "%{$search}%");
         foreach ($column_search as $item) {
           $query->orWhere($item, 'LIKE', "%{$search}%");
         }
@@ -351,7 +347,7 @@ class QuestionController extends Controller
     //echo $list->toSql(); exit;
 
     $list = $list->get();
-
+   // dd($list);
     // generate server side datatables
     $data = array();
     $sl = $start;
@@ -361,8 +357,8 @@ class QuestionController extends Controller
        
         //$row[] = ++$sl;
         $row[] = $value->id;
-        $row[] = $value->quens;
-        $row[] = $value->ans;
+        $row[] = $value->question;
+        $row[] = $value->answer;
   
 
         $data[] = $row;
