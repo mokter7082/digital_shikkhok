@@ -124,14 +124,13 @@ Route::get('/flags-answer',[AnswearController::class,'flagsAnswer'])->name('flag
 Route::get('/flags-delete',[AnswearController::class,'flagsDelete'])->name('flags-delete');
 Route::get('/flags-block',[AnswearController::class,'flagsBlock'])->name('flags-block');
 Route::get('/flags-unblock',[AnswearController::class,'flagsUnblock'])->name('flags-unblock');
+Route::get('/flags-resolve',[AnswearController::class,'flagsResolve'])->name('flags-resolve');
 
 //Leader Board routes
 Route::get('/le_all-teacher',[LeaderboardController::class,'Le_allteacher'])->name('le_all-teacher');
 Route::get('/le_all-student',[LeaderboardController::class,'Le_allstudent'])->name('le_all-student');
 Route::get('/le_all-anshero',[LeaderboardController::class,'Le_anshero'])->name('le_all-anshero');
-Route::get('/t_point-update',[LeaderboardController::class,'te_pointUpdate'])->name('t_point-update');
-Route::get('/s_point-update',[LeaderboardController::class,'stu_pointUpdate'])->name('s_point-update');
-Route::get('/ans_point-update',[LeaderboardController::class,'ans_pointUpdate'])->name('ans_point-update');
+Route::post('/point-insert',[LeaderboardController::class,'pointInsert'])->name('point-insert');
 Route::get('/june-data',[LeaderboardController::class,'juneData'])->name('june-data');
 
 

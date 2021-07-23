@@ -38,6 +38,7 @@ class LeaderboardController extends Controller
         users.`name`,
         users.`email`,
         users.mobile,
+        users.type,
         questions.created_at 
     FROM
         questions
@@ -74,45 +75,19 @@ return view('pages/leaderboard.all-students',compact('all_student'));
 return view('pages/leaderboard.all-answer_hero',compact('all_anshero'));
     }
     //techer point update
-    public function te_pointUpdate(Request $request){
-        $id = $request->input('id');
 
-        //dd($id);
-       // $p_update = array();
-        $p_update = $request->point;
-        //dd($p_update);
-        $point_update = DB::table('answers')
-                        ->where('id',$id )
-                        ->update(['points' => $p_update]);
-        return response()->json([
-            'mes'=>'success',
-            'data' =>$point_update,
-        ]);
-    }
-      //Answer Hero point update
-      public function stu_pointUpdate(Request $request){
-        $id = $request->input('id');
-        $p_update = array();
-        $p_update['points'] = $request->point;
-        $point_update = DB::table('users')
-                        ->where('id',$id )
-                        ->update($p_update);
-        return response()->json([
-            'mes'=>'success',
-            'data' =>$point_update,
-        ]);
-    }
          //Sutdent point update
-         public function ans_pointUpdate(Request $request){
-            $id = $request->input('id');
-            $p_update = array();
-            $p_update['points'] = $request->point;
-            $point_update = DB::table('users')
-                            ->where('id',$id )
-                            ->update($p_update);
-            return response()->json([
-                'mes'=>'success',
-                'data' =>$point_update,
+         public function pointInsert(Request $request){
+            // dd($request->all());
+            $point_data = array();
+            $point_data['user_id'] = $request->user_id;
+            $point_data['point'] = $request->point;
+            $point_data['type'] = $request->type;
+            $point_data['user_type'] = $request->user_type;
+            $point_data['created_at'] = $request->date;
+            DB::table('points')->insert($point_data);
+            return response([
+                'messege' => "successful insert"
             ]);
         }
         public function juneData(){

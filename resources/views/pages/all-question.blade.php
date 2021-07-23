@@ -226,7 +226,7 @@
       "serverSide": true, //Feature control DataTables' server-side processing mode.
       "order": [], //Initial no order.
       pageLength: 0,
-      lengthMenu: [10, 50, 100, 500, 1000,5000],
+      lengthMenu: [10, 50, 100, 500, 1000,5000,10000,25000],
       // Load data for the table's content from an Ajax source
       "ajax": {
         "url": "<?php echo route('all_ques_data'); ?>",

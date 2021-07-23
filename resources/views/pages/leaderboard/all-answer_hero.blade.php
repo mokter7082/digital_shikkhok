@@ -1,6 +1,10 @@
 @extends('welcome')
 
 @section('content')
+@php
+        date_default_timezone_set("Asia/Dhaka");
+        $todaydate = date("Y-m-d");
+@endphp
 <div class="content">
 <div class="container">
   <div class="row">
@@ -22,27 +26,32 @@
                                 <th>Mobile Number</th>
                                 <th>Point</th>
                                 <th>Ans Count</th>
-                                <th>Action</th>
+                                <th>Add Point</th>
                     
                             </tr>
                         </thead>
                                 <tbody>
-                                <tr>
                                 @foreach($all_anshero as $val)
+                                <tr>
                                     <td>{{$val->id}}</td>
                                     <td>{{$val->name}}</td>
                                     <td>{{$val->email}}</td>
                                     <td>{{$val->mobile}}</td>
-                                    <td>
-                                      <div class="form-group col-xs-6">
-                                          <div class="row">
-                                          <p id="point_td_{{$val->id}}" class="font-weight-bold">{{$val->total_point}}</p>
-                                          <input class="form-control col-sm-1 inp" id="point_{{$val->id}}" type="text" name="point">
-                                          </div>
-                                    </div>
-                                 </td> 
-                                 <td>{{$val->anscount}}</td>
-                                 <td><button type="submit" class="btn btn-sm btn-purple waves-effect waves-light" id="p_update{{$val->id}}" onclick="p_update({{$val->id}})">Update</button></td>                               
+                                    <td>{{$val->total_point}}</td>
+                                    <td>{{$val->anscount}}</td>
+                                    <td> 
+                                        <input type="hidden" id="date" value="{{$todaydate}}" />
+                                        <input type="hidden" class="form-control" id="user_id_{{$val->id}}" value="{{$val->id}}" /> 
+                                        <input type="text" class="form-control mb-1 inp" id="point_{{$val->id}}" name="" />
+                                        <select class="form-control form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <option selected>Select</option>
+                                        <option id="type" value="1">Quiz</option>
+                                        </select>
+                                        <input type="hidden" class="form-control" id="user_type" value="{{$val->type}}" />
+                                        <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val->id}})" type="button">submit</button> 
+                                    </td>
+                     
+                                 <!-- <td><button type="button" class="btn btn-sm btn-purple waves-effect waves-light" id="p_update{{$val->id}}" onclick="p_update({{$val->id}})">Update</button></td>                                -->
                                  </tr>
                                 @endforeach
                                 </tbody>
@@ -58,36 +67,49 @@
 
 </div> <!-- container -->
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 
- function p_update(id){
-       var s_id = (id);
+$.ajaxSetup({
+      headers: { 'X-CSRF-Token' : '{{csrf_token()}}' }
+  });
 
-       var point = $("#point_"+id).val();
-       var data_text = $(this).closest('tr').find('td:nth-child(5)').html();
-       $.ajax({
-            url: '<?php echo URL::to('ans_point-update');?>',
-            method: 'GET',
-            data: {
-                id:id,
-                "point":point,
-                "_token": "{{ csrf_token() }}"
-                
-                },
-            cache: false,
-            success: function(html){
-            console.log(html);
-            $("#point_td_"+id).html(point);
+ function myFunction(id){
+       var id = (id);
+ 
+       //alert(id);
+          var user_id = $("#user_id_"+id).val();
+            var point = $("#point_"+id).val();
+            //alert(point);
+            var type = $("#type").val();
+            var user_type = $("#user_type").val();
+            var date = $("#date").val();
+           // alert(user_type);
+    $.ajax({
+        url: '<?php echo URL::to('point-insert');?>',
+        type: "POST",
+        dataType: "json",
+        data:{
+            //  "id":id,
+              "user_id":user_id,
+              "point":point,
+              "type":type,
+              "user_type":user_type,
+              "date":date,
+              "_token": "{{ csrf_token() }}"
+             
+        },
+        success:function(response){
             $(".inp").val("");
             toastr.options =
                 {
                     "closeButton" : true,
                     "progressBar" : true
                 }
-  		toastr.success("Data Updated");
-           
-            }
-          });    
+  	     	toastr.success("Point Updated");
+             
+        }
+      })
  }
 
  

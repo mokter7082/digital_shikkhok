@@ -30,6 +30,7 @@
                                                   @foreach($flags_answer as $val)
                                                   <tr id="rowid_{{$val->id}}" data-id="{{$val->id}}">
                                                  <input type="hidden" value="{{$val->id}}" class="userId">
+                                                 <input type="hidden" value="{{$val->id}}" name="userId">
                                                         <td>{{$val->id}}</td>
                                                         <td>{{$val->question}}</td>
                                                         <td>{{$val->answer}}</td>
@@ -48,21 +49,22 @@
                                                             </form>
                                                         </td>
                                                         <td>
-                                                        <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#view-{{$val->id}}">View</button>
-                                                           <button type="submit" style="margin-top:1px; margin-bottom:1px;" class="btn btn-danger btn-sm delete" id="ans_delete{{$val->id}}" onclick="ans_delete({{$val->ans_id}})">Delete</button>
+                                                        <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#view-{{$val->id}}">View</button><br>
+                                                           <button type="submit" style="margin-top:1px; margin-bottom:1px;" class="btn btn-danger btn-sm delete" id="ans_delete{{$val->id}}" onclick="ans_delete({{$val->ans_id}})">Delete</button><br>
                                                            @if($val->status == '0')
-                                                     <button type="submit" id="verified_{{$val->id}}" class="btn btn-warning btn-sm" onclick="verification({{$val->id}})">Verify</button><br>
-                                                     @elseif($val->status == 'not_verified')
-                                                     <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">Verify</button><br>
-                                                    @else
-                                                     <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">Verified</button><br>
+                                                     <button type="submit" id="verified_{{$val->id}}" class="btn btn-warning btn-sm"    onclick="verification({{$val->id}})">Verify</button><br>
+                                                      @elseif($val->status == 'not_verified')
+                                                      <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">Verify</button><br>
+                                                      @else
+                                                      <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">Verified</button><br>
+                                                      @endif
+                                                      @if ($val->status == '3')
+                                                     <button type="submit" style="margin-top:4px;" class="btn btn-warning btn-sm block" id="flags_block{{$val->id}}" onclick="flags_block({{$val->id}})">Unblock</button><br>
+                                                     @else
+                                                     <button type="submit" style="margin-top:4px;" class="btn btn-danger btn-sm block" id="flags_block{{$val->id}}" onclick="flags_block({{$val->id}})">Block</button><br>
                                                     @endif
-                                                    @if ($val->status == '3')
-                                                   <button type="submit" style="margin-top:4px;" class="btn btn-warning btn-sm block" id="flags_block{{$val->id}}" onclick="flags_block({{$val->id}})">Unblock</button>
-                                                  @else
-                                                  <button type="submit" style="margin-top:4px;" class="btn btn-danger btn-sm block" id="flags_block{{$val->id}}" onclick="flags_block({{$val->id}})">Block</button>
-                                                  @endif
-                                                        </td>
+                                                    <button type="submit" style="margin-top:1px; margin-bottom:1px;" class="btn btn-danger btn-sm success" id="ans_resolve{{$val->id}}" onclick="ans_resolve({{$val->ans_id}})">Resolve</button><br>
+                                                   </td>
                                                    </tr>
                                                      @endforeach
                                                   </tbody>
@@ -122,7 +124,7 @@ function verification(id){
    
       $('.delete').click(function(){
         var id = $(this).parents('tr').find('.userId').val();
-    // alert(id); return;
+     //alert(id); return;
         swal({   
             title: "Are you sure?",   
             text: "Delete this Ans!",   
@@ -147,6 +149,26 @@ function verification(id){
         });
     });       
  }
+
+ function ans_resolve(ans_id){
+   
+   $('.resolve').click(function(){
+     var id = $(this).parents('tr').find('.userId').val();
+
+  $.ajax({
+              url: '<?php echo URL::to('flags-resolve');?>',
+              method: 'GET',
+              data: {id:ans_id},
+              cache: false,
+              success: function(html){
+              console.log(html);
+              $("#rowid_"+id).hide();
+              // reload_table();
+              }
+            }); 
+    
+    });
+}
 
 
     $('.sub').submit(function(e) {

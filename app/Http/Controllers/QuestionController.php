@@ -405,10 +405,11 @@ class QuestionController extends Controller
     public function multiAnswered_ques(){
       ini_set('memory_limit', '-1');
       ini_set('max_execution_time', '0');
-      $single_ans_ques = DB::table('post_q')
-                        ->join('ans','ans.post_id','=','post_q.id')
-                        ->select('post_q.quens as questions','ans.ans as answer')
+      $single_ans_ques = DB::table('questions')
+                        ->join('answers','answers.answer','=','questions.id')
+                        ->select('questions.question as questions','answers.answer')
                         ->get();
+                 
         $question_details =[];
         foreach($single_ans_ques as $full_deails) :
              $question_details[$full_deails->questions][] = $full_deails->answer;

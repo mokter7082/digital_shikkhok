@@ -32,7 +32,6 @@
 				      <th>Name</th>
               <th>Mobile Number</th>
 				      <th>Answer</th>
-              <th>Subject</th>
               <th>Date</th>
               <th>Designation</th>
 				      <th>Institute Name</th>
@@ -54,8 +53,6 @@
               <td>{{$value->name}}</td>
               <td>{{$value->mobile}}</td>
               <td id = "answer_td_{{$value->id}}">{{$value->answer}}</td>
-              
-              <td>{{$value->subject_id}}</td>
               <td>{{$value->created_at}}</td>
               <td>
                  @if($value->type == '1')

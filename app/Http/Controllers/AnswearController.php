@@ -603,9 +603,9 @@ $insert = DB::table('answers')->insert($answer_data);
             ->count();
    
     $list = DB::table('users')
-            ->selectRaw("users.`name`,users.`mobile`,users.`type`,institutes.`institute_name`,(SELECT COUNT(ans.id) FROM ans WHERE ans.user_id = users.id AND ans.`date` BETWEEN '$from_date' AND '$to_date') AS total")
-             ->join('institutes','institutes.user_id','=','users.id')
-             ->join('teachers','teachers.institute_id','=','institutes.id')
+            ->selectRaw("users.`name`,users.`mobile`,users.`type`,users.`institutionname`,(SELECT COUNT(answers.id) FROM answers WHERE answers.answered_by = users.id AND answers.`created_at` BETWEEN '$from_date' AND '$to_date') AS total")
+            //  ->join('institutes','institutes.user_id','=','users.id')
+             //->join('teachers','teachers.institute_id','=','institutes.id')
             ->where('users.type',1)
             ->orderBy('total', 'DESC');
                     // ->get();
@@ -706,7 +706,7 @@ $insert = DB::table('answers')->insert($answer_data);
         $row[] = $value->name;
         $row[] = $value->mobile;
         $row[] = $arr[$value->type];
-        $row[] = $value->institute_name;
+        $row[] = $value->institutionname;
         $row[] = $value->total;
         //$row[] = 0;
 
@@ -779,9 +779,9 @@ $insert = DB::table('answers')->insert($answer_data);
             ->count();
    
     $list = DB::table('users')
-            ->selectRaw("users.`name`,users.`mobile`,institutes.`institute_name`,(SELECT COUNT( ans.user_id ) FROM ans WHERE ans.user_id = users.id AND ans.`date` LIKE '%$corr_date%') AS total")
-            ->join('institutes','institutes.user_id','=','users.id')
-            ->join('teachers','teachers.institute_id','=','institutes.id')
+            ->selectRaw("users.`name`,users.`mobile`,users.`institutionname`,(SELECT COUNT( answers.id ) FROM answers WHERE answers.answered_by = users.id AND answers.`created_at` LIKE '%$corr_date%') AS total")
+            // ->join('institutes','institutes.user_id','=','users.id')
+            // ->join('teachers','teachers.institute_id','=','institutes.id')
             ->where('users.type',1)
             ->orderBy('total','DESC');
             //->groupByRaw('users.id,users.`name`,users.`mobile`,users.`institutionname');
@@ -826,7 +826,7 @@ $insert = DB::table('answers')->insert($answer_data);
         $row[] = ++$sl;
         $row[] = $value->name;
         $row[] = $value->mobile;
-        $row[] = $value->institute_name;
+        $row[] = $value->institutionname;
         $row[] = $value->total;
         //$row[] = 0;
 
@@ -904,11 +904,10 @@ $insert = DB::table('answers')->insert($answer_data);
 
     $start_date = $custom_year.'-'.$custom_month.'-'.'01';
     $end_date = $custom_year.'-'.$custom_month.'-'.date('t');
-    // $datewise_ans = DB::select("SELECT answers.*, users.type,users.mobile FROM `answers` INNER JOIN users ON users.id = answers.answered_by  WHERE answers.created_at BETWEEN '$start_date' 
-    // AND '$end_date'");
+
     $datewise_ans = DB::table('answers')
                  ->join('users','users.id','=','answers.answered_by')
-                 ->select('answers.*','users.name','users.mobile','users.type','users.institutionname','users.subject_id')
+                 ->select('answers.*','users.name','users.mobile','users.type','users.institutionname')
                  ->where('answers.created_at','>=',$start_date)
                  ->where('answers.created_at','<=',$end_date) 
                  ->get();
@@ -925,7 +924,7 @@ $insert = DB::table('answers')->insert($answer_data);
      
       $datewise_ans = DB::table('answers')
       ->join('users','users.id','=','answers.answered_by')
-      ->select('answers.*','users.name','users.mobile','users.type','users.institutionname','users.subject_id')
+      ->select('answers.*','users.name','users.mobile','users.type','users.institutionname')
       ->where('answers.created_at','>=',$s_date)
       ->where('answers.created_at','<=',$e_date) 
       ->get();
@@ -1012,9 +1011,16 @@ public function flagsUnblock(Request $req){
  DB::table('users')
   ->where('id',$id)
   ->update(['status' => '1']);
-
   return response()->json(['success']);     
-
+}
+public function flagsResolve(Request $request){
+  //dd($request->all());
+  $id = $request->input('id');
+  //dd($id);
+ DB::table('answers')
+  ->where('id',$id)
+  ->update(['flags' => '0']);
+  return response()->json(['success']);
 }
 
  
