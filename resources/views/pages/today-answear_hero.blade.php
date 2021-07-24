@@ -8,7 +8,7 @@
                       <div class="col-md-12">
                               <div class="panel panel-default">
                                   <div class="panel-heading">
-                                      <h3 class="panel-title">Today Register Teacher</h3>
+                                      <h3 class="panel-title">Today Register Answer Hero</h3>
                                   </div>
                                   @php
                                     $teacher = Session::get('type')  

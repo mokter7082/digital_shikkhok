@@ -132,8 +132,7 @@ class AnswearController extends Controller
     $todaydate = date("Y-m-d");
     $today_ans =  DB::table('answers')
                   ->join('users','users.id','answers.answered_by')
-                  ->join('subjects','subjects.id','users.subject_id')
-                  ->select('answers.*','users.name','users.type','users.institutionname','subjects.name as sname')
+                  ->select('answers.*','users.name','users.type','users.institutionname')
                   ->where('answers.created_at', 'like', '%' . $todaydate. '%')
                   ->get();
                  // dd($today_ans);
@@ -178,7 +177,6 @@ public function dateCustom_answer(Request $request){
           "users.name",
           "users.mobile",
           "answers.created_at",
-          "users.subject_id",
           "answers.answer",
           "questions.question"); //set column field database for datatable orderable
   
@@ -187,7 +185,6 @@ public function dateCustom_answer(Request $request){
         "users.name",
         "users.mobile",
         "answers.created_at",
-        "users.subject_id",
         "answers.answer",
         "questions.question"); //set column field database for datatable searchable
   
@@ -199,7 +196,7 @@ public function dateCustom_answer(Request $request){
       $list =  DB::table('answers')
                  ->join('users','users.id','=','answers.answered_by')
                  ->join('questions','questions.id','=','answers.question_id')
-                 ->select('answers.*','users.name','users.mobile','questions.question')
+                 ->select('answers.answer','answers.created_at','users.name','users.mobile','questions.id','questions.question')
                  ->where('answers.created_at','>=',$start_date)
                  ->where('answers.created_at','<=',$end_date);        
   
@@ -238,7 +235,8 @@ public function dateCustom_answer(Request $request){
       if (!empty($list)) {
         foreach ($list as $value) {
           $row = array();
-          $row[] = ++$sl;
+         // $row[] = ++$sl;
+         $row[] = $value->id;
           $row[] = $value->name;
           $row[] = $value->mobile;
           $row[] = $value->created_at;

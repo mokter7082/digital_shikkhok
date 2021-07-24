@@ -20,8 +20,7 @@
                                                   <th>Name</th>
                                                   <th>Email</th>
                                                   <th>Mobile</th>
-                                                
-                                                  <th>Subject</th>
+                                                  <th>Institution Name</th>
                                                   <th>Date</th>
                                                   <th>Action</th>
                                               </tr>
@@ -33,8 +32,7 @@
                                                             <td>{{$val->name}}</td>
                                                             <td>{{$val->email}}</td>
                                                             <td>{{$val->mobile}}</td>
-                                                           
-                                                            <td>{{$val->english}}</td>
+                                                            <td>{{$val->institutionname}}</td>
                                                             <td>{{$val->date}}</td>
                                                             <td>
                                                                 <button type="submit" class="btn btn-danger btn-sm delete" id="s_delete{{$val->id}}" onclick="s_delete({{$val->id}})">Delete</button>

@@ -38,7 +38,7 @@
                                     <td>{{$val['email']}}</td>
                                     <td>{{$val['mobile']}}</td>
                                     <td>
-                                        <p>{{$val['total_point']}}</p>
+                                        <p id="point_p_{{$val['id']}}">{{$val['total_point']}}</p>
                                         <input type="hidden"  id="point_td_{{$val['id']}}" value="{{$val['total_point']}}" />
                                     </td>
                                     <td>{{$val['anscount']}}</td>
@@ -86,6 +86,7 @@ $.ajaxSetup({
             var type = $("#type").val();
             var user_type = $("#user_type").val();
             var date = $("#date").val();
+            var pointcount = $("#point_td_"+id).val();
            // alert(user_type);
     $.ajax({
         url: '<?php echo URL::to('point-insert');?>',
@@ -102,6 +103,8 @@ $.ajaxSetup({
              
         },
         success:function(response){
+            $("#point_td_"+id).html(Number(pointcount)+Number(point));
+            $("#point_p_"+id).html(Number(pointcount)+Number(point));
             $(".inp").val("");
             toastr.options =
                 {

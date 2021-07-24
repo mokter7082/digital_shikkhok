@@ -135,10 +135,10 @@
                 <a href="#" class="waves-effect"><i class="fa fa-reply"></i> <span>Answer</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{route('all-answer')}}">All Answer</a></li>
-                    <li><a href="{{route('datewise-answer')}}">Date Wise Answer</a></li>
-                    <li><a href="{{route('today-answear')}}">Today Answer (C)</a></li>
+                    <!-- <li><a href="{{route('datewise-answer')}}">Date Wise Answer</a></li> -->
+                    <li><a href="{{route('today-answear')}}">Today Answer</a></li>
                     <li><a href="{{route('custom-answear')}}">Custom Answer</a></li>
-                    <li><a href="{{route('last_week-answer')}}">Last Week Answer (C)</a></li>
+                    <!-- <li><a href="{{route('last_week-answer')}}">Last Week Answer (C)</a></li> -->
                     <li><a href="{{route('daily-answer')}}">Daily Answer (C)</a></li>
                     <li><a href="{{route('monthly-answer')}}">Monthly Answer (C)</a></li>
                 </ul>
@@ -218,7 +218,7 @@
                 <ul class="list-unstyled">
                     <li><a href="{{route('all-answer')}}">All Answer</a></li>
                     <li><a href="{{route('today-answear')}}">Today Answer</a></li>
-                    <li><a href="{{route('last_week-answer')}}">Last Week Answer</a></li>
+                    <!-- <li><a href="{{route('last_week-answer')}}">Last Week Answer</a></li> -->
                     <li><a href="{{route('daily-answer')}}">Daily Answer</a></li>
                     <li><a href="{{route('monthly-answer')}}">Monthly Answer</a></li>
                 </ul>

@@ -28,12 +28,12 @@
              <table id="my_table" class="table table-striped table-bordered my_table">
                <thead>
                     <tr>
-                      <th>SL</th>
+                      <th>Ques ID</th>
                       <th>Name</th>
                       <th>Mobile</th>
                       <th>Date</th>
                       <th>Questions</th>
-                       <th>Answer</th>
+                      <th>Answer</th>
                     </tr>
                </thead>
                <tbody> 

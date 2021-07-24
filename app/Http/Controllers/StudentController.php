@@ -44,6 +44,7 @@ class StudentController extends Controller
             ->where('date', 'like', '%' . $todaydate . '%')
             ->where('type',2)
             ->get();
+           // dd($today_st_re);
             return view('pages.today-stu_register',compact('today_st_re'));
 
     }

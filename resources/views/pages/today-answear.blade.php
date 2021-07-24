@@ -127,9 +127,7 @@
                                                   <th>Ques ID</th>
                                                   <th>User Name</th>
                                                   <th>Answear</th>
-                                                  <th>Subject</th>
-                                                  <th>Date</th>
-                                               
+                                                  <th>Date</th>  
                                                   <th>Designation</th>
                                                   <th>Institution Name</th>
                                                   <th>Action</th>
@@ -141,7 +139,6 @@
                                                             <td>{{$val->id}}</td>
                                                             <td>{{$val->name}}</td>
                                                             <td>{{$val->answer}}</td>
-                                                            <td>{{$val->sname}}</td>
                                                             <td>{{$val->created_at}}</td>
                                                 
                                                             <td>
@@ -184,9 +181,9 @@
                                                   <th>Ques ID</th>
                                                   <th>User Name</th>
                                                   <th>Answear</th>
-                                                  <th>Subject</th>
+                                             
                                                   <th>Date</th>
-                                                  <th>Subject</th>
+                                           
                                                   <th>Institution Name</th>
                                               </tr>
                                           </thead>
@@ -194,11 +191,11 @@
                                                     @foreach($today_ans as $val)
                                                         <tr id = "tr-{{$val->id}}">
                                                             <td>{{$val->post_id}}</td>
-                                                            <td>{{$val->user_name}}</td>
+                                                            <td>{{$val->name}}</td>
                                                             <td>{{$val->ans}}</td>
-                                                            <td>{{$val->subject}}</td>
+                                                      
                                                             <td>{{$val->date}}</td>
-                                                            <td>{{$val->subject}}</td>
+                                                       
                                                             <td>{{$val->institutionname}}</td>
                                                         </tr>
                                                       @endforeach
