@@ -15,7 +15,7 @@
 	   <div class="panel panel-default">
         <?php  
 		//dd($add_subject);
-		$subject = DB::table('subjects')->where('status',1) ->get();
+		$subject = DB::select("SELECT * FROM `subjects` WHERE `status` ='1'");
 		$ext_sub = explode(",",$add_subject->s_id);
 		//explode(" ",$str)
 		

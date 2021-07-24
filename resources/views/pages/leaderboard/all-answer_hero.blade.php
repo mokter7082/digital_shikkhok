@@ -31,27 +31,29 @@
                             </tr>
                         </thead>
                                 <tbody>
-                                @foreach($all_anshero as $val)
+                                @foreach($data_answer_arr as $val)
                                 <tr>
-                                    <td>{{$val->id}}</td>
-                                    <td>{{$val->name}}</td>
-                                    <td>{{$val->email}}</td>
-                                    <td>{{$val->mobile}}</td>
-                                    <td>{{$val->total_point}}</td>
-                                    <td>{{$val->anscount}}</td>
+                                    <td>{{$val['id']}}</td>
+                                    <td>{{$val['name']}}</td>
+                                    <td>{{$val['email']}}</td>
+                                    <td>{{$val['mobile']}}</td>
+                                    <td>
+                                        <p>{{$val['total_point']}}</p>
+                                        <input type="hidden"  id="point_td_{{$val['id']}}" value="{{$val['total_point']}}" />
+                                    </td>
+                                    <td>{{$val['anscount']}}</td>
                                     <td> 
                                         <input type="hidden" id="date" value="{{$todaydate}}" />
-                                        <input type="hidden" class="form-control" id="user_id_{{$val->id}}" value="{{$val->id}}" /> 
-                                        <input type="text" class="form-control mb-1 inp" id="point_{{$val->id}}" name="" />
-                                        <select class="form-control form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <input type="hidden" class="form-control" id="user_id_{{$val['id']}}" value="{{$val['id']}}" /> 
+                                        <input type="text" class="form-control mb-1 inp" id="point_{{$val['id']}}" name="" />
+                                        <select class="form-control form-select form-select-sm" aria-label="form-select-sm example">
                                         <option selected>Select</option>
                                         <option id="type" value="1">Quiz</option>
                                         </select>
-                                        <input type="hidden" class="form-control" id="user_type" value="{{$val->type}}" />
-                                        <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val->id}})" type="button">submit</button> 
+                                        <input type="hidden" class="form-control" id="user_type" value="{{$val['type']}}" />
+                                        <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val['id']}})" type="button">submit</button> 
                                     </td>
                      
-                                 <!-- <td><button type="button" class="btn btn-sm btn-purple waves-effect waves-light" id="p_update{{$val->id}}" onclick="p_update({{$val->id}})">Update</button></td>                                -->
                                  </tr>
                                 @endforeach
                                 </tbody>
