@@ -406,7 +406,7 @@ class QuestionController extends Controller
       ini_set('memory_limit', '-1');
       ini_set('max_execution_time', '0');
       $single_ans_ques = DB::table('questions')
-                        ->join('answers','answers.answer','=','questions.id')
+                        ->join('answers','answers.question_id','=','questions.id')
                         ->select('questions.question as questions','answers.answer')
                         ->get();
                  
