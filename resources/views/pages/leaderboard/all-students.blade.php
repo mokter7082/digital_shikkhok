@@ -28,6 +28,7 @@
                                 <th>Point</th>
                                 <th>Ques Count</th>
                                 <th>Add Point</th>
+                                <th>Remove Point</th>
                     
                             </tr>
                         </thead>
@@ -53,6 +54,11 @@
                                         </select>
                                         <input type="hidden" class="form-control" id="user_type" value="{{$val['type']}}" />
                                         <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val['id']}})" type="button">submit</button> 
+                                    </td>
+                                    <td> 
+                                        <input type="hidden" class="form-control" id="user_id_{{$val['id']}}" value="{{$val['id']}}" /> 
+                                        <input type="text" class="form-control mb-1 inp" id="remive_point_{{$val['id']}}" name="" />
+                                        <button class="text-center btn btn-danger btn-sm" onclick="removePoint({{$val['id']}})" type="button" style="margin-top:08px;">Remove</button> 
                                     </td>
                      
                                  </tr>
@@ -112,6 +118,42 @@ $.ajaxSetup({
                     "progressBar" : true
                 }
   	     	toastr.success("Point Updated");
+             
+        }
+      })
+ }
+
+ 
+//  remove Point
+function removePoint(id){
+       var id = (id); 
+            var remove_point = $("#remive_point_"+id).val();
+            var user_id = $("#user_id_"+id).val();
+           // alert(remove_point); return;
+           var pointcount = $("#point_td_"+id).val();
+
+    $.ajax({
+        url: '<?php echo URL::to('remove-point');?>',
+        type: "POST",
+        dataType: "json",
+        data:{
+              "point":remove_point,
+              "user_id":user_id,
+              "_token": "{{ csrf_token() }}"
+             
+        },
+        success:function(response){
+      
+             $("#point_td_"+id).html(Number(pointcount)-Number(remove_point));
+             $("#point_p_"+id).html(Number(pointcount)-Number(remove_point));
+             $(".inp").val("");
+
+            toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+  	     	toastr.success("Removed");
              
         }
       })

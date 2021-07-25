@@ -125,9 +125,8 @@ $.ajaxSetup({
         }
       })
  }
+
 //  remove Point
-
-
  function removePoint(id){
        var id = (id); 
             var remove_point = $("#remive_point_"+id).val();
@@ -151,12 +150,12 @@ $.ajaxSetup({
              $("#point_p_"+id).html(Number(pointcount)-Number(remove_point));
              $(".inp").val("");
 
-            // toastr.options =
-            //     {
-            //         "closeButton" : true,
-            //         "progressBar" : true
-            //     }
-  	     	// toastr.success("Point Updated");
+            toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+  	     	toastr.success("Removed");
              
         }
       })
