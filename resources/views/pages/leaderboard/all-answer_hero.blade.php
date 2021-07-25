@@ -47,9 +47,10 @@
                                         <input type="hidden" id="date" value="{{$todaydate}}" />
                                         <input type="hidden" class="form-control" id="user_id_{{$val['id']}}" value="{{$val['id']}}" /> 
                                         <input type="text" class="form-control mb-1 inp" id="point_{{$val['id']}}" name="" />
-                                        <select class="form-control form-select form-select-sm" aria-label="form-select-sm example">
+                                        <select class="form-control form-select form-select-sm" aria-label="form-select-sm example" id="type">
                                         <option selected>Select</option>
-                                        <option id="type" value="1">Quiz</option>
+                                        <option value="3">Custom</option>
+                                        <option value="1">Quiz</option>
                                         </select>
                                         <input type="hidden" class="form-control" id="user_type" value="{{$val['type']}}" />
                                         <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val['id']}})" type="button">submit</button> 
