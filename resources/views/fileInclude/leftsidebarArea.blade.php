@@ -226,7 +226,7 @@
             <li class="has_sub">
                 <a href="#" class="waves-effect"><i class="fa fa-user"></i><span>Teacher</span><span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
-                    <li><a href="{{route('all-teacher')}}">All Teaches</a></li>
+                    <li><a href="{{route('all-teacher')}}">All Teachers</a></li>
                     <li><a href="{{route('today-reg_teacher')}}">Today Register Teacher</a></li>
                 </ul>
             </li>

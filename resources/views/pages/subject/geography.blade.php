@@ -9,16 +9,7 @@
                                   <div class="panel-heading">
                                       <h3 class="panel-title">Geography Question</h3>
                                   </div>
-                                  <div class="panel-heading">
-                                    @php
-                                      $count_geography_ques = DB::select("SELECT * FROM `post_q` WHERE `subject` = 'geography' AND (`status` = 0 OR `status` = 2)");
-                                      $geography_count = count($count_geography_ques);
-                                       @endphp
-                                      <h3 class="panel-title">Total Gography Pending Question ={{$geography_count}} </h3>
-                                  </div>
-                                   <!--  <div class="col-md-4 form-group">
-                                      <input class="form-control" type="text" name="search" id="search" placeholder="Search">
-                                    </div> -->
+                             
                           <?php                           
                             $l_user_id = Session::get('user_id');
                             $institutionname = Session::get('institutionname');
@@ -29,7 +20,7 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                        <table id="value_serch" class="table table-striped table-bordered">
+                                        <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                  <th>ID</th>
