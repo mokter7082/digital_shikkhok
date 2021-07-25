@@ -28,7 +28,7 @@
                                 <th>Point</th>
                                 <th>Ans Count</th>
                                 <th>Add Point</th>
-                            </tr>
+                                <th>Remove Point</th>
                         </thead>
                                 <tbody>
                                 @foreach($data_answer_arr as $val)
@@ -51,9 +51,15 @@
                                         <option id="type" value="1">Quiz</option>
                                         </select>
                                         <input type="hidden" class="form-control" id="user_type" value="{{$val['type']}}" />
-                                        <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val['id']}})" type="button">submit</button> 
+                                        <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val['id']}})" type="button">Add Point</button> 
                                     </td>
-                     
+                                    <td> 
+                                        <input type="hidden" id="date" value="{{$todaydate}}" />
+                                        <input type="hidden" class="form-control" id="user_id_{{$val['id']}}" value="{{$val['id']}}" /> 
+                                        <input type="text" class="form-control mb-1 inp" id="remive_point_{{$val['id']}}" name="" />
+                                        <button class="text-center btn btn-danger btn-sm" onclick="removePoint({{$val['id']}})" type="button" style="margin-top:08px;">Remove</button> 
+                                    </td>
+                                   
                                  </tr>
                                 @endforeach
                                 </tbody>
@@ -75,7 +81,7 @@
 $.ajaxSetup({
       headers: { 'X-CSRF-Token' : '{{csrf_token()}}' }
   });
-
+//add point
  function myFunction(id){
        var id = (id);
  
@@ -89,8 +95,6 @@ $.ajaxSetup({
            // alert(user_type);
            var pointcount = $("#point_td_"+id).val();
 
-        //    var t = pointcount+point;
-        //    alert(pointcount);return;
     $.ajax({
         url: '<?php echo URL::to('point-insert');?>',
         type: "POST",
@@ -117,6 +121,42 @@ $.ajaxSetup({
                     "progressBar" : true
                 }
   	     	toastr.success("Point Updated");
+             
+        }
+      })
+ }
+//  remove Point
+
+
+ function removePoint(id){
+       var id = (id); 
+            var remove_point = $("#remive_point_"+id).val();
+            var user_id = $("#user_id_"+id).val();
+           // alert(remove_point); return;
+           var pointcount = $("#point_td_"+id).val();
+
+    $.ajax({
+        url: '<?php echo URL::to('remove-point');?>',
+        type: "POST",
+        dataType: "json",
+        data:{
+              "point":remove_point,
+              "user_id":user_id,
+              "_token": "{{ csrf_token() }}"
+             
+        },
+        success:function(response){
+      
+             $("#point_td_"+id).html(Number(pointcount)-Number(remove_point));
+             $("#point_p_"+id).html(Number(pointcount)-Number(remove_point));
+             $(".inp").val("");
+
+            // toastr.options =
+            //     {
+            //         "closeButton" : true,
+            //         "progressBar" : true
+            //     }
+  	     	// toastr.success("Point Updated");
              
         }
       })

@@ -194,18 +194,43 @@ return view('pages/leaderboard.all-answer_hero',compact('data_answer_arr'));
 
          //Sutdent point update
          public function pointInsert(Request $request){
-            // dd($request->all());
-            $point_data = array();
-            $point_data['user_id'] = $request->user_id;
-            $point_data['point'] = $request->point;
-            $point_data['type'] = $request->type;
-            $point_data['user_type'] = $request->user_type;
-            $point_data['created_at'] = $request->date;
-            DB::table('points')->insert($point_data);
-            return response([
-                'messege' => "successful insert"
-            ]);
+             $user_id = $request->user_id;
+             $point = $request->point;
+             $find_user = DB::table('points')
+                        ->where('user_id',$user_id)
+                        ->first();
+             if($find_user == NULL){
+                $point_data = array();
+                $point_data['user_id'] = $user_id;
+                $point_data['point'] = $request->point;
+                $point_data['type'] = $request->type;
+                $point_data['user_type'] = $request->user_type;
+                $point_data['created_at'] = $request->date;
+                DB::table('points')->insert($point_data);
+                return response([
+                    'messege' => "successful insert"
+                ]);
+             }else{
+                 DB::table('points')
+                  ->where('user_id',$user_id)
+                  ->update(['point' => DB::raw('point +'.$point)]);
+                  return response([
+                    'messege' => "successful insert"
+                ]);
+             }
+           
         }
+     public function removePoint(Request $request){
+        $user_id = $request->user_id;
+        $point = $request->point;
+         //dd($request->all());
+         DB::table('points')
+         ->where('user_id',$user_id)
+         ->update(['point' => DB::raw('point -'.$point)]);
+         return response([
+           'messege' => "successful insert"
+       ]);
+     }
         public function juneData(){
          
                

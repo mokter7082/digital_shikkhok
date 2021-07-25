@@ -131,6 +131,7 @@ Route::get('/le_all-teacher',[LeaderboardController::class,'Le_allteacher'])->na
 Route::get('/le_all-student',[LeaderboardController::class,'Le_allstudent'])->name('le_all-student');
 Route::get('/le_all-anshero',[LeaderboardController::class,'Le_anshero'])->name('le_all-anshero');
 Route::post('/point-insert',[LeaderboardController::class,'pointInsert'])->name('point-insert');
+Route::post('/remove-point',[LeaderboardController::class,'removePoint'])->name('remove-point');
 Route::get('/june-data',[LeaderboardController::class,'juneData'])->name('june-data');
 
 
