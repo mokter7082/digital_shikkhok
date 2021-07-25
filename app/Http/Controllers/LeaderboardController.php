@@ -13,7 +13,7 @@ class LeaderboardController extends Controller
         user_id,
           SUM(point) as tot_point
       FROM
-          `parkis4i_dev_digital_shikkhok`.`points` 
+          points 
       WHERE
       
            point <> '0.00'
