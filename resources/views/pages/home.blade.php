@@ -290,6 +290,57 @@
               </div>
       </div>
       </div>
+       
+                 @php
+                    $total_ac_teachers = DB::table('answers')
+                                        ->join('users','users.id','=','answers.answered_by')
+                                        ->where('users.type',1)
+                                        ->where('answers.created_at', 'like', '%' . $todaydate . '%')
+                                        ->count();
+                @endphp
+
+      <div class="col-md-6 col-sm-6 col-lg-3">
+      <div class="mini-stat clearfix bx-shadow">
+           <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
+           <a href="#">
+                     <div class="mini-stat-info text-right text-muted">
+                     <span class="active_teachers counter">{{$total_ac_teachers}}</span>
+                       Teachers
+                       </div>
+                       </a>
+                       <div class="tiles-progress">
+             <div class="m-t-20">
+              <h5 class="text-uppercase">Today Active Teachers <span class="active_teachers pull-right">{{$total_ac_teachers}}</span></h5>
+              </div>
+              </div>
+      </div>
+      </div>
+
+                @php
+                    $total_ac_hero = DB::table('answers')
+                                        ->join('users','users.id','=','answers.answered_by')
+                                        ->where('users.type',3)
+                                        ->where('answers.created_at', 'like', '%' . $todaydate . '%')
+                                        ->count();
+                @endphp
+
+      <div class="col-md-6 col-sm-6 col-lg-3">
+      <div class="mini-stat clearfix bx-shadow">
+           <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
+           <a href="#">
+                     <div class="mini-stat-info text-right text-muted">
+                     <span class="active_hero counter">{{$total_ac_hero}}</span>
+                        Answer Hero
+                       </div>
+                       </a>
+                       <div class="tiles-progress">
+             <div class="m-t-20">
+                <h5 class="text-uppercase">Today Active Ans: hero <span class="active_hero pull-right">{{$total_ac_hero}}</span></h5>
+              </div>
+              </div>
+      </div>
+      </div>
+      
 
 
       @elseif($teacher == '5')

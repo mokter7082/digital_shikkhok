@@ -173,7 +173,7 @@ public function dateCustom_answer(Request $request){
         }
       
       $column_order = array(
-          "answers.id",
+          "questions.id",
           "users.name",
           "users.mobile",
           "answers.created_at",
@@ -181,7 +181,7 @@ public function dateCustom_answer(Request $request){
           "questions.question"); //set column field database for datatable orderable
   
       $column_search = array(
-        "answers.id",
+        "questions.id",
         "users.name",
         "users.mobile",
         "answers.created_at",

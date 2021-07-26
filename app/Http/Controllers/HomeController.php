@@ -48,6 +48,18 @@ class HomeController extends Controller
                        ->where('date', 'like', '%' . $date . '%')
                        ->count();
        $output['anshero_count'] = $anshero_count;
+       $active_teachers = DB::table('answers')
+                     ->join('users','users.id','=','answers.answered_by')
+                    ->where('users.type',1)
+                    ->where('answers.created_at', 'like', '%' . $date . '%')
+                    ->count();
+       $output['active_teachers'] = $active_teachers;
+       $active_hero = DB::table('answers')
+                       ->join('users','users.id','=','answers.answered_by')
+                        ->where('users.type',3)
+                        ->where('answers.created_at', 'like', '%' . $date . '%')
+                        ->count();
+      $output['active_hero'] = $active_hero;
        return response()->json($output);
 
    }
