@@ -30,14 +30,6 @@
                                                               <th>Institution Name:</th>
                                                               <td>{{$val->institutionname}}</td>
                                                           </tr>
-                                                          <tr>
-                                                              <th>Question:</th>
-                                                              <td>{{$val->question}}</td>
-                                                          </tr>
-                                                          <tr>
-                                                              <th>Answer:</th>
-                                                              <td>{{$val->answer}}</td>
-                                                          </tr>
                                                          </table>
                                                     </div>
                                                     <div class="modal-footer">

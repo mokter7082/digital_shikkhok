@@ -63,7 +63,7 @@
                                                      @else
                                                      <button type="submit" style="margin-top:4px;" class="btn btn-danger btn-sm block" id="flags_block{{$val->id}}" onclick="flags_block({{$val->id}})">Block</button><br>
                                                     @endif
-                                                    <button type="submit" style="margin-top:1px; margin-bottom:1px;" class="btn btn-danger btn-sm success resolve" id="ans_resolve{{$val->id}}" onclick="ans_resolve({{$val->ans_id}})">Resolve</button><br>
+                                                    <button type="submit" style="margin-top:1px; margin-bottom:1px;" class="btn btn-danger btn-sm success resolve" id="ans_resolve{{$val->id}}" data-ans_id = "{{$val->ans_id}}">Resolve</button><br>
                                                    </td>
                                                    </tr>
                                                      @endforeach
@@ -83,7 +83,7 @@
 <!-- Teacher Verified Not_veryfied form database with jquery -->
 <script type="text/javascript">
 
-
+// onclick="ans_resolve({{$val->ans_id}})"
 
 function verification(id){
         var bclass = $("#verified_"+id).hasClass("btn-warning");
@@ -150,12 +150,11 @@ function verification(id){
     });       
  }
 
- function ans_resolve(ans_id){
-   
+
+   //answer resolved
    $('.resolve').click(function(){
      var id = $(this).parents('tr').find('.userId').val();
-    // alert(id);
-
+    var ans_id = $(this).data('ans_id');
   $.ajax({
               url: '<?php echo URL::to('flags-resolve');?>',
               method: 'GET',
@@ -169,7 +168,6 @@ function verification(id){
             }); 
     
     });
-}
 
 
     $('.sub').submit(function(e) {
