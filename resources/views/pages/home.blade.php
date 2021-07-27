@@ -292,17 +292,21 @@
       </div>
        
                  @php
-                    $total_ac_teachers = DB::table('answers')
+                    $total_teachers = DB::table('answers')
                                         ->join('users','users.id','=','answers.answered_by')
                                         ->where('users.type',1)
                                         ->where('answers.created_at', 'like', '%' . $todaydate . '%')
-                                        ->count();
+                                        ->select('users.name','answers.answered_by')
+                                        ->groupBy('answers.answered_by')
+                                        ->get();
+                     $total_ac_teachers = count($total_teachers);
+                                        
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
            <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
-           <a href="#">
+           <a href="{{URL::to('active-teacher')}}">
                      <div class="mini-stat-info text-right text-muted">
                      <span class="active_teachers counter">{{$total_ac_teachers}}</span>
                        Teachers
@@ -317,17 +321,19 @@
       </div>
 
                 @php
-                    $total_ac_hero = DB::table('answers')
+                    $total_hero = DB::table('answers')
                                         ->join('users','users.id','=','answers.answered_by')
                                         ->where('users.type',3)
                                         ->where('answers.created_at', 'like', '%' . $todaydate . '%')
-                                        ->count();
+                                        ->groupBy('answers.answered_by')
+                                        ->get();
+                        $total_ac_hero = count($total_hero);
                 @endphp
 
       <div class="col-md-6 col-sm-6 col-lg-3">
       <div class="mini-stat clearfix bx-shadow">
            <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
-           <a href="#">
+           <a href="{{URL::to('active-anshero')}}">
                      <div class="mini-stat-info text-right text-muted">
                      <span class="active_hero counter">{{$total_ac_hero}}</span>
                         Answer Hero

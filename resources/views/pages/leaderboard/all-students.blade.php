@@ -128,6 +128,11 @@ $.ajaxSetup({
 //  remove Point
 function removePoint(id){
        var id = (id); 
+           var point = $("#point_"+id).val();
+            //alert(point); return;
+            var type = $("#type").val();
+            var user_type = $("#user_type").val();
+            var date = $("#date").val(); 
             var remove_point = $("#remive_point_"+id).val();
             var user_id = $("#user_id_"+id).val();
            // alert(remove_point); return;
@@ -138,8 +143,10 @@ function removePoint(id){
         type: "POST",
         dataType: "json",
         data:{
-              "point":remove_point,
+            "point":remove_point,
               "user_id":user_id,
+              "type":"0",
+              "user_type":user_type,
               "_token": "{{ csrf_token() }}"
              
         },

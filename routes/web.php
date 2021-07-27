@@ -52,7 +52,8 @@ Route::get('/teacher-delete',[TeacherController::class,'teacherDelete'])->name('
 Route::get('/answer-hero',[TeacherController::class,'answerHero'])->name('answer-hero');
 Route::get('/teacher-block',[TeacherController::class,'teacherBlock'])->name('teacher-block');
 Route::get('/teacher-unblock',[TeacherController::class,'teacherUnblock'])->name('teacher-unblock');
-//student route
+Route::get('/active-teacher',[TeacherController::class,'activeTeacher'])->name('active-teacher');
+   //student route
 Route::get('/all-student',[StudentController::class,'allStudent'])->name('all-student');
 Route::get('/edit-student/{id}',[StudentController::class,'editStudent'])->name('edit-student');
 Route::post('/update-student/{id}',[StudentController::class,'updateStudent'])->name('update-student');
@@ -119,6 +120,7 @@ Route::post('/answer-search',[AnswearController::class,'answerSearch'])->name('a
 Route::post('/answer-update',[AnswearController::class,'answerUpdate'])->name('answer-update');
 Route::get('/anshero-block',[AnswearController::class,'ansheroBlock'])->name('anshero-block');
 Route::get('/anshero-unblock',[AnswearController::class,'ansheroUnblock'])->name('anshero-unblock');
+Route::get('/active-anshero',[AnswearController::class,'activeAnshero'])->name('active-anshero');
 //Flags
 Route::get('/flags-answer',[AnswearController::class,'flagsAnswer'])->name('flags-answer');
 Route::get('/flags-delete',[AnswearController::class,'flagsDelete'])->name('flags-delete');

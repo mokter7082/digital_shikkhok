@@ -1127,6 +1127,17 @@ public function flagsResolve(Request $request){
       
     ]);    
    }
+
+   public function activeAnshero(){
+      date_default_timezone_set("Asia/Dhaka");
+       $todaydate = date("Y-m-d");
+       //dd($todaydate);
+    $active_anshero = DB::select("SELECT users.id,users.name, users.email, users.mobile,users.institutionname,users.type,answers.id,answers.answered_by,answers.created_at 
+    FROM answers INNER JOIN users ON users.id = answers.answered_by 
+    WHERE answers.created_at LIKE '%$todaydate%' AND users.type = 3 GROUP BY answers.answered_by");
+      //dd($active_teacher);
+     return view('pages.active-anshero',compact('active_anshero'));
+   }
  
 
 }

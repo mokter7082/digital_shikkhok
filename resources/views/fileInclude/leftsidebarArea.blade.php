@@ -100,17 +100,25 @@
                 @elseif($teacher == '4')
                     
             <li class="has_sub">
-                <a href="#" class="waves-effect"><i class="fa fa-user"></i><span>Teacher</span><span class="pull-right"><i class="md md-add"></i></span></a>
+                <a href="#" class="waves-effect"><i class="fa fa-users"></i><span>Teacher</span><span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{route('all-teacher')}}">All Teaches</a></li>
                     <li><a href="{{route('today-reg_teacher')}}">Today Register Teacher</a></li>
                 </ul>
             </li>
             <li class="has_sub">
-                <a href="#" class="waves-effect"><i class="fa fa-user"></i><span>Student</span><span class="pull-right"><i class="md md-add"></i></span></a>
+                <a href="#" class="waves-effect"><i class="fa fa-users"></i><span>Student</span><span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{route('all-student')}}">All Student</a></li>
                     <li><a href="{{route('today-reg_student')}}">Today Register Student</a></li>
+                   
+                </ul>
+            </li>
+             <li class="has_sub">
+                <a href="#" class="waves-effect"><i class="fa fa-users"></i><span>Active User</span><span class="pull-right"><i class="md md-add"></i></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="{{route('active-teacher')}}">Today Active Teachers</a></li>
+                    <li><a href="{{route('active-anshero')}}">Today Active Ans Hero</a></li>
                    
                 </ul>
             </li>
