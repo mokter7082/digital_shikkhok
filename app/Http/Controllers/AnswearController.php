@@ -1021,6 +1021,112 @@ public function flagsResolve(Request $request){
   return response()->json(['success']);
 }
 
+//FLAGS INSERT
+    public function flagsInsert(Request $request){
+      $sub_id = $request->subject;
+      $post_id = $request->id;
+      $user_id = $request->user_id;
+      $ans_id = $request->ans_id;
+    //dd($ans_id);
+
+      $check_point = DB::table('answers')
+                    ->where('id',$ans_id)
+                    ->first();
+       $point = $check_point->points;
+
+       $image  = $request->file('image');
+      //dd($data);
+      if($image){
+    
+         $answer_data = array();
+         $answer_data['question_id'] = $request->id;
+         $answer_data['answered_by'] = $user_id;
+         $answer_data['answer'] = $request->ans;
+         $answer_data['points'] = $point;
+         $answer_data['flags'] = '0';
+         $answer_data['quality'] = '0';
+        $image_name = Str::random(20);
+        $ext = strtolower($image->getClientOriginalExtension());
+        $image_fullname = $image_name.'.'.$ext;
+        $upload_path ='sub_images';
+        $image_url = $upload_path.$image_fullname;
+        $success = $image->move($upload_path,$image_fullname);
+        if($success){
+            $answer_data['file_url']=$image_fullname;
+            dd($answer_data);
+         $insert = DB::table('answers')->insert($answer_data);
+         
+      }else{
+          //ELSE IS BLANK
+      }
+
+
+   }else{
+  
+     $answer_data = array();
+     $answer_data['question_id'] = $request->id;
+     $answer_data['answered_by'] = $user_id;
+     $answer_data['answer'] = $request->ans;
+     $answer_data['file_url'] = '0';
+     $answer_data['points'] = $point;
+     $answer_data['flags'] = '0';
+     $answer_data['quality'] = '0';
+     //dd($answer_data);
+     $insert = DB::table('answers')->insert($answer_data);
+   
+
+   }
+   DB::table('answers')
+   ->where('id',$ans_id)
+   ->delete();
+     //*********New Points Add Area *********/
+    //  $point_count = DB::select("SELECT points.user_id
+    //  FROM `points`  WHERE points.user_id = $user_id");
+    //  //dd($point_count);
+    //  if($point_count == NULL){
+
+    //   $teacher = Session::get('type');
+    //   if($teacher == 1) {
+    //     $answer_points = 5;
+    //   }elseif($teacher == 3){
+    //           if($sub_id == 5){
+    //             $answer_points = 2.5;
+    //           }elseif($sub_id == 7){
+    //             $answer_points = 4.0;
+    //           }elseif($sub_id == 8){
+    //             $answer_points = 4.0;
+    //           }elseif($sub_id == 9){
+    //             $answer_points = 2.5;
+    //           }elseif($sub_id == 10){
+    //             $answer_points = 3.0;
+    //           }else{
+    //             $answer_points = .5;
+    //           }       
+    //   }
+    //       $new_points = array();
+    //       $new_points['user_id'] = $user_id;
+    //       $new_points['point'] = $answer_points;
+    //       $new_points['type'] = 0;
+    //       $new_points['user_type'] = $teacher;
+    //       DB::table('points')->insert($new_points);
+    //  }else{
+    //    DB::table('points')
+    //    ->where('user_id',$user_id)
+    //    ->update(['point' =>'point+0.4']);
+    //  }
+    
+//*********New End Area *********/
+// $point_count = DB::select("SELECT answers.question_id, count( answers.question_id ) AS ct
+//    FROM `answers`  WHERE answers.question_id = $request->id");
+
+  //  $ccc = $point_count[0]['ct'];
+  //  dd($ccc);
+          
+    return response()->json([
+      'data' => $insert,
+      
+    ]);    
+   }
  
 
 }

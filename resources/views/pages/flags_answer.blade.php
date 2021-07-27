@@ -38,6 +38,7 @@
                                                         <form method="post" class="sub" enctype="multipart/form-data">
                                                         @csrf
                                                             <input type="hidden" class="id_i" name="id" value="{{$val->id}}">
+                                                            <input type="hidden" class="ans_id" name="ans_id" value="{{$val->ans_id}}">
                                                             <input type="hidden" name="post_user_id" id="post_user_id_{{$val->id}}" value="{{$val->asked_by}}">
                                                             <textarea class="form-control" name="ans" id="ans_{{$val->id}}" rows="3" cols="30" placeholder="Write Answer Here" required></textarea>
                                                             <input name="image" type="file" id="image_{{$val->id}}" />
@@ -177,7 +178,7 @@ function verification(id){
        let formData = new FormData(this);
        $.ajax({
           type:'POST',
-          url: '{{url('a_insert')}}',
+          url: '{{url('flags-insert')}}',
            data: formData,
            contentType: false,
            processData: false,

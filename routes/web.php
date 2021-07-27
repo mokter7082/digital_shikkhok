@@ -125,6 +125,7 @@ Route::get('/flags-delete',[AnswearController::class,'flagsDelete'])->name('flag
 Route::get('/flags-block',[AnswearController::class,'flagsBlock'])->name('flags-block');
 Route::get('/flags-unblock',[AnswearController::class,'flagsUnblock'])->name('flags-unblock');
 Route::get('/flags-resolve',[AnswearController::class,'flagsResolve'])->name('flags-resolve');
+Route::post('/flags-insert',[AnswearController::class,'flagsInsert'])->name('flags-insert');
 
 //Leader Board routes
 Route::get('/le_all-teacher',[LeaderboardController::class,'Le_allteacher'])->name('le_all-teacher');
