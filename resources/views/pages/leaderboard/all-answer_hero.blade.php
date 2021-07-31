@@ -49,8 +49,10 @@
                                         <input type="text" class="form-control mb-1 inp" id="point_{{$val['id']}}" name="" />
                                         <select class="form-control form-select form-select-sm" aria-label="form-select-sm example" id="type">
                                         <option selected>Select</option>
-                                        <option value="3">Custom</option>
-                                        <option value="1">Quiz</option>
+                                          <option value="custom">Custom</option>
+                                          <option value="scholarship">Scholarship</option>
+                                          <option value="referral">Referral</option>
+                                          <option value="quiz">Quiz</option>
                                         </select>
                                         <input type="hidden" class="form-control" id="user_type" value="{{$val['type']}}" />
                                         <button class="text-center btn btn-primary btn-sm" onclick="myFunction({{$val['id']}})" type="button">submit</button> 

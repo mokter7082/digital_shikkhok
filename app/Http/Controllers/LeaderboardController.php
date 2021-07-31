@@ -194,6 +194,7 @@ return view('pages/leaderboard.all-answer_hero',compact('data_answer_arr'));
 
          //Sutdent point update
          public function pointInsert(Request $request){
+            // dd($request->all());
             $point_data = array();
             $point_data['user_id'] = $request->user_id;
             $point_data['point'] = $request->point;
