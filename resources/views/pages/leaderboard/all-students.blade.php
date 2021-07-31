@@ -4,7 +4,7 @@
 
 @php
         date_default_timezone_set("Asia/Dhaka");
-        $todaydate = date("Y-m-d");
+        $todaydate = date("Y-m-d H:i:s");
 @endphp
 <div class="content">
 <div class="container">
