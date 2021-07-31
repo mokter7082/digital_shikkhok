@@ -48,18 +48,30 @@ class HomeController extends Controller
                        ->where('date', 'like', '%' . $date . '%')
                        ->count();
        $output['anshero_count'] = $anshero_count;
-    //    $active_teachers = DB::table('answers')
-    //                  ->join('users','users.id','=','answers.answered_by')
-    //                 ->where('users.type',1)
-    //                 ->where('answers.created_at', 'like', '%' . $date . '%')
-    //                 ->count();
-    //    $output['active_teachers'] = $active_teachers;
-    //    $active_hero = DB::table('answers')
-    //                    ->join('users','users.id','=','answers.answered_by')
-    //                     ->where('users.type',3)
-    //                     ->where('answers.created_at', 'like', '%' . $date . '%')
-    //                     ->count();
-    //   $output['active_hero'] = $active_hero;
+       $active_t = DB::table('answers')
+                     ->join('users','users.id','=','answers.answered_by')
+                     ->where('users.type',1)
+                     ->where('answers.created_at', 'like', '%' . $date . '%')
+                     ->groupBy('answers.answered_by')
+                     ->get();
+                  $active_teachers = count($active_t);
+       $output['active_teachers'] = $active_teachers;
+       $active_h = DB::table('answers')
+                       ->join('users','users.id','=','answers.answered_by')
+                        ->where('users.type',3)
+                        ->where('answers.created_at', 'like', '%' . $date . '%')
+                        ->groupBy('answers.answered_by')
+                        ->get();
+               $active_hero = count($active_h);
+      $output['active_hero'] = $active_hero;
+       $active_s = DB::table('questions')
+                       ->join('users','users.id','=','questions.asked_by')
+                        ->where('users.type',2)
+                        ->where('questions.created_at', 'like', '%' . $date . '%')
+                        ->groupBy('questions.asked_by')
+                        ->get();
+               $active_student = count($active_s);
+      $output['active_student'] = $active_student;
        return response()->json($output);
 
    }

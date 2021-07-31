@@ -346,6 +346,33 @@
               </div>
       </div>
       </div>
+       @php
+
+                $total_stude= DB::table('questions')
+                                ->join('users','users.id','=','questions.asked_by')
+                                ->where('users.type',2)
+                                ->where('questions.created_at', 'like', '%' . $todaydate . '%')
+                                ->groupBy('questions.asked_by')
+                                ->get();
+                        $total_student = count($total_stude);
+                @endphp
+
+      <div class="col-md-6 col-sm-6 col-lg-3">
+      <div class="mini-stat clearfix bx-shadow">
+           <span class="mini-stat-icon bg-info"><i class="fa fa-reply"></i></span>
+           <a href="{{URL::to('active-student')}}">
+                     <div class="mini-stat-info text-right text-muted">
+                     <span class="active_student counter">{{$total_student}}</span>
+                        Student
+                       </div>
+                       </a>
+                       <div class="tiles-progress">
+             <div class="m-t-20">
+                <h5 class="text-uppercase">Today Active Student <span class="active_student pull-right">{{$total_student}}</span></h5>
+              </div>
+              </div>
+      </div>
+      </div>
       
 
 

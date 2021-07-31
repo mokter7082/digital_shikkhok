@@ -119,6 +119,7 @@
                 <ul class="list-unstyled">
                     <li><a href="{{route('active-teacher')}}">Today Active Teachers</a></li>
                     <li><a href="{{route('active-anshero')}}">Today Active Ans Hero</a></li>
+                    <li><a href="{{route('active-student')}}">Today Active Student</a></li>
                    
                 </ul>
             </li>

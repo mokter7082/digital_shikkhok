@@ -89,4 +89,14 @@ class StudentController extends Controller
              return response()->json(['success']);     
 
       }
+       public function activeStudent(){
+     date_default_timezone_set("Asia/Dhaka");
+       $todaydate = date("Y-m-d");
+       //dd($todaydate);
+    $active_student = DB::select("SELECT users.id,users.name, users.email, users.mobile,users.institutionname,users.type,questions.id,questions.asked_by,questions.created_at 
+FROM questions INNER JOIN users ON users.id = questions.asked_by 
+WHERE questions.created_at LIKE '%$todaydate%' AND users.type = 2 GROUP BY questions.asked_by");
+  //dd($active_student);
+    return view('pages.active-student',compact('active_student'));
+  }
 }

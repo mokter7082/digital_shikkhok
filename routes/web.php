@@ -64,6 +64,7 @@ Route::get('/student-active',[StudentController::class,'studentActive'])->name('
 Route::get('/student-delete',[StudentController::class,'studentDelete'])->name('student-delete');
 Route::get('/student-block',[StudentController::class,'studentBlock'])->name('student-block');
 Route::get('/student-unblock',[StudentController::class,'studentUnblock'])->name('student-unblock');
+Route::get('/active-student',[StudentController::class,'activeStudent'])->name('active-student');
 
 
 //question routes
