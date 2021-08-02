@@ -24,6 +24,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Mobile Number</th>
+                                 <th>Institution Name</th>
                                 <th>Point</th>
                                 <th>Ans Count</th>
                                 <th>Add Point</th>
@@ -38,6 +39,7 @@
                                     <td>{{$val['name']}}</td>
                                     <td>{{$val['email']}}</td>
                                     <td>{{$val['mobile']}}</td>
+                                    <td>{{$val['institutionname']}}</td>
                                     <td>
                                         <p id="point_p_{{$val['id']}}">{{$val['total_point']}}</p>
                                         <input type="hidden"  id="point_td_{{$val['id']}}" value="{{$val['total_point']}}" />

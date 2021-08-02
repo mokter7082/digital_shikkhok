@@ -36,6 +36,7 @@ class LeaderboardController extends Controller
       users.`name`,
       users.`email`,
       users.mobile,
+      users.institutionname,
       users.type,
       answers.created_at 
   FROM
@@ -61,6 +62,7 @@ class LeaderboardController extends Controller
     $data_answer_arr[$user_id]['name']=$val->name;
     $data_answer_arr[$user_id]['email']=$val->email;
     $data_answer_arr[$user_id]['mobile']=$val->mobile;
+    $data_answer_arr[$user_id]['institutionname']=$val->institutionname;
     $data_answer_arr[$user_id]['type']=$val->type;
     $data_answer_arr[$user_id]['created_at']=$val->created_at;
    
@@ -100,6 +102,7 @@ class LeaderboardController extends Controller
       users.`name`,
       users.`email`,
       users.mobile,
+      users.institutionname,
       users.type,
       questions.created_at 
   FROM
@@ -125,6 +128,7 @@ class LeaderboardController extends Controller
     $data_answer_arr[$user_id]['name']=$val->name;
     $data_answer_arr[$user_id]['email']=$val->email;
     $data_answer_arr[$user_id]['mobile']=$val->mobile;
+    $data_answer_arr[$user_id]['institutionname']=$val->institutionname;
     $data_answer_arr[$user_id]['type']=$val->type;
     $data_answer_arr[$user_id]['created_at']=$val->created_at;
    
@@ -159,6 +163,7 @@ return view('pages/leaderboard.all-students',compact('data_answer_arr'));
       users.`name`,
       users.`email`,
       users.mobile,
+      users.institutionname,
       users.type,
       answers.created_at 
   FROM
@@ -184,6 +189,7 @@ return view('pages/leaderboard.all-students',compact('data_answer_arr'));
     $data_answer_arr[$user_id]['name']=$val->name;
     $data_answer_arr[$user_id]['email']=$val->email;
     $data_answer_arr[$user_id]['mobile']=$val->mobile;
+    $data_answer_arr[$user_id]['institutionname']=$val->institutionname;
     $data_answer_arr[$user_id]['type']=$val->type;
     $data_answer_arr[$user_id]['created_at']=$val->created_at;
    
