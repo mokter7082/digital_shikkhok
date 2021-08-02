@@ -16,7 +16,7 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                        <table id="" class="table table-striped table-bordered">
+                                        <table id="datatable" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                   <th>ID</th>
@@ -38,6 +38,7 @@
                                                         <form method="post" class="sub" enctype="multipart/form-data">
                                                         @csrf
                                                             <input type="hidden" class="id_i" name="id" value="{{$val->id}}">
+                                                            <input type="hidden" class="id_i" name="ques_id" value="{{$val->qid}}">
                                                             <input type="hidden" class="ans_id" name="ans_id" value="{{$val->ans_id}}">
                                                             <input type="hidden" name="post_user_id" id="post_user_id_{{$val->id}}" value="{{$val->asked_by}}">
                                                             <textarea class="form-control" name="ans" id="ans_{{$val->id}}" rows="3" cols="30" placeholder="Write Answer Here" required></textarea>

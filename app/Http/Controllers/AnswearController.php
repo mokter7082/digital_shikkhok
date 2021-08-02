@@ -973,7 +973,8 @@ public function flagsAnswer(){
   answers.id AS ans_id,
 	answers.answer,
 	answers.flags,
-	questions.question,
+	questions.id as qid,
+  questions.question,
 	questions.asked_by
 
 FROM
@@ -1023,8 +1024,9 @@ public function flagsResolve(Request $request){
 
 //FLAGS INSERT
     public function flagsInsert(Request $request){
+     // dd($request->all());
       $sub_id = $request->subject;
-      $post_id = $request->id;
+      $post_id = $request->ques_id;
       $user_id = $request->user_id;
       $ans_id = $request->ans_id;
     //dd($ans_id);
@@ -1039,7 +1041,7 @@ public function flagsResolve(Request $request){
       if($image){
     
          $answer_data = array();
-         $answer_data['question_id'] = $request->id;
+         $answer_data['question_id'] = $request->ques_id;
          $answer_data['answered_by'] = $user_id;
          $answer_data['answer'] = $request->ans;
          $answer_data['points'] = $point;
@@ -1053,7 +1055,7 @@ public function flagsResolve(Request $request){
         $success = $image->move($upload_path,$image_fullname);
         if($success){
             $answer_data['file_url']=$image_fullname;
-            dd($answer_data);
+           // dd($answer_data);
          $insert = DB::table('answers')->insert($answer_data);
          
       }else{
@@ -1064,7 +1066,7 @@ public function flagsResolve(Request $request){
    }else{
   
      $answer_data = array();
-     $answer_data['question_id'] = $request->id;
+     $answer_data['question_id'] = $request->ques_id;
      $answer_data['answered_by'] = $user_id;
      $answer_data['answer'] = $request->ans;
      $answer_data['file_url'] = '0';
