@@ -182,6 +182,12 @@ function verification(id){
 
     $('.sub').submit(function(e) {
        e.preventDefault();
+        toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+  	     	toastr.success("Loding");
        var id = $(this).parents('tr').find('.userId').val();
          //alert(id); return;
        let formData = new FormData(this);
