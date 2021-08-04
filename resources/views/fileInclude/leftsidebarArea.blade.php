@@ -28,6 +28,8 @@
                 @elseif($teacher == '5')
                 @elseif($teacher == '6')
                 <p class="text-muted m-0">Editor</p>
+                @elseif($teacher == '7')
+                <p class="text-muted m-0">Flags Tream</p>
                 @else
                 @endif
         </div>
