@@ -975,12 +975,15 @@ public function flagsAnswer(){
 	answers.flags,
 	questions.id as qid,
   questions.question,
+  subjects.name as sname,
 	questions.asked_by
 
 FROM
 	answers
 	INNER JOIN questions ON questions.id = answers.question_id
- INNER JOIN users ON users.id = answers.answered_by	
+  INNER JOIN users ON users.id = answers.answered_by	
+  INNER JOIN subjects ON subjects.id = questions.subject_id
+
 WHERE
 	answers.flags >0');
   //dd($flags_answer);

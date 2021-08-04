@@ -21,6 +21,7 @@
                                                 <tr>
                                                   <th>ID</th>
                                                   <th>Question</th> 
+                                                  <th>Subject</th> 
                                                   <th>Answer</th> 
                                                   <th>New Answer</th> 
                                                   <th>Actions</th>  
@@ -33,6 +34,7 @@
                                                  <input type="hidden" value="{{$val->id}}" name="userId">
                                                         <td>{{$val->id}}</td>
                                                         <td>{{$val->question}}</td>
+                                                        <td>{{$val->sname}}</td>
                                                         <td>{{$val->answer}}</td>
                                                         <td>
                                                         <form method="post" class="sub" enctype="multipart/form-data">
@@ -164,6 +166,12 @@ function verification(id){
               cache: false,
               success: function(html){
               console.log(html);
+               toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+  	     	toastr.success("Answer Resolved");
               $("#rowid_"+id).hide();
               // reload_table();
               }
@@ -185,6 +193,12 @@ function verification(id){
            processData: false,
            success:function(data){
              console.log(data);
+              toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+  	     	toastr.success("Answer Submit Success");
              if(data.data===true) {
               $("#rowid_"+id).hide();
             }else if(data.data===null){
