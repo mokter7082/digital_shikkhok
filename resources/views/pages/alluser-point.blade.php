@@ -11,7 +11,7 @@
     <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">All Users Points</h3>
+                    <h3 class="panel-title">All Users</h3>
                 </div>  
                 <h4 class="show text-success text-center" id="hide"></h4> 
         <div class="panel-body">
@@ -26,7 +26,6 @@
                                 <th>Mobile Number</th>
                                 <th>Designation</th>
                                 <th>Institution Name</th>
-                                <th>Point</th>
                         </thead>
                                 <tbody>
                             @foreach($all_users_points as $val)
@@ -52,7 +51,6 @@
                                          @endif
                                     </td>
                                     <td>{{$val->institutionname}}</td>
-                                    <td>{{$val->total_points}}</td>
                                 </tr>
                              @endforeach
                                 </tbody>

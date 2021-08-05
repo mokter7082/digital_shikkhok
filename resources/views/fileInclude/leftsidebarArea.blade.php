@@ -195,7 +195,7 @@
                 </ul>
             </li>
             </li><li class="has_sub">
-                <a href="#" class="waves-effect"><i class="fa fa-users"></i> <span>All Users Point</span> <span class="pull-right"><i class="md md-add"></i></span></a>
+                <a href="#" class="waves-effect"><i class="fa fa-users"></i> <span>All Users</span> <span class="pull-right"><i class="md md-add"></i></span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{route('all-user_point')}}">Users</a></li>
                 </ul>
