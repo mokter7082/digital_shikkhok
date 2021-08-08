@@ -14,6 +14,10 @@
                                                               <th>ID:</th>
                                                               <td>{{$val->id}}</td>
                                                           </tr>
+                                                            <tr>
+                                                              <th>Answer ID:</th>
+                                                              <td>{{$val->ans_id}}</td>
+                                                          </tr>
                                                           <tr>
                                                               <th>Name:</th>
                                                               <td>{{$val->name}}</td>

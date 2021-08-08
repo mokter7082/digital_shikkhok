@@ -973,6 +973,7 @@ public function flagsAnswer(){
   answers.id AS ans_id,
 	answers.answer,
 	answers.flags,
+  answers.file_url,
 	questions.id as qid,
   questions.question,
   subjects.name as sname,

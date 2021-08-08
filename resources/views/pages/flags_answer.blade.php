@@ -23,6 +23,7 @@
                                                   <th>Question</th> 
                                                   <th>Subject</th> 
                                                   <th>Answer</th> 
+                                                  <th>Photo</th> 
                                                   <th>New Answer</th> 
                                                   <th>Actions</th>  
                                               </tr>
@@ -36,6 +37,7 @@
                                                         <td>{{$val->question}}</td>
                                                         <td>{{$val->sname}}</td>
                                                         <td>{{$val->answer}}</td>
+                                                        <td><img src="{{$val->file_url}}" alt="no image" style="height:200px;width:160px;"></td>
                                                         <td>
                                                         <form method="post" class="sub" enctype="multipart/form-data">
                                                         @csrf
