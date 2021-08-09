@@ -38,6 +38,7 @@ class LeaderboardController extends Controller
       users.mobile,
       users.institutionname,
       users.type,
+      users.status,
       answers.created_at 
   FROM
       answers
@@ -64,6 +65,7 @@ class LeaderboardController extends Controller
     $data_answer_arr[$user_id]['mobile']=$val->mobile;
     $data_answer_arr[$user_id]['institutionname']=$val->institutionname;
     $data_answer_arr[$user_id]['type']=$val->type;
+    $data_answer_arr[$user_id]['status']=$val->status;
     $data_answer_arr[$user_id]['created_at']=$val->created_at;
    
  }
@@ -89,11 +91,8 @@ class LeaderboardController extends Controller
       foreach($point as $key => $val){
           $user_id=$val->user_id;
          $data_point_arr[$user_id]['user_id']=$val->user_id;
-         $data_point_arr[$user_id]['tot_point']=$val->tot_point;
-        
-        
+         $data_point_arr[$user_id]['tot_point']=$val->tot_point; 
       }
-      
       
       $all_student = DB::select("SELECT
       SUM( questions.points ) AS total_point,
@@ -104,6 +103,7 @@ class LeaderboardController extends Controller
       users.mobile,
       users.institutionname,
       users.type,
+      users.status,
       questions.created_at 
   FROM
    questions
@@ -130,6 +130,7 @@ class LeaderboardController extends Controller
     $data_answer_arr[$user_id]['mobile']=$val->mobile;
     $data_answer_arr[$user_id]['institutionname']=$val->institutionname;
     $data_answer_arr[$user_id]['type']=$val->type;
+    $data_answer_arr[$user_id]['status']=$val->status;
     $data_answer_arr[$user_id]['created_at']=$val->created_at;
    
  }
@@ -165,6 +166,7 @@ return view('pages/leaderboard.all-students',compact('data_answer_arr'));
       users.mobile,
       users.institutionname,
       users.type,
+      users.status,
       answers.created_at 
   FROM
       answers
@@ -191,6 +193,7 @@ return view('pages/leaderboard.all-students',compact('data_answer_arr'));
     $data_answer_arr[$user_id]['mobile']=$val->mobile;
     $data_answer_arr[$user_id]['institutionname']=$val->institutionname;
     $data_answer_arr[$user_id]['type']=$val->type;
+     $data_answer_arr[$user_id]['status']=$val->status;
     $data_answer_arr[$user_id]['created_at']=$val->created_at;
    
  }

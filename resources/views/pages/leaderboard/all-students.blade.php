@@ -30,6 +30,7 @@
                                 <th>Ques Count</th>
                                 <th>Add Point</th>
                                 <th>Remove Point</th>
+                                <th>Action</th>
                     
                             </tr>
                         </thead>
@@ -64,6 +65,13 @@
                                         <input type="hidden" class="form-control" id="user_id_{{$val['id']}}" value="{{$val['id']}}" /> 
                                         <input type="text" class="form-control mb-1 inp" id="remive_point_{{$val['id']}}" name="" />
                                         <button class="text-center btn btn-danger btn-sm" onclick="removePoint({{$val['id']}})" type="button" style="margin-top:08px;">Remove</button> 
+                                    </td>
+                                    <td>
+                                     @if ($val['status'] == '3')
+                                        <button type="submit" style="margin-top:4px;" class="btn btn-warning btn-sm block" id="s_block{{$val['id']}}" onclick="student_block({{$val['id']}})">Unblock</button>
+                                        @else
+                                        <button type="submit" style="margin-top:4px;" class="btn btn-danger btn-sm block" id="s_block{{$val['id']}}" onclick="student_block({{$val['id']}})">Block</button>
+                                        @endif
                                     </td>
                      
                                  </tr>
@@ -170,6 +178,40 @@ function removePoint(id){
         }
       })
  }
+
+    function student_block(id){
+        var bclass = $("#s_block"+id).hasClass("btn-danger");
+        //alert(bclass);
+        if($("#s_block"+id).hasClass("btn-danger")){
+          $.ajax({
+            url: '<?php echo URL::to('student-block');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+            $("#s_block"+id).text('Unblock'); //versions newer than 1.6
+            $("#s_block"+id).removeClass("btn-danger");
+            $("#s_block"+id).addClass("btn-warning");
+            }
+          });
+        }else {
+          $.ajax({
+            url: '<?php echo URL::to('student-unblock');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            //  $("#results").append(html);
+            console.log(html);
+             $("#s_block"+id).text('Block'); //versions newer than 1.6
+             $("#s_block"+id).removeClass("btn-warning");
+             $("#s_block"+id).addClass("btn-danger");
+            }
+          });
+        }
+  }
 
  
 
