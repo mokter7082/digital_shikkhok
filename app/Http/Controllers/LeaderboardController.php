@@ -209,7 +209,7 @@ return view('pages/leaderboard.all-answer_hero',compact('data_answer_arr'));
             $point_data['point'] = $request->point;
             $point_data['type'] = $request->type;
             $point_data['user_type'] = $request->user_type;
-            $point_data['created_at'] = '2021-07-09 16:43:28';
+            $point_data['created_at'] = '2021-08-07 16:43:28';
             DB::table('points')->insert($point_data);
             return response([
                 'messege' => "successful insert"
@@ -235,7 +235,7 @@ return view('pages/leaderboard.all-answer_hero',compact('data_answer_arr'));
             $point_data['point'] = $ready_point;
             $point_data['type'] = $request->type;
             $point_data['user_type'] = $request->user_type;
-            $point_data['created_at'] = '2021-07-09 16:43:28';
+            $point_data['created_at'] = '2021-08-07 16:43:28';
             DB::table('points')->insert($point_data);
             return response([
                 'messege' => "successful insert"
