@@ -26,6 +26,7 @@
                                 <th>Mobile Number</th>
                                 <th>Designation</th>
                                 <th>Institution Name</th>
+                                <th>Action</th>
                         </thead>
                                 <tbody>
                             @foreach($all_users_points as $val)
@@ -51,11 +52,12 @@
                                          @endif
                                     </td>
                                     <td>{{$val->institutionname}}</td>
+                                    <td><button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#view-{{$val->user_id}}">View</button></td>
                                 </tr>
                              @endforeach
                                 </tbody>
                             </table>
-
+@include('modal.points-viewmodal')
                         </div>
                     </div>
                 </div>

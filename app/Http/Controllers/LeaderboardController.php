@@ -246,8 +246,22 @@ return view('pages/leaderboard.all-answer_hero',compact('data_answer_arr'));
         }
 
       public function allUsersPoint(){
-          $all_users_points = DB::select("SELECT users.`name`, users.email, users.mobile, users.institutionname,users.type,points.user_id,
-	     SUM( points.point ) AS total_points FROM points INNER JOIN users ON users.id = points.user_id GROUP BY points.user_id");
+          $all_users_points = DB::select("SELECT
+	users.`name`,
+	users.email,
+	users.mobile,
+	users.institutionname,
+	users.type,
+	points.user_id,
+	SUM(points.point) AS total_points,
+	SUM( CASE WHEN points.type = 'referral' THEN points.point ELSE 0 END) AS referral_points ,
+	SUM( CASE WHEN points.type = 'custom' THEN points.point ELSE 0 END) AS custom_points ,
+	SUM( CASE WHEN points.type = 'quiz' THEN points.point ELSE 0 END) AS quiz_points 
+FROM
+	points
+	INNER JOIN users ON users.id = points.user_id 
+GROUP BY
+	points.user_id");
     //dd($all_users_points);
     return view('pages.alluser-point',compact('all_users_points'));
       }
