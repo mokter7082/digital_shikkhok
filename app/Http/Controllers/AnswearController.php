@@ -285,7 +285,8 @@ public function dateCustom_answer(Request $request){
  }
     public function Ainsert(Request $request){
 
-     
+      date_default_timezone_set("Asia/Dhaka");
+       $todaydate = date("Y-m-d");
       $sub_id = $request->subject;
       $post_id = $request->id;
       $user_id = $request->user_id;
@@ -355,6 +356,7 @@ public function dateCustom_answer(Request $request){
          $answer_data['points'] = $answer_points;
          $answer_data['flags'] = '0';
          $answer_data['quality'] = '0';
+          $answer_data['created_at'] = $todaydate;
         $image_name = Str::random(20);
         $ext = strtolower($image->getClientOriginalExtension());
         $image_fullname = $image_name.'.'.$ext;
@@ -421,6 +423,7 @@ public function dateCustom_answer(Request $request){
      $answer_data['points'] = $answer_points;
      $answer_data['flags'] = '0';
      $answer_data['quality'] = '0';
+      $answer_data['created_at'] = $todaydate;
      $insert = DB::table('answers')->insert($answer_data);
      ///End Ansheor and teacher ar special point///
    }else{
@@ -440,6 +443,7 @@ public function dateCustom_answer(Request $request){
  $answer_data['points'] = $point;
  $answer_data['flags'] = '0';
  $answer_data['quality'] = '0';
+ $answer_data['created_at'] = $todaydate;
 $insert = DB::table('answers')->insert($answer_data);
  }
 //00000000000/
