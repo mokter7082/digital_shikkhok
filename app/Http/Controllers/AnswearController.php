@@ -286,7 +286,7 @@ public function dateCustom_answer(Request $request){
     public function Ainsert(Request $request){
 
       date_default_timezone_set("Asia/Dhaka");
-       $todaydate = date("Y-m-d");
+       $todaydate = date("Y-m-d H:i:s");
       $sub_id = $request->subject;
       $post_id = $request->id;
       $user_id = $request->user_id;
