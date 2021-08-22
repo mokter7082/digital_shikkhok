@@ -155,12 +155,12 @@
                                                     @else
                                                     <button type="submit" style="margin-top:2px;" class="btn btn-danger btn-sm block" id="t_block{{$val->id}}" onclick="teacher_block({{$val->id}})">Block</button>                     
                                                     @endif
+                                                      <a href="{{URL::to('teacher-view/'.$val->id)}}" class="btn btn-warning btn-sm">View</a>
                                                   </td>
                                               </tr>
                                             @endforeach
                                         </tbody>
                                        </table>
-
                                           </div>
                                       </div>
                                   </div>
@@ -397,6 +397,19 @@
             }
           });
         }
+  }
+  function viewTeacher(name){
+     alert(name);return;
+       $.ajax({
+            url: '<?php echo URL::to('teacher-view');?>',
+            method: 'GET',
+            data: {refBy:refBy},
+            cache: false,
+            success: function(html){
+            console.log(html);
+            console.log(html)
+            }
+          });  
   }
 
 

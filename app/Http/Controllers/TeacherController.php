@@ -81,6 +81,16 @@ class TeacherController extends Controller
                  ->delete();
          return response()->json('delete success');
     }
+     public function teacherView($id){
+     $user = DB::table("users")
+            ->where("id",$id)
+            ->first();
+            $refCode = $user->referral_code;
+      $referedUsers =  DB::table("users")
+            ->where("referred_by",$refCode)
+            ->get();
+       return view('pages.referal-users',compact('referedUsers'));
+    }
     public function addSubject($id){
        $add_subject = DB::table('users')
                        ->join('teacher_subject','teacher_subject.teacher_id','=','users.id')

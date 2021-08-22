@@ -57,6 +57,7 @@
                                                     @else
                                                     <button type="submit" style="margin-top:2px;" class="btn btn-danger btn-sm block" id="anshero_block{{$val->id}}" onclick="anshero_block({{$val->id}})">Block</button>                     
                                                     @endif
+                                                     <a href="{{URL::to('teacher-view/'.$val->id)}}" class="btn btn-warning btn-sm">View</a>
                                                   </td>
                                                         </tr>
                                                      @endforeach

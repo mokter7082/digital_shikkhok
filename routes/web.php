@@ -49,6 +49,7 @@ Route::get('/edit-teacher/{id}',[TeacherController::class,'editTeacher'])->name(
 Route::post('/insert-teacher',[TeacherController::class,'insertTeacher'])->name('insert-teacher');
 Route::get('/today-reg_teacher',[TeacherController::class,'todayRegteacher'])->name('today-reg_teacher');
 Route::get('/teacher-delete',[TeacherController::class,'teacherDelete'])->name('teacher-delete');
+Route::get('/teacher-view/{id}',[TeacherController::class,'teacherView'])->name('teacher-view');
 Route::get('/answer-hero',[TeacherController::class,'answerHero'])->name('answer-hero');
 Route::get('/teacher-block',[TeacherController::class,'teacherBlock'])->name('teacher-block');
 Route::get('/teacher-unblock',[TeacherController::class,'teacherUnblock'])->name('teacher-unblock');
