@@ -56,6 +56,7 @@ Route::get('/teacher-unblock',[TeacherController::class,'teacherUnblock'])->name
 Route::get('/active-teacher',[TeacherController::class,'activeTeacher'])->name('active-teacher');
    //student route
 Route::get('/all-student',[StudentController::class,'allStudent'])->name('all-student');
+Route::post('/studentData',[StudentController::class,'studentData'])->name('studentData');
 Route::get('/edit-student/{id}',[StudentController::class,'editStudent'])->name('edit-student');
 Route::post('/update-student/{id}',[StudentController::class,'updateStudent'])->name('update-student');
 //Route::get('/all_stu_data',[StudentController::class,'allstuData'])->name('all_stu_data');
@@ -63,6 +64,7 @@ Route::get('/today-reg_student',[StudentController::class,'todaySturegister'])->
 Route::get('/student-inactive',[StudentController::class,'studentInactive'])->name('student-inactive');
 Route::get('/student-active',[StudentController::class,'studentActive'])->name('student-active');
 Route::get('/student-delete',[StudentController::class,'studentDelete'])->name('student-delete');
+Route::get('/student-refar',[StudentController::class,'studentRefar'])->name('student-refar');
 Route::get('/student-block',[StudentController::class,'studentBlock'])->name('student-block');
 Route::get('/student-unblock',[StudentController::class,'studentUnblock'])->name('student-unblock');
 Route::get('/active-student',[StudentController::class,'activeStudent'])->name('active-student');

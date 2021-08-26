@@ -11,11 +11,120 @@ use Carbon\Carbon;
 class StudentController extends Controller
 {
     public function allStudent(){
-      $all_student = DB::select("SELECT * FROM users WHERE type = 2");
-                  //dd($all_student);
-   
-      return view('pages.all-student',compact('all_student'));
+  
+      return view('pages.all-student');
     }
+    public function studentData(Request $request){
+
+
+    $limit = $request->input('length');
+    $start = $request->input('start');
+    $search = $request->input('search.value');
+
+    $column_order = array(
+        "users.id",
+        "users.name",
+        "users.mobile",
+        "users.date",
+        "users.institutionname"); //set column field database for datatable orderable
+
+    $column_search = array(
+        "users.id",
+        "users.name",
+        "users.mobile",
+        "users.date",
+      "users.institutionname"); //set column field database for datatable searchable
+
+    $order = array("users.id" => 'asc');
+
+    $recordsTotal = DB::table('users')
+            //->where('users.isTeacher',1)
+            ->count();
+   
+    $list = DB::table('users')
+    ->where('type',2);
+            
+
+
+    //echo $list->toSql(); exit;
+
+    // if (!empty($EMPLOYEE_ID)) {
+    //   $list->where("users.EMPLOYEE_ID", $EMPLOYEE_ID);
+    // }
+
+    if (!empty($search)) {
+      $list->where(function($query) use ($search, $column_search) {
+        $query->where("users.id", 'LIKE', "%{$search}%");
+        foreach ($column_search as $item) {
+          $query->orWhere($item, 'LIKE', "%{$search}%");
+        }
+      });
+    }
+
+    $recordsFiltered = $list->count();
+
+    $list->offset($start);
+    $list->limit($limit);
+
+    if (!empty($request->input('order.0.column'))) { // here order processing
+      $list->orderBy($column_order[$request->input('order.0.column')], $request->input('order.0.dir'));
+    } else {
+      $list->orderBy(key($order), $order[key($order)]);
+    }
+
+    //echo $list->toSql(); exit;
+
+    $list = $list->get();
+    //dd($list);
+    // generate server side datatables
+    $data = array();
+  //   $arr =[
+  //     1 => "Teacher",
+  //     2 => "Student",
+  //     3 => "Answer Hero",
+  //     4 => "Admin",
+  //     5 => "Others",
+  //     6 => "Editior",
+  // ];
+    $sl = $start;
+    if (!empty($list)) {
+      foreach ($list as $value) {
+        $row = array();
+       //dd($row);
+       // $row[] = ++$sl;
+        $row[] = $value->id;
+        $row[] = $value->name;
+        $row[] = $value->email;
+        $row[] = $value->mobile;
+        // $row[] = $value->institutionname;
+        $row[] = $value->date;
+        $button = '<button type="submit" class="btn btn-primary btn-sm " id="refer' . $value->id . '" onclick="refer(' . $value->id . ')">Refar User</button>'.'<br>'.
+        '<button type="submit" class="btn btn-danger btn-sm delete" style="margin-top:3px;" id="s_delete' . $value->id . '" onclick="s_delete(' . $value->id . ')">Delete</button>'.'<br>';
+  
+        if($value->status  == 3 ){
+          $button.='<button type="submit" class="btn btn-warning btn-sm block" style="margin-top:3px;" id="s_block' . $value->id . '" onclick="student_block(' . $value->id . ')">Unblock</button>';
+        }else{
+           $button.='<button type="submit" class="btn btn-danger btn-sm block" style="margin-top:3px;" id="s_block' . $value->id . '" onclick="student_block(' . $value->id . ')">Block</button>';
+        }
+        $row[] = $button;
+        //$row[] = 0;
+
+        $data[] = $row;
+      }
+    }
+
+    //print_r($data); exit;
+
+    $output = array(
+        "draw" => intval($request->input('draw')),
+        "recordsTotal" => intval($recordsTotal),
+        "recordsFiltered" => intval($recordsFiltered),
+        "data" => $data
+    );
+
+    // output to json format
+    return response()->json($output);
+  }
     public function editStudent($id){
       //return "fghksjfdh";
      $edit_student = DB::table('users')
@@ -70,6 +179,17 @@ class StudentController extends Controller
                     ->where('id', $id)
                     ->delete();
             return response()->json('delete success');
+       }
+        public function studentRefar(Request $request){
+            $id = $request->input('id');
+           $user = DB::table('users')
+                    ->where('id', $id)
+                    ->first();
+            $refarCode = $user->referral_code;
+            $refarUsers = DB::table("users")
+                   ->where("referred_by",$refarCode)
+                   ->get();
+            return response()->json($refarUsers);
        }
            public function studentBlock(Request $req){
              $id = $req->input('id');

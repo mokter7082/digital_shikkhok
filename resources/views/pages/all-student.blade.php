@@ -4,122 +4,148 @@
 <div class="content">
 <div class="container">
   <div class="row">
-     @php
-             $teacher = Session::get('type')  
-             @endphp
-             @if($teacher == '4')
-                          <div class="col-md-12">
+                      <div class="col-md-12">
                               <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                      <h3 class="panel-title">All Student</h3>
-                                  </div>
-
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                <table id="datatable" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                          <th>ID</th>
-                                          <th>Name</th>
-                                          <th>Email</th>
-                                          <th>Mobile</th>
-                                          <th>Date</th>
-                                          <th>Action</th>
-                                      </tr>
-                                  </thead>
-                                          <tbody>
-                                            @foreach($all_student as $val)
-                                               <tr id = "tr-{{$val->id}}">
-                                                <td>{{$val->id}}</td>
-                                                <td>{{$val->name}}</td>
-                                                <td>{{$val->email}}</td>
-                                                <td>{{$val->mobile}}</td>
-                                                <td>{{$val->date}}</td>
-                                                <td class="text-center">
-                                                  <button type="submit" class="btn btn-danger btn-sm delete" id="s_delete{{$val->id}}" onclick="s_delete({{$val->id}})">Delete</button></br>
-                                                  <a href="{{URL::to('edit-student/'.$val->id)}}" style="margin-top:2px;" class="btn btn-success btn-sm">Edit</a><br>
-                                                  @if ($val->status == '3')
-                                                   <button type="submit" style="margin-top:4px;" class="btn btn-warning btn-sm block" id="s_block{{$val->id}}" onclick="student_block({{$val->id}})">Unblock</button>
-                                                  @else
-                                                  <button type="submit" style="margin-top:4px;" class="btn btn-danger btn-sm block" id="s_block{{$val->id}}" onclick="student_block({{$val->id}})">Block</button>
-                                                  @endif
-                                                   <a href="{{URL::to('teacher-view/'.$val->id)}}" class="btn btn-warning btn-sm">View</a>
-                                                </td>
-                                            </tr>
-                                              @endforeach
-                                          </tbody>
-                                      </table>
-
-                                  </div>
-                              </div>
-                          </div>
-                              </div>
-                          </div>
-                          @elseif($teacher == '5')
-                              <div class="col-md-12">
-                              <div class="panel panel-default">
+    
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive">
-                                        <table id="" class="table table-striped table-bordered">
+                                        <table id="my_table" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                            
-                                                  <th>Name</th>
-                                                  <th>Email</th>
-                                                  <th>Date</th>
-                                                  <th>Mobile</th>
-                                          
-                                                  <th>Ans Count</th>
-          
-                                                  <th>Action</th>
+                                             <th>ID</th>
+                                             <th>Name</th>
+                                             <th>Email</th>
+                                             <th>Mobile</th>
+                                              <th>Date</th>
+                                             <th>Action</th>
                                               </tr>
                                           </thead>
-                                        <tbody>
-                                          @foreach($all_student as $val)
-                                              <tr id = "tr-{{$val->id}}">
+                                                  <tbody>
                                                 
-                                                  <td>{{$val->name}}</td>
-                                                  <td>{{$val->email}}</td>
-                                                  @php
-                                                        $d = $val->date;
-                                                        $date =  date("Y-m-d",strtotime($d));
-                                                  @endphp
-                                                  <td>{{$date}}</td>
-                                                  <td>{{$val->mobile}}</td>
-                                         
-                                                  <td>{{isset($a_q[$val->id])?$a_q[$val->id]:0}}</td>
-                                                 
-                                                  <td class="row">
-                                                    @if($val->status == 'verified')
-                                                     <button type="submit" id="verified_{{$val->id}}" class="btn btn-primary btn-sm" onclick="verification({{$val->id}})">Verified</button>
-                                                    @else
-                                                     <button type="submit" id="verified_{{$val->id}}" class="btn btn-danger btn-sm" onclick="verification({{$val->id}})">Not Verified</button>
-                                                    @endif
-                                                    <button type="submit" class="btn btn-danger btn-sm delete" id="t_delete{{$val->id}}" onclick="t_delete({{$val->id}})">Delete</button>
-                                                    <a href="{{URL::to('edit-teacher/'.$val->id)}}" class="btn btn-warning btn-sm">Edit</a>
-                                                  </td>
-                                              </tr>
-                                            @endforeach
-                                        </tbody>
-                                       </table>
+                                                  </tbody>
+                                              </table>
 
                                           </div>
                                       </div>
                                   </div>
                               </div>
                           </div>
-                          @else
-                          @endif
 
                       </div>
 
 </div> <!-- container -->
 </div>
-<script type="text/javascript">
 
-  function s_delete(id){
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Referred Users</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <table class="table table-bordered" border="1pt solid ash" style="font-family: arial; color:black; border-collapse: collapse;">
+              <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Date</th>
+              </thead>
+              <tbody id="my-data">
+
+              </tbody>
+             </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Teacher Verified Not_veryfied form database with jquery -->
+<!--START AJAX SERVERSITE DATATABLE-->
+<script type="text/javascript">
+  var table;
+  jQuery(document).ready(function ($) {
+    table = $('#my_table').DataTable({
+      "processing": true, //Feature control the processing indicator.
+      "serverSide": true, //Feature control DataTables' server-side processing mode.
+      "order": [], //Initial no order.
+      // Load data for the table's content from an Ajax source
+      pageLength: 0,
+      lengthMenu: [10, 50, 100, 500, 1000,5000,10000,25000],
+      "ajax": {
+        "url": "<?php echo route('studentData'); ?>",
+        "type": "POST",
+        "data": function(data) {
+          data._token = "{{ csrf_token() }}";
+          // data.dates = $('.date').text();
+        }
+      },
+
+      //Set column definition initialisation properties.
+      "columnDefs": [
+        {
+          "targets": [0, -1], //first, second and last column
+          "orderable": false, //set not orderable
+        },
+      ],
+
+    });
+    
+    $('#search').on( 'click change', function (event) {
+      event.preventDefault();
+      table.draw();
+      serach = 'SEARCH';
+    });
+
+  });
+
+  function reload_table() {
+    table.ajax.reload(null, false); //reload datatable ajax 
+  }
+
+
+
+
+//find reerall users
+  function refer(id){
+    toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+  	     	toastr.success("Please Wait few minutes.");
+     $.ajax({
+            url: '<?php echo URL::to('student-refar');?>',
+            method: 'GET',
+            data: {id:id},
+            cache: false,
+            success: function(html){
+            console.log(html);
+            $("#my-data").html("");
+          $.each(html, function(index, val) {
+                $("#my-data").append('<tr><td>'+ val.id +'</td> <td>'+ val.name +'</td><td>'+ val.mobile +'</td> <td>'+ val.date +'</td> </tr>');
+             });
+             $("#myModal").modal("show");
+            }
+          });
+  }
+  //end refaral users
+  //start student block
+   function s_delete(id){
       //  alert(id);
       $('.delete').click(function(){
         swal({   
@@ -138,20 +164,16 @@
             cache: false,
             success: function(html){
             console.log(html);
-            $("#tr-"+id).remove();
+             reload_table()
             }
           });  
             swal("Deleted!", "Your Student delete successfull.", "success"); 
         });
     });
   }
-
-
-
-
-
-
-    function student_block(id){
+  //end student block
+  //start student block
+  function student_block(id){
         var bclass = $("#s_block"+id).hasClass("btn-danger");
         //alert(bclass);
         if($("#s_block"+id).hasClass("btn-danger")){
@@ -184,6 +206,8 @@
           });
         }
   }
-
+  //end student block
 </script>
+<!--END SERVERSITE DATATABLE-->
 @endsection
+
