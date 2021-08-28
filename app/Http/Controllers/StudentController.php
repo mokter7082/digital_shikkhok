@@ -99,7 +99,7 @@ class StudentController extends Controller
         // $row[] = $value->institutionname;
         $row[] = $value->date;
         $button = '<button type="submit" class="btn btn-primary btn-sm " id="refer' . $value->id . '" onclick="refer(' . $value->id . ')">Refar User</button>'.'<br>'.
-        '<button type="submit" class="btn btn-danger btn-sm delete" style="margin-top:3px;" id="s_delete' . $value->id . '" onclick="s_delete(' . $value->id . ')">Delete</button>'.'<br>';
+        '<button type="submit" class="btn btn-danger btn-sm delete" style="margin-top:3px;" id="s_delete' . $value->id . '" onclick="s_delete(' . $value->id . ')">Delete</button>'.'<br>'.'<button type="submit" class="btn btn-info btn-sm edit" style="margin-top:3px;" id="s_edit' . $value->id . '" onclick="studentEdit(' . $value->id . ')">Edite</button>'.'<br>';
   
         if($value->status  == 3 ){
           $button.='<button type="submit" class="btn btn-warning btn-sm block" style="margin-top:3px;" id="s_block' . $value->id . '" onclick="student_block(' . $value->id . ')">Unblock</button>';
@@ -125,25 +125,30 @@ class StudentController extends Controller
     // output to json format
     return response()->json($output);
   }
-    public function editStudent($id){
-      //return "fghksjfdh";
-     $edit_student = DB::table('users')
-                     ->where('users.id',$id)
-                     ->first();
-                    // dd($edit_student);
-     return view('pages.edit-student',compact('edit_student'));
+    public function editStudent(Request $req){
+      $id = $req->input('id');
+      $user = DB::table("users")
+              ->where("id",$id)
+              ->first();
+      return response()->json($user);
    }
-   public function updateStudent(Request $request,$id){
-    //dd($id);
-   $update_data = array();
-   $update_data['name'] = $request->name;
-   $update_data['email'] = $request->email;
-   $update_data['mobile'] = $request->mobile;
-   $update_data['institutionname'] = $request->institutionname;
-   //dd($update_data);
-   $t_update = DB::table('users')->where('id',$id)->update($update_data);
-   Session::flash('message', 'Updated');
-   return Redirect::back();
+   public function updateStudent(Request $request){
+    // dd($request->all());
+       $id = $request->id;
+      $data = array();
+      $data['name'] = $request->name;
+      $data['email'] = $request->email;
+      $data['mobile'] = $request->mobile;
+      $data['institutionname'] = $request->insName;
+      
+      // dd($data);
+      $up = DB::table("users")
+         ->where("id",$id)
+         ->update($data);
+        return response()->json([
+          "mas"=>"success",
+          "status"=>200
+        ]);
     
 }
     public function todaySturegister(){

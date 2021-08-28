@@ -40,35 +40,10 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Referred Users</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         <table class="table table-bordered" border="1pt solid ash" style="font-family: arial; color:black; border-collapse: collapse;">
-              <thead>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Date</th>
-              </thead>
-              <tbody id="my-data">
+@include('modal.student-refer')
+@include('modal.edit-student')
 
-              </tbody>
-             </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 
 
@@ -137,7 +112,7 @@
             console.log(html);
             $("#my-data").html("");
           $.each(html, function(index, val) {
-                $("#my-data").append('<tr><td>'+ val.id +'</td> <td>'+ val.name +'</td><td>'+ val.mobile +'</td> <td>'+ val.date +'</td> </tr>');
+                $("#my-data").append('<tr><td>'+ val.id +'</td> <td>'+ val.name +'</td><td>'+ val.email +'</td> <td>'+ val.mobile +'</td><td>'+ val.institutionname +'</td> <td>'+ val.date +'</td> </tr>');
              });
              $("#myModal").modal("show");
             }
@@ -206,7 +181,75 @@
           });
         }
   }
-  //end student block
+//start edite student from here
+  function studentEdit (id){
+    toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+  	     	toastr.success("Please Wait few minutes.");
+     $.ajax({
+            url: '<?php echo URL::to('edit-student');?>',
+            method: 'POST',
+            data: {
+                  "_token": "{{ csrf_token() }}",
+                  "id": id
+                  },
+            cache: false,
+            success: function(html){
+             $("#editModal").modal("show");
+             $('#id').val(html.id);
+             $('#name').val(html.name);
+             $('#email').val(html.email);
+             $('#mobile').val(html.mobile);
+             $('#insName').val(html.institutionname);
+            }
+          });
+  }
+  // end edite student from here
+  function studentUpdate(){
+    toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+  	     	toastr.success("Updating");
+    var id=$("#id").val();
+    var name=$("#name").val();
+    var email=$("#email").val();
+    var mobile=$("#mobile").val();
+    var insName=$("#insName").val();
+    // alert(name);
+     $.ajax({
+            type: 'post',
+            url: '<?php echo URL::to('update-student');?>',
+            data:{
+             "id":id,
+             "name":name,
+             "email":email,
+             "mobile":mobile,
+             "insName":insName,
+             "_token": "{{ csrf_token() }}"  
+        },
+            success: function (response ) {
+              console.log(response);
+              if(response.status===200) {
+                // loop through all modal's and call the Bootstrap
+                // modal jQuery extension's 'hide' method
+                //$("#answer_td_"+id).html(ans);
+                $('.modal').each(function(){
+                    $(this).modal('hide');
+                });
+                reload_table()
+                console.log('success');
+            } else {
+                console.log('failure');
+            }
+                
+            }
+        });
+  }
 </script>
 <!--END SERVERSITE DATATABLE-->
 @endsection

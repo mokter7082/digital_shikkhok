@@ -57,8 +57,8 @@ Route::get('/active-teacher',[TeacherController::class,'activeTeacher'])->name('
    //student route
 Route::get('/all-student',[StudentController::class,'allStudent'])->name('all-student');
 Route::post('/studentData',[StudentController::class,'studentData'])->name('studentData');
-Route::get('/edit-student/{id}',[StudentController::class,'editStudent'])->name('edit-student');
-Route::post('/update-student/{id}',[StudentController::class,'updateStudent'])->name('update-student');
+Route::post('/edit-student',[StudentController::class,'editStudent'])->name('edit-student');
+Route::post('/update-student',[StudentController::class,'updateStudent'])->name('update-student');
 //Route::get('/all_stu_data',[StudentController::class,'allstuData'])->name('all_stu_data');
 Route::get('/today-reg_student',[StudentController::class,'todaySturegister'])->name('today-reg_student');
 Route::get('/student-inactive',[StudentController::class,'studentInactive'])->name('student-inactive');
