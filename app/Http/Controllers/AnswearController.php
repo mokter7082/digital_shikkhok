@@ -858,23 +858,23 @@ $insert = DB::table('answers')->insert($answer_data);
        $start_date = $custome_year.'-'.$custome_month.'-'.'01';
        $end_date = $custome_year.'-'.$custome_month.'-'.date('t');
         
-     $monthly = DB::select("SELECT users.`name`, users.`mobile`, users.`institutionname`, users.`type`, COUNT( ans.id ) AS total 
+     $monthly = DB::select("SELECT users.`name`, users.`mobile`, users.`institutionname`, users.`type`, COUNT( answers.id ) AS total 
    FROM
-     `users` LEFT JOIN ans ON users.id = ans.user_id  WHERE (users.type = 1 OR users.type = 3) AND ans.date BETWEEN '$start_date' AND '$end_date'
-   GROUP BY users.id, users.`name`, users.`mobile`, users.`institutionname`, users.`type` 
-   ORDER BY `total` DESC");
-     //dd($monthly);
+     `users` LEFT JOIN answers ON users.id = answers.answered_by  WHERE (users.type = 1 OR users.type = 3) AND answers.created_at BETWEEN '$start_date' AND '$end_date'
+   GROUP BY users.id ORDER BY `total` DESC");
+    //  dd($monthly);
        return view('pages.monthly-answer',compact('monthly'));
   }
 
   public function Save(Request $request){
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-    $monthly = DB::select("SELECT users.`name`, users.`mobile`, users.`institutionname`, users.`type`, COUNT( ans.id ) AS total 
+    $monthly = DB::select("SELECT users.`id`,users.`name`, users.`mobile`, users.`institutionname`, users.`type`, COUNT( answers.id ) AS total 
     FROM
-      `users` LEFT JOIN ans ON users.id = ans.user_id  WHERE (users.type = 1 OR users.type = 3) AND ans.date BETWEEN '$start_date' AND '$end_date'
+      `users` LEFT JOIN answers ON users.id = answers.answered_by  WHERE (users.type = 1 OR users.type = 3) AND answers.created_at BETWEEN '$start_date' AND '$end_date'
     GROUP BY users.id, users.`name`, users.`mobile`, users.`institutionname`, users.`type` 
     ORDER BY `total` DESC");
+    // dd($monthly);
        return view('pages.monthly-answer',compact('monthly'));
 
   }
